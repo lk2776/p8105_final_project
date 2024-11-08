@@ -10,7 +10,8 @@ Tai Yue - ty2554
 
 ## Project title:
 
-Analysis of Milk Consumption Patterns in the United States
+Analysis of Milk Production and Consumption Patterns in the United
+States
 
 ## Motivation:
 
@@ -21,3 +22,13 @@ USDA data, our project aims to analyze these trends and provide insights
 for policymakers, dairy farmers, and businesses. Additionally, our
 project seeks to study consumer behaviour in choosing the type of milk
 they prefer to drink.
+
+## Planned Timeline
+
+| Weeks          | Tasks                  |
+|:---------------|:-----------------------|
+| November 11-15 | Project Review Meeting |
+| November 18-22 | Data tidying           |
+| November 25-29 | Data Analysis          |
+| December 2-6   | Website build          |
+| December 7     | Project Submission     |
