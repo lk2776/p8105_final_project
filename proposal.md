@@ -70,6 +70,8 @@ the USA. Create a two-minute screencast summarizing the project report.
     the data.
   - Regional and State-wise Data: Ensure that comparisons are made
     correctly across regions and states.
+  - Interpretability: Ensure that the analysis and plots are clear, easy
+    to read, and understandable.
 
 ## Planned Timeline
 

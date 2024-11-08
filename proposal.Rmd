@@ -41,6 +41,7 @@ Build a website detailing the project goals and motivations, data cleaning proce
   - Year Selection: Select the years for analysis, as the data spans from 1970 to 2023.
   - Visualization: Use the appropriate types of plots for visualizing the data.
   - Regional and State-wise Data: Ensure that comparisons are made correctly across regions and states.
+  - Interpretability: Ensure that the analysis and plots are clear, easy to read, and understandable.
 
 ## Planned Timeline
 
