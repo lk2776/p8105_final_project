@@ -44,16 +44,23 @@ the USA. Create a two-minute screencast summarizing the project report.
 
 - Analysis and Visualizations:
   - Analysis of Whole vs. Other-than-Whole Milk Consumption Across the
-    Years in the United States: show the results using line plots.
+    Years in the United States: Show the results using line plots and
+    quantify the relationship between year and milk consumption for both
+    whole and other-than-whole milk types using linear regression
+    models.
   - Analysis of Consumption Patterns for Flavored Whole vs. Flavored
     Other-than-Whole Milk Across the Years in the United States: Show
     the results using line plots.
   - Analysis of the Distribution of Milk Cows Across Regions and Years
     in the United States: Present the results using a violin plot and a
-    geographic distribution map.
+    geographic distribution map. Additionally, examine how the
+    distribution of milk cows is influenced by geographical factors over
+    time.
   - Analysis of the Distribution of Milk Production per Cow Across
     Regions and Years in the United States: Present the results using a
-    violin plot and a geographic distribution map.
+    violin plot and a geographic distribution map. Apply regression
+    models to study how milk production per cow varies across regions
+    and years.
 - Coding Challenges:
   - Data Tidying: The datasets are large, so we need to tidy them and
     use relevant data.
