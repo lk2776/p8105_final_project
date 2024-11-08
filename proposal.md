@@ -52,15 +52,15 @@ the USA. Create a two-minute screencast summarizing the project report.
     Other-than-Whole Milk Across the Years in the United States: Show
     the results using line plots.
   - Analysis of the Distribution of Milk Cows Across Regions and Years
-    in the United States: Present the results using a violin plot and a
-    geographic distribution map. Additionally, examine how the
-    distribution of milk cows is influenced by geographical factors over
-    time.
+    in the United States: Present the results using data distribution
+    plots and a geographic distribution map. Additionally, examine how
+    the distribution of milk cows is influenced by geographical factors
+    over time.
   - Analysis of the Distribution of Milk Production per Cow Across
-    Regions and Years in the United States: Present the results using a
-    violin plot and a geographic distribution map. Apply regression
-    models to study how milk production per cow varies across regions
-    and years.
+    Regions and Years in the United States: Present the results using
+    plots (eg., violin plots) and a geographic distribution map. Apply
+    regression models to study how milk production per cow varies across
+    regions and years.
 - Coding Challenges:
   - Data Tidying: The datasets are large, so we need to tidy them and
     use relevant data.
