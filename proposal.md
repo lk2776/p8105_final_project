@@ -1,0 +1,13 @@
+Proposal
+================
+2024-11-08
+
+## Group members
+
+Lahari Koganti – lk2776  
+Vidit Tripathi – vt2415  
+Tai Yue - ty2554  
+
+## Project title:
+
+Analysis of Milk Consumption Patterns in the United States
