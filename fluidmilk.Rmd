@@ -48,4 +48,4 @@ print(key_stats)
 
 ```
 
-
+The dataset covers years from 1975 to 2023, with a mean year of around 1999. This indicates the dataset spans a considerable period, allowing for a long-term trend analysis.The mean value for "Whole Milk" sales is approximately 20,871.73 units. Based on the table, it appears that whole milk sales have generally decreased over time, as the earlier years show higher values than might be expected based on recent years. This might suggest a trend away from whole milk consumption over time.Similar trends might be visible in the data for "Reduced Fat 2%", "Low Fat 1%", and "Skim" milk types, which would be useful to confirm with visualizations.
