@@ -1,0 +1,51 @@
+---
+title: "Untitled"
+author: "Tai Yue"
+date: "2024-11-18"
+output:
+  pdf_document: default
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+
+
+library(readxl)
+library(dplyr)
+
+file_path <- "fluidmilk.xlsx"
+fluidmilk_data <- read_excel(file_path, sheet = "fluidmilk")
+
+
+colnames(fluidmilk_data) <- c("Year", "Whole_Milk", "Reduced_Fat_2_%", 
+                              "Low_Fat_1_%", "Skim", "Flavored_Whole", 
+                              "Flavored_Other", "Buttermilk", "Eggnog", "Total_Sales")
+
+
+fluidmilk_data <- fluidmilk_data %>%
+  mutate(Year = as.numeric(Year)) %>%
+  filter(!is.na(Year))
+
+
+fluidmilk_data <- fluidmilk_data %>%
+  mutate(across(Whole_Milk:Total_Sales, as.numeric))
+
+print(fluidmilk_data)
+
+key_stats <- fluidmilk_data %>%
+  summarise(
+    across(everything(), list(mean = mean, sd = sd, min = min, max = max), na.rm = TRUE)
+  )
+
+
+print(key_stats)
+
+```
+
+The dataset covers years from 1975 to 2023, with a mean year of around 1999. This indicates the dataset spans a considerable period, allowing for a long-term trend analysis.The mean value for "Whole Milk" sales is approximately 20,871.73 units. Based on the table, it appears that whole milk sales have generally decreased over time, as the earlier years show higher values than might be expected based on recent years. This might suggest a trend away from whole milk consumption over time.Similar trends might be visible in the data for "Reduced Fat 2%", "Low Fat 1%", and "Skim" milk types, which would be useful to confirm with visualizations.
