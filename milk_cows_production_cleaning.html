@@ -483,7 +483,20 @@ data = data_long |&gt; mutate(
 
 #merge location data with production data
 combine_data &lt;- us_states |&gt;
- left_join(data, by = c(&quot;abbr&quot; = &quot;state_abbr&quot;))</code></pre>
+ left_join(data, by = c(&quot;abbr&quot; = &quot;state_abbr&quot;))
+
+ggplot(combine_data) +
+  geom_sf(aes(fill = million_pounds), color = &quot;white&quot;, size = 0.2) +
+  scale_fill_viridis_c(name = &quot;million pounds&quot;) + 
+  theme_minimal() +
+  labs(title = &quot;state milk production&quot;)</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
+<pre class="r"><code>ggplot(combine_data) +
+  geom_sf(aes(fill = percent_of_US_milk_production), color = &quot;white&quot;, size = 0.2) +
+  scale_fill_viridis_c(name = &quot;percent_of_US_milk_production&quot;) + 
+  theme_minimal() +
+  labs(title = &quot;state - percent_of_US_milk_production&quot;)</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-4-2.png" width="90%" /></p>
 </div>
 <div id="state-production" class="section level2">
 <h2>state production</h2>

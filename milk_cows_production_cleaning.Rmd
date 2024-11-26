@@ -143,6 +143,20 @@ data = data_long |> mutate(
 #merge location data with production data
 combine_data <- us_states |>
  left_join(data, by = c("abbr" = "state_abbr"))
+
+ggplot(combine_data) +
+  geom_sf(aes(fill = million_pounds), color = "white", size = 0.2) +
+  scale_fill_viridis_c(name = "million pounds") + 
+  theme_minimal() +
+  labs(title = "state milk production")
+
+ggplot(combine_data) +
+  geom_sf(aes(fill = percent_of_US_milk_production), color = "white", size = 0.2) +
+  scale_fill_viridis_c(name = "percent_of_US_milk_production") + 
+  theme_minimal() +
+  labs(title = "state - percent_of_US_milk_production")
+  
+  
 ```
 
 ## state production 
@@ -161,6 +175,8 @@ ggplot(combine_data) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1),  
         legend.position = "bottom") 
 ```
+
+
 
 ## region production
 
