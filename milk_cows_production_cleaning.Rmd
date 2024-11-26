@@ -59,7 +59,29 @@ milk_cows = readxl::read_excel("./data/milkcowsandprod.xlsx", sheet="Milk cows",
     state %in% c("Alaska","Hawaii") ~ "Other States"
     #TRUE ~ "Other"  # Default case for states not in the Northeast
   )) |>
-  filter(!is.na(state))
+  filter(!is.na(state)) 
+   
+
+  
+```
+
+```{r}
+data_milk_cows <- milk_cows |>
+  mutate(across(
+    .cols = matches("^\\d{4}_.*"), 
+    .fns = ~ as.numeric(.),  
+    .names = "{.col}" 
+  )) |>
+   mutate(`2019` = as.numeric(`2019`), 
+         `2020` = as.numeric(`2020`),
+         `2021` = as.numeric(`2021`),
+         `2022` = as.numeric(`2022`),
+         `2023` = as.numeric(`2023`)) |>
+  pivot_longer(
+    cols = 3:ncol(data_milk_cows),
+    names_to = "year",
+    values_to = "number_of_cows"
+  )  
 ```
 
 ## milk production dataset
