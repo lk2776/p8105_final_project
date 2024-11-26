@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Tai Yue" />
+
+<meta name="date" content="2024-11-18" />
+
+<title>Untitled</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown-header">Data Processing</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Webpage1
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header"></li>
+    <li class="dropdown-header"></li>
+    <li class="dropdown-header"></li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Webpage2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header"></li>
+  </ul>
+</li>
+<li class="dropdown-header">Webpage3</li>
+<li class="dropdown-header">Webpage4</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown-header">About the Team</li>
+<li>
+  <a>
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Untitled</h1>
+<h4 class="author">Tai Yue</h4>
+<h4 class="date">2024-11-18</h4>
+
+</div>
+
+
+<pre class="r"><code>library(readxl)
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>file_path &lt;- &quot;fluidmilk.xlsx&quot;
+fluidmilk_data &lt;- read_excel(file_path, sheet = &quot;fluidmilk&quot;)</code></pre>
+<pre><code>## New names:
+## • `` -&gt; `...2`
+## • `` -&gt; `...3`
+## • `` -&gt; `...4`
+## • `` -&gt; `...5`
+## • `` -&gt; `...6`
+## • `` -&gt; `...7`
+## • `` -&gt; `...8`
+## • `` -&gt; `...9`
+## • `` -&gt; `...10`</code></pre>
+<pre class="r"><code>colnames(fluidmilk_data) &lt;- c(&quot;Year&quot;, &quot;Whole_Milk&quot;, &quot;Reduced_Fat_2_%&quot;, 
+                              &quot;Low_Fat_1_%&quot;, &quot;Skim&quot;, &quot;Flavored_Whole&quot;, 
+                              &quot;Flavored_Other&quot;, &quot;Buttermilk&quot;, &quot;Eggnog&quot;, &quot;Total_Sales&quot;)
+
+
+fluidmilk_data &lt;- fluidmilk_data %&gt;%
+  mutate(Year = as.numeric(Year)) %&gt;%
+  filter(!is.na(Year))</code></pre>
+<pre><code>## Warning: There was 1 warning in `mutate()`.
+## ℹ In argument: `Year = as.numeric(Year)`.
+## Caused by warning:
+## ! NAs introduced by coercion</code></pre>
+<pre class="r"><code>fluidmilk_data &lt;- fluidmilk_data %&gt;%
+  mutate(across(Whole_Milk:Total_Sales, as.numeric))
+
+print(fluidmilk_data)</code></pre>
+<pre><code>## # A tibble: 49 × 10
+##     Year Whole_Milk `Reduced_Fat_2_%` `Low_Fat_1_%`  Skim Flavored_Whole
+##    &lt;dbl&gt;      &lt;dbl&gt;             &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;
+##  1  1975      36188              8726          2742  2480           1366
+##  2  1976      35241              9556          2875  2524           1475
+##  3  1977      34036             10423          3003  2617           1446
+##  4  1978      33235             11017          3233  2543           1359
+##  5  1979      32480             11762          3281  2604           1236
+##  6  1980      31253             12435          3483  2636           1075
+##  7  1981      30397             13088          3574  2583            843
+##  8  1982      29350             13501          3537  2449            710
+##  9  1983      28871             14183          3455  2474            749
+## 10  1984      28204             15143          3382  2726            907
+## # ℹ 39 more rows
+## # ℹ 4 more variables: Flavored_Other &lt;dbl&gt;, Buttermilk &lt;dbl&gt;, Eggnog &lt;dbl&gt;,
+## #   Total_Sales &lt;dbl&gt;</code></pre>
+<pre class="r"><code>key_stats &lt;- fluidmilk_data %&gt;%
+  summarise(
+    across(everything(), list(mean = mean, sd = sd, min = min, max = max), na.rm = TRUE)
+  )</code></pre>
+<pre><code>## Warning: There was 1 warning in `summarise()`.
+## ℹ In argument: `across(...)`.
+## Caused by warning:
+## ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
+## Supply arguments directly to `.fns` through an anonymous function instead.
+## 
+##   # Previously
+##   across(a:b, mean, na.rm = TRUE)
+## 
+##   # Now
+##   across(a:b, \(x) mean(x, na.rm = TRUE))</code></pre>
+<pre class="r"><code>print(key_stats)</code></pre>
+<pre><code>## # A tibble: 1 × 40
+##   Year_mean Year_sd Year_min Year_max Whole_Milk_mean Whole_Milk_sd
+##       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+## 1      1999    14.3     1975     2023          20872.         6578.
+## # ℹ 34 more variables: Whole_Milk_min &lt;dbl&gt;, Whole_Milk_max &lt;dbl&gt;,
+## #   `Reduced_Fat_2_%_mean` &lt;dbl&gt;, `Reduced_Fat_2_%_sd` &lt;dbl&gt;,
+## #   `Reduced_Fat_2_%_min` &lt;dbl&gt;, `Reduced_Fat_2_%_max` &lt;dbl&gt;,
+## #   `Low_Fat_1_%_mean` &lt;dbl&gt;, `Low_Fat_1_%_sd` &lt;dbl&gt;, `Low_Fat_1_%_min` &lt;dbl&gt;,
+## #   `Low_Fat_1_%_max` &lt;dbl&gt;, Skim_mean &lt;dbl&gt;, Skim_sd &lt;dbl&gt;, Skim_min &lt;dbl&gt;,
+## #   Skim_max &lt;dbl&gt;, Flavored_Whole_mean &lt;dbl&gt;, Flavored_Whole_sd &lt;dbl&gt;,
+## #   Flavored_Whole_min &lt;dbl&gt;, Flavored_Whole_max &lt;dbl&gt;, …</code></pre>
+<p>The dataset covers years from 1975 to 2023, with a mean year of
+around 1999. This indicates the dataset spans a considerable period,
+allowing for a long-term trend analysis.The mean value for “Whole Milk”
+sales is approximately 20,871.73 units. Based on the table, it appears
+that whole milk sales have generally decreased over time, as the earlier
+years show higher values than might be expected based on recent years.
+This might suggest a trend away from whole milk consumption over
+time.Similar trends might be visible in the data for “Reduced Fat 2%”,
+“Low Fat 1%”, and “Skim” milk types, which would be useful to confirm
+with visualizations.</p>
+<pre class="r"><code>library(ggplot2)
+library(tidyr)
+
+
+file_path &lt;- &quot;fluidmilk.xlsx&quot;
+fluidmilk_data &lt;- read_excel(file_path, sheet = &quot;fluidmilk&quot;)</code></pre>
+<pre><code>## New names:
+## • `` -&gt; `...2`
+## • `` -&gt; `...3`
+## • `` -&gt; `...4`
+## • `` -&gt; `...5`
+## • `` -&gt; `...6`
+## • `` -&gt; `...7`
+## • `` -&gt; `...8`
+## • `` -&gt; `...9`
+## • `` -&gt; `...10`</code></pre>
+<pre class="r"><code>colnames(fluidmilk_data) &lt;- c(&quot;Year&quot;, &quot;Whole_Milk&quot;, &quot;Reduced_Fat_2_Percent&quot;, 
+                              &quot;Low_Fat_1_Percent&quot;, &quot;Skim&quot;, &quot;Flavored_Whole&quot;, 
+                              &quot;Flavored_Other&quot;, &quot;Buttermilk&quot;, &quot;Eggnog&quot;, &quot;Total_Sales&quot;)
+
+
+fluidmilk_data &lt;- fluidmilk_data %&gt;%
+  mutate(Year = as.numeric(Year)) %&gt;%
+  filter(!is.na(Year)) %&gt;%
+  mutate(across(Whole_Milk:Total_Sales, as.numeric))</code></pre>
+<pre><code>## Warning: There was 1 warning in `mutate()`.
+## ℹ In argument: `Year = as.numeric(Year)`.
+## Caused by warning:
+## ! NAs introduced by coercion</code></pre>
+<pre class="r"><code># 1. Line Plot: Trends in Total Milk Sales Over Time
+ggplot(fluidmilk_data, aes(x = Year, y = Total_Sales)) +
+  geom_line(color = &quot;blue&quot;, size = 1) +
+  labs(title = &quot;Total Fluid Milk Sales Over Time&quot;, x = &quot;Year&quot;, y = &quot;Total Sales (Million Pounds)&quot;) +
+  theme_minimal()</code></pre>
+<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<p><img src="fluidmilk_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code># 2. Line Plot: Trends in Different Milk Types Over Time
+fluidmilk_long &lt;- fluidmilk_data %&gt;%
+  select(Year, Whole_Milk, Reduced_Fat_2_Percent, Low_Fat_1_Percent, Skim) %&gt;%
+  pivot_longer(cols = -Year, names_to = &quot;Milk_Type&quot;, values_to = &quot;Sales&quot;)
+
+ggplot(fluidmilk_long, aes(x = Year, y = Sales, color = Milk_Type)) +
+  geom_line(size = 1) +
+  labs(title = &quot;Trends in Different Milk Types Over Time&quot;, x = &quot;Year&quot;, y = &quot;Sales (Million Pounds)&quot;, color = &quot;Milk Type&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="fluidmilk_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<pre class="r"><code># 3. Bar Plot: Distribution of Milk Types in a Specific Year
+milk_2020 &lt;- fluidmilk_data %&gt;%
+  filter(Year == 2020) %&gt;%
+  select(Whole_Milk, Reduced_Fat_2_Percent, Low_Fat_1_Percent, Skim, Flavored_Whole, Flavored_Other, Buttermilk, Eggnog) %&gt;%
+  pivot_longer(cols = everything(), names_to = &quot;Milk_Type&quot;, values_to = &quot;Sales&quot;)
+
+ggplot(milk_2020, aes(x = Milk_Type, y = Sales, fill = Milk_Type)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  labs(title = &quot;Milk Type Distribution in 2020&quot;, x = &quot;Milk Type&quot;, y = &quot;Sales (Million Pounds)&quot;) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
+<p><img src="fluidmilk_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
+<pre class="r"><code># 4. Histogram: Distribution of Total Milk Sales
+ggplot(fluidmilk_data, aes(x = Total_Sales)) +
+  geom_histogram(binwidth = 2000, fill = &quot;blue&quot;, color = &quot;black&quot;) +
+  labs(title = &quot;Distribution of Total Milk Sales&quot;, x = &quot;Total Sales (Million Pounds)&quot;, y = &quot;Frequency&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="fluidmilk_files/figure-html/unnamed-chunk-2-4.png" width="672" /></p>
+<ol style="list-style-type: decimal">
+<li>line plot:</li>
+</ol>
+<p>a.Growth Period (1975 to mid-1980s): During this period, total fluid
+milk sales experienced steady growth, likely driven by population growth
+and increased demand for dairy products.</p>
+<p>b.Plateau Phase (mid-1980s to around 2010): Sales remained relatively
+stable, indicating a period of sus- tained consumption where demand
+neither increased nor decreased significantly.</p>
+<p>c.Decline Period (2010 to 2023): After 2010, a sharp and continuous
+decline in fluid milk sales is observed, reflecting a significant shift
+in consumer preferences and market trends.</p>
+<p>the data suggests a major transformation in the dairy industry,
+particularly in the last decade, as consumer behaviors evolve.
+Understanding the underlying factors driving these trends would be key
+for stakeholders in the dairy market to adapt to these changes.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>line plot:</li>
+</ol>
+<p>a.The sales of whole milk have experienced a dramatic decline since
+1975. Initially the dominant milk type, it steadily decreased as
+consumers shifted toward lower-fat alternatives, reflecting changing
+dietary preferences and health trends.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><p>Reduced-Fat (2%) Milk: gained popularity starting in the late
+1970s and peaked around the 1990s. However, its sales began to decline
+after 2010, mirroring the overall decline in fluid milk
+consumption.</p></li>
+<li><p>Skim milk experienced gradual growth from the 1980s to the early
+2000s, reflecting increasing health- consciousness. However, its sales
+have significantly declined since the mid-2000s, suggesting a loss of
+favor among consumers, possibly due to taste or the rise of
+alternatives.</p></li>
+</ol>
+<p>d.Sales of 1% milk have remained relatively stable over the years,
+though they have seen a slight decline post-2010.</p>
+<p>While there was a clear shift from whole milk to reduced-fat and skim
+milk during the late 20th century, all categories have experienced
+declining sales since 2010. This underscores a broader trend of
+declining fluid milk consumption, possibly driven by the rise of
+plant-based alternatives, changing dietary habits, and demographic
+shifts.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>bar plot:</li>
+</ol>
+<p>a.Whole Milk and Reduced-Fat 2% Milk are the most consumed milk types
+in 2020, showing they remain staples in consumer preferences despite the
+overall decline in milk consumption.</p>
+<p>b.Skim Milk and Low-Fat 1% Milk have significantly lower sales
+compared to the top two categories. This suggests a decline in the
+popularity of these lighter milk options, possibly due to changing
+health trends or consumer taste preferences.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Flavored Milk, Buttermilk, and Eggnog have minimal sales volumes
+compared to standard milk types. These are likely niche products
+consumed in smaller quantities, perhaps for specific occasions or as
+specialty items. The large sales gap between the primary and
+secondary/tertiary categories highlights consumer focus on traditional
+milk options over specialty or lighter alternatives.The consistent
+demand for Whole Milk may indicate a shift away from the health-driven
+trends of the 1990s and early 2000s, reflecting a return to taste and
+indulgence over reduced fat content.</li>
+</ol>
+<ol start="4" style="list-style-type: decimal">
+<li>Histogram:</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li><p>The majority of years have total milk sales concentrated in the
+range of approximately 52,000 to 55,000 million pounds. This suggests
+that for a significant part of the observed period, milk sales were
+relatively stable and high.</p></li>
+<li><p>There are fewer years with total milk sales below 50,000 million
+pounds. These years likely correspond to the more recent period
+(post-2010), where milk consumption began to decline sharply.</p></li>
+</ol>
+<p>c.The distribution is right-skewed, indicating that while most years
+experienced high sales volumes, there is a noticeable tail on the left
+side reflecting the gradual decline in milk consumption in more recent
+years. This plot highlights the decline in milk consumption as an
+emerging trend rather than the historical norm. It suggests that milk
+sales were robust for a majority of the observed period, with the
+decline being a more recent phenomenon.</p>
+<p>Future project ideas:</p>
+<ol style="list-style-type: decimal">
+<li><p>Provide a comprehensive analysis of how milk sales have evolved
+over time and what factors may have driven these changes.</p></li>
+<li><p>Examine how consumer preferences have shifted between milk types
+over the decades.</p></li>
+</ol>
+<p>3.Investigate the factors contributing to the sharp decline in fluid
+milk sales post-2010.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>: Analyze milk consumption trends by region or demographic</li>
+</ol>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
