@@ -1,0 +1,32 @@
+name: "Final Project"
+output_dir: "."
+navbar:
+  title: "Home"
+  left: 
+    - text: "Data Processing"
+      href: 
+    - text: "Webpage1"
+      menu:
+      - text: ""
+        href: 
+      - text: ""
+        href: 
+      - text: ""
+        href: 
+    - text: "Webpage2"
+      menu:
+      - text: ""
+    - text: "Webpage3"
+      href: 
+    - text: "Webpage4"
+      href:  
+  right:
+    - text: "About the Team"
+      href: 
+    - icon: fa-github fa-lg
+      href: 
+output:
+  html_document:
+    include:
+      in_header: 
+    theme: lumen

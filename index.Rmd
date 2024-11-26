@@ -1,0 +1,9 @@
+---
+title: "index"
+output: html_document
+date: "2024-11-18"
+---
+
+```{R}
+print("hello world")
+```
