@@ -345,9 +345,64 @@ scale_fill_discrete = scale_fill_viridis_d</code></pre>
     state %in% c(&quot;Alaska&quot;,&quot;Hawaii&quot;) ~ &quot;Other States&quot;
     #TRUE ~ &quot;Other&quot;  # Default case for states not in the Northeast
   )) |&gt;
-  filter(!is.na(state))</code></pre>
+  filter(!is.na(state)) </code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...1`</code></pre>
+<pre class="r"><code>data_milk_cows = milk_cows |&gt;
+  mutate(across(
+    .cols = matches(&quot;^\\d{4}_.*&quot;), 
+    .fns = ~ as.numeric(.),  
+    .names = &quot;{.col}&quot; 
+  )) |&gt;
+   mutate(`2019` = as.numeric(`2019`), 
+         `2020` = as.numeric(`2020`),
+         `2021` = as.numeric(`2021`),
+         `2022` = as.numeric(`2022`),
+         `2023` = as.numeric(`2023`)) |&gt;
+  pivot_longer(
+    cols = 3:ncol(milk_cows),
+    names_to = &quot;year&quot;,
+    values_to = &quot;number_of_cows&quot;
+  )  </code></pre>
+<pre><code>## Warning: There were 5 warnings in `mutate()`.
+## The first warning was:
+## ℹ In argument: `2019 = as.numeric(`2019`)`.
+## Caused by warning:
+## ! NAs introduced by coercion
+## ℹ Run `dplyr::last_dplyr_warnings()` to see the 4 remaining warnings.</code></pre>
+<pre class="r"><code>#point plot 
+
+
+
+#map coordinates of states
+us_states &lt;- usmap::us_map()
+
+#abbreviation for state names
+data_milk_cows_2 = data_milk_cows |&gt; mutate(
+  state_abbr = state.abb[match(state, state.name)]
+)
+
+#merge location data with production data
+combine_milk_cows &lt;- us_states |&gt;
+ left_join(data_milk_cows_2, by = c(&quot;abbr&quot; = &quot;state_abbr&quot;))
+
+ggplot(combine_milk_cows) +
+  geom_sf(aes(fill = number_of_cows), color = &quot;white&quot;, size = 0.2) +
+  scale_fill_viridis_c(name = &quot;number_of_cows&quot;) + 
+  theme_minimal() +
+  labs(title = &quot;state number_of_cows&quot;)</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
+<pre class="r"><code>ggplot(combine_milk_cows) +
+  geom_point(aes(x = state, y = number_of_cows, size = 0.2, color = number_of_cows), 
+             alpha = 0.7) +  
+  scale_size_continuous(name = &quot;number_of_cows&quot;, range = c(3, 7)) +
+  scale_color_viridis_c(name = &quot;number_of_cows&quot;)  + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
+        legend.position = &quot;bottom&quot;) </code></pre>
+<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-3-2.png" width="90%" /></p>
 </div>
 <div id="milk-production-dataset" class="section level2">
 <h2>milk production dataset</h2>
@@ -490,13 +545,13 @@ ggplot(combine_data) +
   scale_fill_viridis_c(name = &quot;million pounds&quot;) + 
   theme_minimal() +
   labs(title = &quot;state milk production&quot;)</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
 <pre class="r"><code>ggplot(combine_data) +
   geom_sf(aes(fill = percent_of_US_milk_production), color = &quot;white&quot;, size = 0.2) +
   scale_fill_viridis_c(name = &quot;percent_of_US_milk_production&quot;) + 
   theme_minimal() +
   labs(title = &quot;state - percent_of_US_milk_production&quot;)</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-4-2.png" width="90%" /></p>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-6-2.png" width="90%" /></p>
 </div>
 <div id="state-production" class="section level2">
 <h2>state production</h2>
@@ -515,7 +570,7 @@ ggplot(combine_data) +
         legend.position = &quot;bottom&quot;) </code></pre>
 <pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
 ## (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
 </div>
 <div id="region-production" class="section level2">
 <h2>region production</h2>
@@ -529,7 +584,7 @@ ggplot(combine_data) +
         legend.position = &quot;bottom&quot;) </code></pre>
 <pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
 ## (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
 <p>##state percent</p>
 <pre class="r"><code>ggplot(combine_data) +
   geom_point(aes(x = state, y = percent_of_US_milk_production, size = million_pounds, color = percent_of_US_milk_production), 
@@ -541,7 +596,7 @@ ggplot(combine_data) +
         legend.position = &quot;bottom&quot;) </code></pre>
 <pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
 ## (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-9-1.png" width="90%" /></p>
 </div>
 <div id="region-percent" class="section level2">
 <h2>region percent</h2>
@@ -555,7 +610,7 @@ ggplot(combine_data) +
         legend.position = &quot;bottom&quot;) </code></pre>
 <pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
 ## (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-10-1.png" width="90%" /></p>
 </div>
 
 

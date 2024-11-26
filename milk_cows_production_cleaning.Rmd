@@ -66,7 +66,7 @@ milk_cows = readxl::read_excel("./data/milkcowsandprod.xlsx", sheet="Milk cows",
 ```
 
 ```{r}
-data_milk_cows <- milk_cows |>
+data_milk_cows = milk_cows |>
   mutate(across(
     .cols = matches("^\\d{4}_.*"), 
     .fns = ~ as.numeric(.),  
@@ -78,7 +78,7 @@ data_milk_cows <- milk_cows |>
          `2022` = as.numeric(`2022`),
          `2023` = as.numeric(`2023`)) |>
   pivot_longer(
-    cols = 3:ncol(data_milk_cows),
+    cols = 3:ncol(milk_cows),
     names_to = "year",
     values_to = "number_of_cows"
   )  
@@ -86,15 +86,6 @@ data_milk_cows <- milk_cows |>
 
 ```{r}
 #point plot 
-
-ggplot(combine_milk_cows) +
-  geom_point(aes(x = state, y = number_of_cows, size = 0.2, color = number_of_cows), 
-             alpha = 0.7) +  
-  scale_size_continuous(name = "number_of_cows", range = c(3, 7)) +
-  scale_color_viridis_c(name = "number_of_cows")  + 
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
-        legend.position = "bottom") 
 
 
 
@@ -116,11 +107,18 @@ ggplot(combine_milk_cows) +
   theme_minimal() +
   labs(title = "state number_of_cows")
 
+ggplot(combine_milk_cows) +
+  geom_point(aes(x = state, y = number_of_cows, size = 0.2, color = number_of_cows), 
+             alpha = 0.7) +  
+  scale_size_continuous(name = "number_of_cows", range = c(3, 7)) +
+  scale_color_viridis_c(name = "number_of_cows")  + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
+        legend.position = "bottom") 
+
+
 
 ```
-
-
-
 
 
 ## milk production dataset
