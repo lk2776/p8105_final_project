@@ -136,23 +136,69 @@ data_long <- left_join(data_million_pounds, data_percent_milk_production, by = c
 us_states <- usmap::us_map()
 
 #abbreviation for state names
-data = data |> mutate(
+data = data_long |> mutate(
   state_abbr = state.abb[match(state, state.name)]
 )
 
 #merge location data with production data
 combine_data <- us_states |>
  left_join(data, by = c("abbr" = "state_abbr"))
-
-
 ```
 
+## state production 
 ```{r}
 #plot usa map with produciton values
+#ggplot(combine_data) +
+#  geom_point(aes(fill="million_pounds"), color = "white") +
+#  theme_minimal()
+
 ggplot(combine_data) +
-  geom_sf(aes(fill="2010_million_pounds"), color = "white") +
-  theme_minimal()
+  geom_point(aes(x = state, y = million_pounds, size = million_pounds, color = million_pounds), 
+             alpha = 0.7) +  
+  scale_size_continuous(name = "Million Pounds", range = c(3, 7)) +
+  scale_color_viridis_c(name = "Million Pounds")  + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
+        legend.position = "bottom") 
+```
+
+## region production
+
+```{r}
+ggplot(combine_data) +
+  geom_point(aes(x = region, y = million_pounds, size = million_pounds, color = million_pounds), 
+             alpha = 0.7) +  
+  scale_size_continuous(name = "Million Pounds", range = c(3, 7)) +
+  scale_color_viridis_c(name = "Million Pounds")  + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
+        legend.position = "bottom") 
+```
 
 
+##state percent 
+
+```{r}
+ggplot(combine_data) +
+  geom_point(aes(x = state, y = percent_of_US_milk_production, size = million_pounds, color = percent_of_US_milk_production), 
+             alpha = 0.7) +  
+  scale_size_continuous(name = "Million Pounds", range = c(3, 7)) +
+  scale_color_viridis_c(name = "Million Pounds")  + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
+        legend.position = "bottom") 
+```
+
+## region percent
+
+```{r}
+ggplot(combine_data) +
+  geom_point(aes(x = region, y = percent_of_US_milk_production, size = million_pounds, color = percent_of_US_milk_production), 
+             alpha = 0.7) +  
+  scale_size_continuous(name = "Million Pounds", range = c(3, 7)) +
+  scale_color_viridis_c(name = "Million Pounds")  + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
+        legend.position = "bottom") 
 ```
 
