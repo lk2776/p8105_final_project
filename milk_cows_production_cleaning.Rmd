@@ -67,7 +67,13 @@ milk_production = readxl::read_excel("./data/milkcowsandprod.xlsx", sheet="Milk 
     #TRUE ~ "Other"  # Default case for states not in the Northeast
   )) |>
  filter(!is.na(state)) |>
-  filter(!is.na(region))
+  filter(!is.na(region)) |>
+  mutate(across(
+    .cols = matches("^\\d{4}_.*"), 
+    .fns = ~ as.numeric(.),  
+    .names = "{.col}" 
+  )) #NAs introduced by coercion
+
 
 ```
 
