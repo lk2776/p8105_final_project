@@ -111,7 +111,8 @@ data_million_pounds <- data |>
     names_to = "year",
     values_to = "million_pounds"
   ) |>
-  select(region,state,year,million_pounds)
+  select(region,state,year,million_pounds) |>
+ mutate(year = sub("_million_pounds$", "", year))  
 
 # pivot for percent_of_US_milk_production columns
 data_percent_milk_production <- data |>
@@ -120,7 +121,9 @@ data_percent_milk_production <- data |>
     names_to = "year",
     values_to = "percent_of_US_milk_production"
   ) |>
-  select(region,state,year,percent_of_US_milk_production)
+  select(region,state,year,percent_of_US_milk_production) |>
+  mutate(year = sub("_percent_of_US_milk_production$", "", year))  
+
 
 # left_join
 data_long <- left_join(data_million_pounds, data_percent_milk_production, by = c("region","state","year"))
