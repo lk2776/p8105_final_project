@@ -17,7 +17,24 @@ milk_con_prod_data = readxl::read_excel("./data/milkcowsandprod.xlsx", sheet="Mi
   #drop_na() |>
   rename(region = x1) |>
   rename(state = back_to_content_page) |>
-  filter_all(any_vars(!is.na(.))) #|>
+  filter_all(any_vars(!is.na(.))) |>
+ mutate(region = case_when(
+    state %in% c("Maine", "New Hampshire", "Vermont", "Massachusetts", "Rhode Island", 
+                 "Connecticut", "New York", "New Jersey", "Pennsylvania", 
+                 "Delaware", "Maryland") ~ "Northeast",
+    state %in% c("Michigan","Wisconsin","Minnesota") ~ "Lake States",
+    state %in% c("Ohio","Indiana","Illinois","Iowa","Missouri") ~ "Corn Belt",
+    state %in% c("North Dakota", "South Dakota", "Nebraska", "Kansas") ~ "Northern Plains",
+    state %in% c("Virginia", "West Virginia", "North Carolina", "Kentucky", "Tennessee") ~ "Appalachia",
+    state %in% c("South Carolina", "Georgia", "Florida", "Alabama") ~ "Southeast",
+    state %in% c("Mississippi", "Arkansas","Louisiana") ~ "Delta States",
+    state %in% c("Oklahoma","Texas") ~ "Southern Plains",
+    state %in% c("Montana","Idaho","Wyoming","Colorado","New Mexico","Arizona","Utah","Nevada") ~ "Mountain Region",
+    state %in% c("Washington","Oregon","California") ~ "West Coast",
+    state %in% c("Alaska","Hawaii") ~ "Other States"
+    #TRUE ~ "Other"  # Default case for states not in the Northeast
+  ))
+
   
 ```
 
