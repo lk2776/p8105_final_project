@@ -484,6 +484,9 @@ data = data_long |&gt; mutate(
 #merge location data with production data
 combine_data &lt;- us_states |&gt;
  left_join(data, by = c(&quot;abbr&quot; = &quot;state_abbr&quot;))</code></pre>
+</div>
+<div id="state-production" class="section level2">
+<h2>state production</h2>
 <pre class="r"><code>#plot usa map with produciton values
 #ggplot(combine_data) +
 #  geom_point(aes(fill=&quot;million_pounds&quot;), color = &quot;white&quot;) +
@@ -500,6 +503,46 @@ ggplot(combine_data) +
 <pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
 ## (`geom_point()`).</code></pre>
 <p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
+</div>
+<div id="region-production" class="section level2">
+<h2>region production</h2>
+<pre class="r"><code>ggplot(combine_data) +
+  geom_point(aes(x = region, y = million_pounds, size = million_pounds, color = million_pounds), 
+             alpha = 0.7) +  
+  scale_size_continuous(name = &quot;Million Pounds&quot;, range = c(3, 7)) +
+  scale_color_viridis_c(name = &quot;Million Pounds&quot;)  + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
+        legend.position = &quot;bottom&quot;) </code></pre>
+<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
+<p>##state percent</p>
+<pre class="r"><code>ggplot(combine_data) +
+  geom_point(aes(x = state, y = percent_of_US_milk_production, size = million_pounds, color = percent_of_US_milk_production), 
+             alpha = 0.7) +  
+  scale_size_continuous(name = &quot;Million Pounds&quot;, range = c(3, 7)) +
+  scale_color_viridis_c(name = &quot;Million Pounds&quot;)  + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
+        legend.position = &quot;bottom&quot;) </code></pre>
+<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
+</div>
+<div id="region-percent" class="section level2">
+<h2>region percent</h2>
+<pre class="r"><code>ggplot(combine_data) +
+  geom_point(aes(x = region, y = percent_of_US_milk_production, size = million_pounds, color = percent_of_US_milk_production), 
+             alpha = 0.7) +  
+  scale_size_continuous(name = &quot;Million Pounds&quot;, range = c(3, 7)) +
+  scale_color_viridis_c(name = &quot;Million Pounds&quot;)  + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
+        legend.position = &quot;bottom&quot;) </code></pre>
+<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
 </div>
 
 
