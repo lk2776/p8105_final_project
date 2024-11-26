@@ -12,7 +12,7 @@
 
 <meta name="date" content="2024-11-18" />
 
-<title>milk_cows_production_cleaning</title>
+<title>data_cleaning_1</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -288,40 +288,25 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">milk_cows_production_cleaning</h1>
+<h1 class="title toc-ignore">data_cleaning_1</h1>
 <h4 class="date">2024-11-18</h4>
 
 </div>
 
 
-<pre class="r"><code>#load packages
-library(tidyverse)
-library(ggridges)
-library(patchwork)
-library(purrr)
-library(broom)
-library(readxl)
-library(ggplot2)
-library(sf)
-library(usmap)
-
-#R figure settings
-knitr::opts_chunk$set(
-  fig.width = 9,
-  fig.asp = .6,
-  out.width = &quot;90%&quot;
-)
-theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))
-
-options(
-  ggplot2.continuous.colour = &quot;viridis&quot;,
-  ggplot2.continuous.fill = &quot;viridis&quot;
-)
-
-scale_colour_discrete = scale_colour_viridis_d
-scale_fill_discrete = scale_fill_viridis_d</code></pre>
-<div id="read-milk-cows-dataset" class="section level2">
-<h2>read milk cows dataset</h2>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.2     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>library(readxl)
+library(ggplot2)</code></pre>
 <pre class="r"><code>milk_cows = readxl::read_excel(&quot;./data/milkcowsandprod.xlsx&quot;, sheet=&quot;Milk cows&quot;, skip=1,col_names = TRUE) |&gt;
   janitor::clean_names() |&gt;
   #drop_na() |&gt;
@@ -348,9 +333,6 @@ scale_fill_discrete = scale_fill_viridis_d</code></pre>
   filter(!is.na(state))</code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...1`</code></pre>
-</div>
-<div id="milk-production-dataset" class="section level2">
-<h2>milk production dataset</h2>
 <pre class="r"><code>milk_production = readxl::read_excel(&quot;./data/milkcowsandprod.xlsx&quot;, sheet=&quot;Milk production&quot;, skip=1,col_names = TRUE) |&gt;
   janitor::clean_names() |&gt;
   #drop_na() |&gt;
@@ -378,12 +360,7 @@ scale_fill_discrete = scale_fill_viridis_d</code></pre>
     #TRUE ~ &quot;Other&quot;  # Default case for states not in the Northeast
   )) |&gt;
  filter(!is.na(state)) |&gt;
-  filter(!is.na(region)) |&gt;
-  mutate(across(
-    .cols = matches(&quot;^\\d{4}_.*&quot;), 
-    .fns = ~ as.numeric(.),  
-    .names = &quot;{.col}&quot; 
-  )) #NAs introduced by coercion</code></pre>
+  filter(!is.na(region))</code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...1`
 ## • `` -&gt; `...4`
@@ -440,110 +417,6 @@ scale_fill_discrete = scale_fill_viridis_d</code></pre>
 ## • `` -&gt; `...106`
 ## • `` -&gt; `...108`
 ## • `` -&gt; `...110`</code></pre>
-<pre><code>## Warning: There were 10 warnings in `mutate()`.
-## The first warning was:
-## ℹ In argument: `across(...)`.
-## Caused by warning:
-## ! NAs introduced by coercion
-## ℹ Run `dplyr::last_dplyr_warnings()` to see the 9 remaining warnings.</code></pre>
-<pre class="r"><code>data = milk_production
-
-data_million_pounds &lt;- data |&gt;
-  pivot_longer(
-    cols = matches(&quot;_million_pounds$&quot;),
-    names_to = &quot;year&quot;,
-    values_to = &quot;million_pounds&quot;
-  ) |&gt;
-  select(region,state,year,million_pounds) |&gt;
- mutate(year = sub(&quot;_million_pounds$&quot;, &quot;&quot;, year))  
-
-# pivot for percent_of_US_milk_production columns
-data_percent_milk_production &lt;- data |&gt;
-  pivot_longer(
-    cols = matches(&quot;_percent_of_US_milk_production$&quot;),  
-    names_to = &quot;year&quot;,
-    values_to = &quot;percent_of_US_milk_production&quot;
-  ) |&gt;
-  select(region,state,year,percent_of_US_milk_production) |&gt;
-  mutate(year = sub(&quot;_percent_of_US_milk_production$&quot;, &quot;&quot;, year))  
-
-
-# left_join
-data_long &lt;- left_join(data_million_pounds, data_percent_milk_production, by = c(&quot;region&quot;,&quot;state&quot;,&quot;year&quot;))</code></pre>
-</div>
-<div id="plots" class="section level2">
-<h2>plots</h2>
-<pre class="r"><code>#map coordinates of states
-us_states &lt;- usmap::us_map()
-
-#abbreviation for state names
-data = data_long |&gt; mutate(
-  state_abbr = state.abb[match(state, state.name)]
-)
-
-#merge location data with production data
-combine_data &lt;- us_states |&gt;
- left_join(data, by = c(&quot;abbr&quot; = &quot;state_abbr&quot;))</code></pre>
-</div>
-<div id="state-production" class="section level2">
-<h2>state production</h2>
-<pre class="r"><code>#plot usa map with produciton values
-#ggplot(combine_data) +
-#  geom_point(aes(fill=&quot;million_pounds&quot;), color = &quot;white&quot;) +
-#  theme_minimal()
-
-ggplot(combine_data) +
-  geom_point(aes(x = state, y = million_pounds, size = million_pounds, color = million_pounds), 
-             alpha = 0.7) +  
-  scale_size_continuous(name = &quot;Million Pounds&quot;, range = c(3, 7)) +
-  scale_color_viridis_c(name = &quot;Million Pounds&quot;)  + 
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
-        legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
-## (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
-</div>
-<div id="region-production" class="section level2">
-<h2>region production</h2>
-<pre class="r"><code>ggplot(combine_data) +
-  geom_point(aes(x = region, y = million_pounds, size = million_pounds, color = million_pounds), 
-             alpha = 0.7) +  
-  scale_size_continuous(name = &quot;Million Pounds&quot;, range = c(3, 7)) +
-  scale_color_viridis_c(name = &quot;Million Pounds&quot;)  + 
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
-        legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
-## (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
-<p>##state percent</p>
-<pre class="r"><code>ggplot(combine_data) +
-  geom_point(aes(x = state, y = percent_of_US_milk_production, size = million_pounds, color = percent_of_US_milk_production), 
-             alpha = 0.7) +  
-  scale_size_continuous(name = &quot;Million Pounds&quot;, range = c(3, 7)) +
-  scale_color_viridis_c(name = &quot;Million Pounds&quot;)  + 
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
-        legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
-## (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
-</div>
-<div id="region-percent" class="section level2">
-<h2>region percent</h2>
-<pre class="r"><code>ggplot(combine_data) +
-  geom_point(aes(x = region, y = percent_of_US_milk_production, size = million_pounds, color = percent_of_US_milk_production), 
-             alpha = 0.7) +  
-  scale_size_continuous(name = &quot;Million Pounds&quot;, range = c(3, 7)) +
-  scale_color_viridis_c(name = &quot;Million Pounds&quot;)  + 
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
-        legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
-## (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
-</div>
 
 
 
