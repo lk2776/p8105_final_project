@@ -104,6 +104,27 @@ milk_production = readxl::read_excel("./data/milkcowsandprod.xlsx", sheet="Milk 
 
 ```{r}
 data = milk_production
+
+data_million_pounds <- data |>
+  pivot_longer(
+    cols = matches("_million_pounds$"),
+    names_to = "year",
+    values_to = "million_pounds"
+  ) |>
+  select(region,state,year,million_pounds)
+
+# pivot for percent_of_US_milk_production columns
+data_percent_milk_production <- data |>
+  pivot_longer(
+    cols = matches("_percent_of_US_milk_production$"),  
+    names_to = "year",
+    values_to = "percent_of_US_milk_production"
+  ) |>
+  select(region,state,year,percent_of_US_milk_production)
+
+# left_join
+data_long <- left_join(data_million_pounds, data_percent_milk_production, by = c("region","state","year"))
+
 ```
 
 ## plots 
@@ -118,7 +139,17 @@ data = data |> mutate(
 
 #merge location data with production data
 combine_data <- us_states |>
- left_join(data, by = c("fips" = "state_abbr"))
+ left_join(data, by = c("abbr" = "state_abbr"))
+
+
+```
+
+```{r}
+#plot usa map with produciton values
+ggplot(combine_data) +
+  geom_sf(aes(fill="2010_million_pounds"), color = "white") +
+  theme_minimal()
+
 
 ```
 
