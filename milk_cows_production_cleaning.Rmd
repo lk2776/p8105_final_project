@@ -84,6 +84,45 @@ data_milk_cows <- milk_cows |>
   )  
 ```
 
+```{r}
+#point plot 
+
+ggplot(combine_milk_cows) +
+  geom_point(aes(x = state, y = number_of_cows, size = 0.2, color = number_of_cows), 
+             alpha = 0.7) +  
+  scale_size_continuous(name = "number_of_cows", range = c(3, 7)) +
+  scale_color_viridis_c(name = "number_of_cows")  + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
+        legend.position = "bottom") 
+
+
+
+#map coordinates of states
+us_states <- usmap::us_map()
+
+#abbreviation for state names
+data_milk_cows_2 = data_milk_cows |> mutate(
+  state_abbr = state.abb[match(state, state.name)]
+)
+
+#merge location data with production data
+combine_milk_cows <- us_states |>
+ left_join(data_milk_cows_2, by = c("abbr" = "state_abbr"))
+
+ggplot(combine_milk_cows) +
+  geom_sf(aes(fill = number_of_cows), color = "white", size = 0.2) +
+  scale_fill_viridis_c(name = "number_of_cows") + 
+  theme_minimal() +
+  labs(title = "state number_of_cows")
+
+
+```
+
+
+
+
+
 ## milk production dataset
 ```{r}
 milk_production = readxl::read_excel("./data/milkcowsandprod.xlsx", sheet="Milk production", skip=1,col_names = TRUE) |>
