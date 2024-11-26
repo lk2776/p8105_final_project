@@ -18,6 +18,7 @@ milk_con_prod_data = readxl::read_excel("./data/milkcowsandprod.xlsx", sheet="Mi
   rename(region = x1) |>
   rename(state = back_to_content_page) |>
   filter_all(any_vars(!is.na(.))) |>
+  rename_with(~ gsub("^x", "", .), starts_with("x")) |>
  mutate(region = case_when(
     state %in% c("Maine", "New Hampshire", "Vermont", "Massachusetts", "Rhode Island", 
                  "Connecticut", "New York", "New Jersey", "Pennsylvania", 
@@ -33,7 +34,8 @@ milk_con_prod_data = readxl::read_excel("./data/milkcowsandprod.xlsx", sheet="Mi
     state %in% c("Washington","Oregon","California") ~ "West Coast",
     state %in% c("Alaska","Hawaii") ~ "Other States"
     #TRUE ~ "Other"  # Default case for states not in the Northeast
-  ))
+  )) |>
+  filter(!is.na(state))
 
   
 ```
