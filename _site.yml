@@ -3,8 +3,8 @@ output_dir: "."
 navbar:
   title: "Home"
   left: 
-    - text: "Data Processing"
-      href: 
+    - text: "Cow Production"
+      href: milk_cows_production_cleaning.html
     - text: "Webpage1"
       menu:
       - text: ""
@@ -22,7 +22,7 @@ navbar:
       href:  
   right:
     - text: "About the Team"
-      href: 
+      href: About-us.html
     - icon: fa-github fa-lg
       href: 
 output:
