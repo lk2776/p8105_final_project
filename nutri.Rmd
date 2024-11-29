@@ -1,0 +1,27 @@
+---
+title: "Nutrition"
+output: html_document
+date: "2024-11-28"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readxl)
+```
+
+```{R}
+# Making a layout
+layout(matrix(c(1, 1, 2, 3, 4, 5), nrow=3, ncol=2, byrow=TRUE), heights=c(0.2, 1, 1))
+par(mar=c(0, 0, 2, 0)) # Adjust margins for the title
+plot.new()
+title(main="Cholesterol Intake /cup for a 2000 calorie diet", cex.main=2, font.main=2)
+percentages <- c(12, 6, 5, 2)
+titles <- c("Whole Milk", "2% Milk", "1% Milk", "Skim Milk")
+colors <- c("red", "white")
+
+par(mar=c(4, 4, 2, 2)) # Adjusting margins
+
+#Pie charts
+for (i in 1:4) { pie(c(percentages[i], 100 - percentages[i]), labels = c("", ""), col = colors, main = titles[i], cex = 1.5)}
+```
