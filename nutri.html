@@ -298,6 +298,45 @@ $(document).ready(function () {
 </div>
 
 
+<pre class="r"><code>df &lt;- readxl::read_xlsx(&#39;nutri.xlsx&#39;)|&gt;
+  head(11)
+nutri &lt;- df |&gt;
+  as.data.frame() |&gt;
+  mutate(Whole = as.double(Whole))
+nutri_d &lt;- nutri |&gt;
+  mutate(mean_diff = rowMeans(across(c(Whole, `2 Percent`, `1 Percent`))) -Skim) |&gt;
+  select(c(1,6))
+print(nutri_d)</code></pre>
+<pre><code>##            Nutritional Components mean_diff
+## 1                        Calories  38.66667
+## 2  Vitamin C [Ascorbic acid] (mg)   0.00000
+## 3                    Calcium (mg)  50.40000
+## 4                       Iron (mg)   0.00000
+## 5                     Sodium (mg)  -3.20000
+## 6                     Protein (g)   0.00000
+## 7                Carbohydrate (g)   0.00000
+## 8                       Fiber (g)   0.00000
+## 9                      Sugars (g)   0.00000
+## 10                  Net carbs (g)   0.00000
+## 11               Cholesterol (mg)  18.40000</code></pre>
+<pre class="r"><code>extra = c (0,0,0,0)
+selected_rows &lt;- nutri[c(1, 3, 5, 11), ]
+nutri_bp = cbind(selected_rows, extra)
+rows_to_plot &lt;- c(1, 2, 3, 4)
+legend_labels &lt;- names(nutri_bp)[2:(ncol(nutri_bp) - 1)]
+
+# Loop
+for (i in rows_to_plot) {
+  values &lt;- as.numeric(nutri_bp[i, 2:ncol(nutri_bp)])
+  plot_title &lt;- nutri_bp[i, 1]
+  bc = c(&quot;red&quot;,&quot;magenta&quot;,&quot;lightblue&quot;,&quot;cyan&quot;,&quot;transparent&quot;)
+  bar_pos &lt;- barplot(values, main = plot_title, col = bc, border = NA) 
+  for (j in seq_along(values)) { if (values[j] != 0) { 
+    rect(bar_pos[j] - 0.5, 0, bar_pos[j] + 0.5, values[j], border = &quot;black&quot;) } 
+    } 
+  legend(&quot;topright&quot;, legend = legend_labels, fill = bc[-length(bc)], title = &quot;Components&quot;, cex = 0.8)
+}</code></pre>
+<p><img src="nutri_files/figure-html/unnamed-chunk-2-1.png" width="672" /><img src="nutri_files/figure-html/unnamed-chunk-2-2.png" width="672" /><img src="nutri_files/figure-html/unnamed-chunk-2-3.png" width="672" /><img src="nutri_files/figure-html/unnamed-chunk-2-4.png" width="672" /></p>
 <pre class="r"><code># Making a layout
 layout(matrix(c(1, 1, 2, 3, 4, 5), nrow=3, ncol=2, byrow=TRUE), heights=c(0.2, 1, 1))
 par(mar=c(0, 0, 2, 0)) # Adjust margins for the title
@@ -311,7 +350,7 @@ par(mar=c(4, 4, 2, 2)) # Adjusting margins
 
 #Pie charts
 for (i in 1:4) { pie(c(percentages[i], 100 - percentages[i]), labels = c(&quot;&quot;, &quot;&quot;), col = colors, main = titles[i], cex = 1.5)}</code></pre>
-<p><img src="nutri_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="nutri_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 
 
 
