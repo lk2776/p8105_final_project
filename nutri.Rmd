@@ -19,10 +19,13 @@ nutri <- df |>
   mutate(Whole = as.double(Whole))
 nutri_d <- nutri |>
   mutate(mean_diff = rowMeans(across(c(Whole, `2 Percent`, `1 Percent`))) -Skim) |>
-  select(c(1,6))
+  select(c(1,6)) |>
+  filter(mean_diff != 0)
 print(nutri_d)
-
 ```
+
+We calculated the mean of the nutritional components for whole, 2% and 1% milk and subtracted the corresponding component for skim milk. If this mean difference is not 0 it means that there is some difference across the milk types for that component. 
+
 
 ```{R}
 extra = c (0,0,0,0)
@@ -42,8 +45,11 @@ for (i in rows_to_plot) {
     } 
   legend("topright", legend = legend_labels, fill = bc[-length(bc)], title = "Components", cex = 0.8)
 }
-
 ```
+
+There is a decreasing trend as we go towards the lower fat options for calories and cholesterol.
+Quantity of sodium is roughly the same for all 4 (higher in 1% and skim).
+Skim has the least amount of calcium. The rest seem to have the same amount.
 
 ```{R}
 # Making a layout
@@ -60,3 +66,5 @@ par(mar=c(4, 4, 2, 2)) # Adjusting margins
 #Pie charts
 for (i in 1:4) { pie(c(percentages[i], 100 - percentages[i]), labels = c("", ""), col = colors, main = titles[i], cex = 1.5)}
 ```
+
+The above pie charts show the cholesterol intake per cup for a 2000 calorie diet. Obviously, higher fat means more cholesterol. This intake is quite important as a health conscious person is likely to lean towards the lower fat options because of the lower cholesterol. Accompany the individual cholesterol with the fact that most people will use milk in some way and not just drink it straight up implies that the way they consume it (through cereal or drinks) would increase their cholesterol intake due to what they added.
