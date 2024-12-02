@@ -51,6 +51,7 @@ There is a decreasing trend as we go towards the lower fat options for calories 
 Quantity of sodium is roughly the same for all 4 (higher in 1% and skim).
 Skim has the least amount of calcium. The rest seem to have the same amount.
 
+
 ```{R}
 # Making a layout
 layout(matrix(c(1, 1, 2, 3, 4, 5), nrow=3, ncol=2, byrow=TRUE), heights=c(0.2, 1, 1))
