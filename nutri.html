@@ -275,12 +275,19 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
+<<<<<<< HEAD
 <li>
   <a href="nutri.html">Nutrition</a>
 </li>
 <li>
   <a href="Report.html">Report</a>
 </li>
+=======
+<li class="dropdown-header">Webpage3</li>
+<li>
+  <a href="nutri.html">Nutrition</a>
+</li>
+>>>>>>> 09da940105fb94199419ae115e7e4adc62f6c03d
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -337,7 +344,7 @@ legend_labels &lt;- names(nutri_bp)[2:(ncol(nutri_bp) - 1)]
 for (i in rows_to_plot) {
   values &lt;- as.numeric(nutri_bp[i, 2:ncol(nutri_bp)])
   plot_title &lt;- nutri_bp[i, 1]
-  bc = c(&quot;red&quot;,&quot;magenta&quot;,&quot;lightblue&quot;,&quot;cyan&quot;,&quot;transparent&quot;)
+  bc = c(&quot;red&quot;,&quot;orange&quot;,&quot;magenta&quot;,&quot;pink&quot;,&quot;transparent&quot;)
   bar_pos &lt;- barplot(values, main = plot_title, col = bc, border = NA) 
   for (j in seq_along(values)) { if (values[j] != 0) { 
     rect(bar_pos[j] - 0.5, 0, bar_pos[j] + 0.5, values[j], border = &quot;black&quot;) } 
