@@ -4,10 +4,10 @@
 \
 \
 \
-Milk Nutrition Study
+Milk Nutrition 
 \
 \
-<img src="images/horizon_milk_page.png" style="width:50%">   
-[Milk Nutrition](https://horizon.com/organic-dairy-products/organic-milk/shelf-stable-organic-vanilla-1-percent-dha-omega-3-milk/)
+<img src="images/cow_index.jpg" style="width:75%">   
+[Reference](https://theconversation.com/why-some-humans-developed-a-taste-for-milk-and-some-didnt-56084/)
 
 

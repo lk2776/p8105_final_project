@@ -1,23 +1,20 @@
-name: "Final Project"
+name: "Milk Nutrition"
 output_dir: "."
 navbar:
   title: "Home"
   left: 
     - text: "Milk Production"
-      href: milk_cows_production_cleaning.html
-    #- text: "Webpage1"
-    #  menu:
-    #  - text: ""
-    #    href: 
-    #  - text: ""
-    #    href: 
-    #  - text: ""
-    #    href: 
-    #- text: "Webpage2"
-    #  menu:
-    #  - text: ""
+      menu:
+      - text: "milk production across states"
+        href: milk_cows_production_cleaning.html
+      - text: "milk production across years"
+        href: milk_cows_production_cleaning.html
     - text: "Milk Statistics"
-      href: fluidmilk.html
+      menu:
+      - text: "fluidmilk"
+        href: fluidmilk.html
+      - text: "fluidmilk_2"
+        href: fluidmilk.html
     - text: "Nutrition"
       href: nutri.html
     - text: "Report"
@@ -31,4 +28,4 @@ output:
   html_document:
     include:
       in_header: 
-    theme: lumen
+    theme: flatly
