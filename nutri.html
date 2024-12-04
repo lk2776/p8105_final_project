@@ -33,14 +33,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
-<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-<script src="site_libs/plotly-binding-4.10.4/plotly.js"></script>
-<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
-<script src="site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
-<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
@@ -279,7 +271,9 @@ $(document).ready(function () {
   </ul>
 </li>
 <li class="dropdown-header">Webpage3</li>
-<li class="dropdown-header">Webpage4</li>
+<li>
+  <a href="nutri.html">Nutrition</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -335,7 +329,7 @@ legend_labels &lt;- names(nutri_bp)[2:(ncol(nutri_bp) - 1)]
 for (i in rows_to_plot) {
   values &lt;- as.numeric(nutri_bp[i, 2:ncol(nutri_bp)])
   plot_title &lt;- nutri_bp[i, 1]
-  bc = c(&quot;red&quot;,&quot;magenta&quot;,&quot;lightblue&quot;,&quot;cyan&quot;,&quot;transparent&quot;)
+  bc = c(&quot;red&quot;,&quot;orange&quot;,&quot;magenta&quot;,&quot;pink&quot;,&quot;transparent&quot;)
   bar_pos &lt;- barplot(values, main = plot_title, col = bc, border = NA) 
   for (j in seq_along(values)) { if (values[j] != 0) { 
     rect(bar_pos[j] - 0.5, 0, bar_pos[j] + 0.5, values[j], border = &quot;black&quot;) } 
@@ -347,58 +341,6 @@ for (i in rows_to_plot) {
 for calories and cholesterol. Quantity of sodium is roughly the same for
 all 4 (higher in 1% and skim). Skim has the least amount of calcium. The
 rest seem to have the same amount.</p>
-<pre class="r"><code>library(plotly)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;plotly&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     last_plot</code></pre>
-<pre><code>## The following object is masked from &#39;package:stats&#39;:
-## 
-##     filter</code></pre>
-<pre><code>## The following object is masked from &#39;package:graphics&#39;:
-## 
-##     layout</code></pre>
-<pre class="r"><code># Data for the pie charts
-percentages &lt;- c(10, 6, 3, 0)
-titles &lt;- c(&quot;Whole Milk&quot;, &quot;2% Milk&quot;, &quot;1% Milk&quot;, &quot;Skim Milk&quot;)
-colors &lt;- c(&quot;blue&quot;, &quot;white&quot;)
-custom_texts &lt;- c(&quot;Whole Milk has 10% fat&quot;, &quot;2% Milk has 6% fat&quot;, &quot;1% Milk has 3% fat&quot;, &quot;Skim Milk has no fat&quot;)
-
-# Initialize an empty list for plots
-subplot_list &lt;- list()
-
-# Create pie charts with hover text for each chart
-for (i in 1:4) {
-  values &lt;- c(percentages[i], 100 - percentages[i])
-  hover_text &lt;- c(custom_texts[i], &quot;Remaining&quot;)
-  
-  pie_chart &lt;- plot_ly(
-    type = &#39;pie&#39;,
-    labels = c(&quot;Fat&quot;, &quot;Non-fat&quot;),
-    values = values,
-    marker = list(colors = colors),
-    text = hover_text,
-    hoverinfo = &#39;text&#39;,
-    showlegend = FALSE
-  ) %&gt;% layout(title = titles[i])
-  
-  subplot_list[[i]] &lt;- pie_chart
-}
-
-# Combine all pie charts into a single layout
-subplot_combined &lt;- subplot(subplot_list, nrows = 2, titleX = TRUE, titleY = TRUE, margin = 0.05)
-
-# Add a main title
-subplot_combined &lt;- subplot_combined %&gt;% layout(title = list(text = &quot;Fat Intake /cup for a 2000 calorie diet&quot;))
-
-# Display the plot
-subplot_combined</code></pre>
-<pre><code>## Warning: &#39;layout&#39; objects don&#39;t have these attributes: &#39;NA&#39;
-## Valid attributes include:
-## &#39;_deprecated&#39;, &#39;activeshape&#39;, &#39;annotations&#39;, &#39;autosize&#39;, &#39;autotypenumbers&#39;, &#39;calendar&#39;, &#39;clickmode&#39;, &#39;coloraxis&#39;, &#39;colorscale&#39;, &#39;colorway&#39;, &#39;computed&#39;, &#39;datarevision&#39;, &#39;dragmode&#39;, &#39;editrevision&#39;, &#39;editType&#39;, &#39;font&#39;, &#39;geo&#39;, &#39;grid&#39;, &#39;height&#39;, &#39;hidesources&#39;, &#39;hoverdistance&#39;, &#39;hoverlabel&#39;, &#39;hovermode&#39;, &#39;images&#39;, &#39;legend&#39;, &#39;mapbox&#39;, &#39;margin&#39;, &#39;meta&#39;, &#39;metasrc&#39;, &#39;modebar&#39;, &#39;newshape&#39;, &#39;paper_bgcolor&#39;, &#39;plot_bgcolor&#39;, &#39;polar&#39;, &#39;scene&#39;, &#39;selectdirection&#39;, &#39;selectionrevision&#39;, &#39;separators&#39;, &#39;shapes&#39;, &#39;showlegend&#39;, &#39;sliders&#39;, &#39;smith&#39;, &#39;spikedistance&#39;, &#39;template&#39;, &#39;ternary&#39;, &#39;title&#39;, &#39;transition&#39;, &#39;uirevision&#39;, &#39;uniformtext&#39;, &#39;updatemenus&#39;, &#39;width&#39;, &#39;xaxis&#39;, &#39;yaxis&#39;, &#39;barmode&#39;, &#39;bargap&#39;, &#39;mapType&#39;</code></pre>
-<div class="plotly html-widget html-fill-item" id="htmlwidget-a14c216a9fd80a034164" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-a14c216a9fd80a034164">{"x":{"data":[{"labels":["Fat","Non-fat"],"values":[10,90],"marker":{"color":"rgba(31,119,180,1)","colors":["blue","white"],"line":{"color":"rgba(255,255,255,1)"}},"text":["Whole Milk has 10% fat","Remaining"],"hoverinfo":["text","text"],"showlegend":false,"type":"pie","frame":null},{"labels":["Fat","Non-fat"],"values":[6,94],"marker":{"color":"rgba(255,127,14,1)","colors":["blue","white"],"line":{"color":"rgba(255,255,255,1)"}},"text":["2% Milk has 6% fat","Remaining"],"hoverinfo":["text","text"],"showlegend":false,"type":"pie","frame":null},{"labels":["Fat","Non-fat"],"values":[3,97],"marker":{"color":"rgba(44,160,44,1)","colors":["blue","white"],"line":{"color":"rgba(255,255,255,1)"}},"text":["1% Milk has 3% fat","Remaining"],"hoverinfo":["text","text"],"showlegend":false,"type":"pie","frame":null},{"labels":["Fat","Non-fat"],"values":[0,100],"marker":{"color":"rgba(214,39,40,1)","colors":["blue","white"],"line":{"color":"rgba(255,255,255,1)"}},"text":["Skim Milk has no fat","Remaining"],"hoverinfo":["text","text"],"showlegend":false,"type":"pie","frame":null}],"layout":{"NA":{"anchor":[],"domain":[0.55000000000000004,1]},"NA2":{"anchor":[],"domain":[0.55000000000000004,1]},"NA3":{"anchor":[],"domain":[0,0.45000000000000001]},"NA4":{"anchor":[],"domain":[0,0.45000000000000001]},"margin":{"b":40,"l":60,"t":25,"r":10},"title":{"text":"Fat Intake /cup for a 2000 calorie diet"},"hovermode":"closest","showlegend":false},"attrs":{"91c059646ee6":{"labels":["Fat","Non-fat"],"values":[10,90],"marker":{"colors":["blue","white"]},"text":["Whole Milk has 10% fat","Remaining"],"hoverinfo":"text","showlegend":false,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"},"91c0386fa99":{"labels":["Fat","Non-fat"],"values":[6,94],"marker":{"colors":["blue","white"]},"text":["2% Milk has 6% fat","Remaining"],"hoverinfo":"text","showlegend":false,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"},"91c060fe2b97":{"labels":["Fat","Non-fat"],"values":[3,97],"marker":{"colors":["blue","white"]},"text":["1% Milk has 3% fat","Remaining"],"hoverinfo":"text","showlegend":false,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"},"91c05202476":{"labels":["Fat","Non-fat"],"values":[0,100],"marker":{"colors":["blue","white"]},"text":["Skim Milk has no fat","Remaining"],"hoverinfo":"text","showlegend":false,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"subplot":true,"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code># Making a layout
 layout(matrix(c(1, 1, 2, 3, 4, 5), nrow=3, ncol=2, byrow=TRUE), heights=c(0.2, 1, 1))
 par(mar=c(0, 0, 2, 0)) # Adjust margins for the title
@@ -412,7 +354,7 @@ par(mar=c(4, 4, 2, 2)) # Adjusting margins
 
 #Pie charts
 for (i in 1:4) { pie(c(percentages[i], 100 - percentages[i]), labels = c(&quot;&quot;, &quot;&quot;), col = colors, main = titles[i], cex = 1.5)}</code></pre>
-<p><img src="nutri_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="nutri_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>The above pie charts show the cholesterol intake per cup for a 2000
 calorie diet. Obviously, higher fat means more cholesterol. This intake
 is quite important as a health conscious person is likely to lean

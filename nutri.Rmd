@@ -38,7 +38,7 @@ legend_labels <- names(nutri_bp)[2:(ncol(nutri_bp) - 1)]
 for (i in rows_to_plot) {
   values <- as.numeric(nutri_bp[i, 2:ncol(nutri_bp)])
   plot_title <- nutri_bp[i, 1]
-  bc = c("red","magenta","lightblue","cyan","transparent")
+  bc = c("red","orange","magenta","pink","transparent")
   bar_pos <- barplot(values, main = plot_title, col = bc, border = NA) 
   for (j in seq_along(values)) { if (values[j] != 0) { 
     rect(bar_pos[j] - 0.5, 0, bar_pos[j] + 0.5, values[j], border = "black") } 
