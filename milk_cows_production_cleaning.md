@@ -87,8 +87,7 @@ data_milk_cows = milk_cows |>
     ## ℹ In argument: `2019 = as.numeric(`2019`)`.
     ## Caused by warning:
     ## ! NAs introduced by coercion
-    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 4
-    ##   remaining warnings.
+    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 4 remaining warnings.
 
 ``` r
 #point plot 
@@ -127,8 +126,8 @@ ggplot(combine_milk_cows) +
         legend.position = "bottom") 
 ```
 
-    ## Warning: Removed 11 rows containing missing values or values
-    ## outside the scale range (`geom_point()`).
+    ## Warning: Removed 11 rows containing missing values or values outside the scale
+    ## range (`geom_point()`).
 
 <img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-3-2.png" width="90%" />
 
@@ -232,8 +231,7 @@ milk_production = readxl::read_excel("./data/milkcowsandprod.xlsx", sheet="Milk 
     ## ℹ In argument: `across(...)`.
     ## Caused by warning:
     ## ! NAs introduced by coercion
-    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 9
-    ##   remaining warnings.
+    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 9 remaining warnings.
 
 ``` r
 data = milk_production
@@ -314,8 +312,8 @@ ggplot(combine_data) +
         legend.position = "bottom") 
 ```
 
-    ## Warning: Removed 11 rows containing missing values or values
-    ## outside the scale range (`geom_point()`).
+    ## Warning: Removed 11 rows containing missing values or values outside the scale
+    ## range (`geom_point()`).
 
 <img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-7-1.png" width="90%" />
 
@@ -332,8 +330,8 @@ ggplot(combine_data) +
         legend.position = "bottom") 
 ```
 
-    ## Warning: Removed 11 rows containing missing values or values
-    ## outside the scale range (`geom_point()`).
+    ## Warning: Removed 11 rows containing missing values or values outside the scale
+    ## range (`geom_point()`).
 
 <img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-8-1.png" width="90%" />
 
@@ -350,8 +348,8 @@ ggplot(combine_data) +
         legend.position = "bottom") 
 ```
 
-    ## Warning: Removed 11 rows containing missing values or values
-    ## outside the scale range (`geom_point()`).
+    ## Warning: Removed 11 rows containing missing values or values outside the scale
+    ## range (`geom_point()`).
 
 <img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-9-1.png" width="90%" />
 
@@ -368,7 +366,7 @@ ggplot(combine_data) +
         legend.position = "bottom") 
 ```
 
-    ## Warning: Removed 11 rows containing missing values or values
-    ## outside the scale range (`geom_point()`).
+    ## Warning: Removed 11 rows containing missing values or values outside the scale
+    ## range (`geom_point()`).
 
 <img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-10-1.png" width="90%" />
