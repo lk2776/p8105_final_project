@@ -3,28 +3,30 @@ output_dir: "."
 navbar:
   title: "Home"
   left: 
-    - text: "Cow Production"
+    - text: "Milk Production"
       href: milk_cows_production_cleaning.html
-    - text: "Webpage1"
-      menu:
-      - text: ""
-        href: 
-      - text: ""
-        href: 
-      - text: ""
-        href: 
-    - text: "Webpage2"
-      menu:
-      - text: ""
-    - text: "Webpage3"
-      href: 
+    #- text: "Webpage1"
+    #  menu:
+    #  - text: ""
+    #    href: 
+    #  - text: ""
+    #    href: 
+    #  - text: ""
+    #    href: 
+    #- text: "Webpage2"
+    #  menu:
+    #  - text: ""
+    - text: "Milk Statistics"
+      href: fluidmilk.html
     - text: "Nutrition"
       href: nutri.html
+    - text: "Report"
+      href: Report.html
   right:
     - text: "About the Team"
       href: About-us.html
     - icon: fa-github fa-lg
-      href: 
+      href: https://github.com/lk2776/p8105_final_project/
 output:
   html_document:
     include:

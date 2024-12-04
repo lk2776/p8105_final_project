@@ -1,9 +1,13 @@
----
-title: "index"
-output: html_document
-date: "2024-11-18"
----
 
-```{R}
-print("hello world")
-```
+
+\
+\
+\
+\
+Milk Nutrition Study
+\
+\
+<img src="images/horizon_milk_page.png" style="width:50%">   
+[Milk Nutrition](https://horizon.com/organic-dairy-products/organic-milk/shelf-stable-organic-vanilla-1-percent-dha-omega-3-milk/)
+
+
