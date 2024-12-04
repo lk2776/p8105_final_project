@@ -207,6 +207,8 @@ ggplot_basic <- ggplot(fluidmilk_long, aes(x = Year, y = Sales, color = Milk_Typ
 
 print(ggplot_basic)
 
+ggplotly(ggplot_basic)
+
 ggplot_interactive <- ggplot(fluidmilk_long, aes(
   x = Year, 
   y = Sales, 
