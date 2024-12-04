@@ -1,5 +1,40 @@
 ---
 title: "Report"
-output: html_document
-date: "2024-12-04"
 ---
+
+<br><br> 
+
+### Motivation
+
+The motivation behind our project is 
+
+<br><br>
+
+### Related work
+
+<br><br>
+
+### Initial questions
+
+<br><br>
+
+### Data
+
+<br><br>
+
+### Exploratory analysis
+
+<br><br>
+
+### Data analysis
+
+<br><br>
+
+### Discussion
+
+<br><br>
+
+### References
+
+1. <https://www.ers.usda.gov/data-products/dairy-data/>
+2. <https://www.ers.usda.gov/amber-waves/2022/june/fluid-milk-consumption-continues-downward-trend-proving-difficult-to-reverse/>
