@@ -1,13 +1,34 @@
+---
+title: "Dairy Industry Insights"
+output: html_document
+---
 
+# Welcome to Dairy Industry Insights
 
-\
-\
-\
-\
-Milk Nutrition Study
-\
-\
-<img src="images/horizon_milk_page.png" style="width:50%">   
-[Milk Nutrition](https://horizon.com/organic-dairy-products/organic-milk/shelf-stable-organic-vanilla-1-percent-dha-omega-3-milk/)
+<img src="images/cow_index.jpg" style="width:75%">   
+[Reference](https://theconversation.com/why-some-humans-developed-a-taste-for-milk-and-some-didnt-56084/)
 
+Welcome to **Dairy Industry Insights**, your go-to source for the latest trends, research, and information on the dairy industry. 
 
+## About Us
+
+<!-- Fill in with information about your project or team -->
+
+## Latest Articles
+
+<!-- List some of your articles or insights here -->
+
+## Interactive Dashboard
+
+Explore our interactive dashboard to visualize key metrics and trends in the dairy industry:
+
+```{r, echo=FALSE}
+# Placeholder for your interactive plot or dashboard code
+# Example:
+# library(plotly)
+# data <- data.frame(
+#   Month = c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'),
+#   MilkProduction = c(200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 310)
+# )
+# p <- plot_ly(data, x = ~Month, y = ~MilkProduction, type = 'scatter', mode = 'lines+markers')
+# p
