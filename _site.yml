@@ -1,3 +1,4 @@
+---
 name: "Milk Nutrition"
 output_dir: "."
 navbar:
@@ -24,8 +25,8 @@ navbar:
       href: About-us.html
     - icon: fa-github fa-lg
       href: https://github.com/lk2776/p8105_final_project/
-output:
-  html_document:
-    include:
-      in_header: 
-    theme: flatly
+output: 
+  html_document: 
+    theme: flatly 
+    css: custom.css
+---

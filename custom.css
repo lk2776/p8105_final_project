@@ -1,0 +1,17 @@
+/* custom.css */
+.navbar-default {
+  background-color: coral !important;
+  border-color: coral !important;
+}
+.navbar-default .navbar-brand {
+  color: white !important;
+}
+.navbar-default .navbar-nav > li > a {
+  color: white !important;
+}
+.navbar-default .navbar-nav > li > a:hover {
+  color: gold !important;
+}
+.navbar-default .navbar-nav > li > a:focus {
+  color: gold !important;
+}

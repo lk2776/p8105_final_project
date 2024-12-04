@@ -3,11 +3,13 @@ title: "Dairy Industry Insights"
 output: html_document
 ---
 
-# Welcome to Dairy Industry Insights
+# A Comprehensive Analysis of Milk Production & Types
 
-![Milk Nutrition](images/cow_index.jpg)
+![Milk Nutrition](images/CoverPicW.png)
 
 Welcome to **Dairy Industry Insights**, your go-to source for the latest trends, research, and information on the dairy industry. 
+
+<br>
 
 ## About Us
 
@@ -29,6 +31,13 @@ Our project delves into the dairy industry, focusing on:
 </ul>
 
 <br>
+
+## Screencast
+
+<iframe width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+<br>
+
 ## Interactive Dashboard
 
 Explore our interactive dashboard to visualize key metrics and trends in the dairy industry:
@@ -43,3 +52,173 @@ data <- data.frame(
 )
 p <- plot_ly(data, x = ~Month, y = ~MilkProduction, type = 'scatter', mode = 'lines+markers')
 p
+```
+
+
+# Dairy Industry Insights Puzzle
+
+```{r, results='asis', echo=FALSE}
+htmltools::HTML('
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dairy Animal Puzzle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    table {
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 18px;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    .found {
+      background-color: yellow;
+    }
+  </style>
+  <script>
+    // Function to generate a random letter
+    function randomLetter() {
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      return letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+
+    // Dairy animals to be found
+    const dairyAnimals = ["COW", "GOAT", "BUFFALO", "SHEEP", "YAK", "CAMEL", "REINDEER"];
+    const selectedAnimal = dairyAnimals[Math.floor(Math.random() * dairyAnimals.length)];
+
+    // Initialize puzzle grid
+    const grid = Array.from({ length: 6 }, () => Array(20).fill(""));
+    
+    // Function to place the selected animal in the grid
+    function placeWord(word) {
+      const length = word.length;
+      let placed = false;
+
+      while (!placed) {
+        const direction = Math.floor(Math.random() * 2);
+        const row = Math.floor(Math.random() * (6 - (direction === 0 ? length : 1)));
+        const col = Math.floor(Math.random() * (20 - (direction === 1 ? length : 1)));
+        
+        let fits = true;
+        
+        for (let i = 0; i < length; i++) {
+          const newRow = row + (direction === 0 ? i : 0);
+          const newCol = col + (direction === 1 ? i : 0);
+          
+          if (grid[newRow][newCol] && grid[newRow][newCol] !== word[i]) {
+            fits = false;
+            break;
+          }
+        }
+        
+        if (fits) {
+          for (let i = 0; i < length; i++) {
+            const newRow = row + (direction === 0 ? i : 0);
+            const newCol = col + (direction === 1 ? i : 0);
+            
+            grid[newRow][newCol] = word[i];
+          }
+          placed = true;
+        }
+      }
+    }
+
+    // Place the selected animal in the grid
+    placeWord(selectedAnimal);
+
+    // Fill remaining cells with random letters
+    for (let i = 0; i < 6; i++) {
+      for (let j = 0; j < 20; j++) {
+        if (!grid[i][j]) {
+          grid[i][j] = randomLetter();
+        }
+      }
+    }
+
+    // Function to create puzzle table
+    function createPuzzleTable() {
+      const table = document.createElement("table");
+      for (let i = 0; i < 6; i++) {
+        const row = table.insertRow();
+        for (let j = 0; j < 20; j++) {
+          const cell = row.insertCell();
+          cell.innerText = grid[i][j];
+        }
+      }
+      return table;
+    }
+
+    // Function to check word
+    function findWord() {
+      const input = document.getElementById("wordInput").value.toUpperCase();
+      const cells = document.querySelectorAll("td");
+      let found = false;
+      const directions = [
+        [0, 1], // Horizontal
+        [1, 0]  // Vertical
+      ];
+
+      for (const direction of directions) {
+        if (selectedAnimal === input) {
+          cells.forEach((cell, index) => {
+            const row = Math.floor(index / 20);
+            const col = index % 20;
+            if (checkWordInGrid(row, col, selectedAnimal, direction)) {
+              for (let i = 0; i < selectedAnimal.length; i++) {
+                const newRow = row + direction[0] * i;
+                const newCol = col + direction[1] * i;
+                cells[newRow * 20 + newCol].classList.add("found");
+              }
+              found = true;
+            }
+          });
+        }
+      }
+
+      if (found) {
+        alert("Word Found!");
+      } else {
+        alert(`Word Not Found! The correct word was: ${selectedAnimal}`);
+      }
+
+      // Disable the input field and button after one attempt
+      document.getElementById("wordInput").disabled = true;
+      document.querySelector("button").disabled = true;
+    }
+
+    function checkWordInGrid(row, col, word, direction) {
+      for (let i = 0; i < word.length; i++) {
+        const newRow = row + direction[0] * i;
+        const newCol = col + direction[1] * i;
+        if (grid[newRow] && grid[newRow][newCol] !== word[i]) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    // Create and display puzzle table on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("puzzleContainer").appendChild(createPuzzleTable());
+    });
+  </script>
+</head>
+<body>
+  <p>Thank you so much for visiting our website! Here is a fun activity! One dairy animal is here- find it! <br>
+  (Refresh site for new puzzle):</p>
+  <div id="puzzleContainer"></div>
+  <input type="text" id="wordInput" placeholder="Enter word">
+  <button onclick="findWord()">Find</button>
+</body>
+</html>
+')
+
+```
