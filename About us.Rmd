@@ -1,0 +1,61 @@
+---
+title: "About Us"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+---
+```{css, echo = FALSE}
+img.portrait{
+  width:20%;
+  float:bottom;
+  float:right;
+}
+```
+
+Thanks for visiting our project! Our team consists of Columbia University graduate students. You can learn more about us, individually, here:
+
+```{=html}
+<table style="width:100%">
+  <tr>
+    <td><h4>Vidit Tripathi</h4></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><a href="githublink">Vidit Tripathi</a> brought the group together. Blah blah blah <br> Favourite Milk Beverage: Vanilla Milkshake <br> Favourite Dairy Animal: Cow </td>
+    <td><img src="cow1.png" class="portrait"></td>
+  </tr>
+
+  <tr>
+    <td><h4>Lahari Koganti</h4></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><a href="githublink">Lahari Koganti</a> was interested in finding the state wise distribution of milk production of the USA. BLAH BLAH BLAH <br> Favourite Milk Beverage: Milk Tea <br> Favourite Dairy Animal: Goat </td>
+    <td><img src="cow2.png" class="portrait"></td>
+  </tr>
+  
+  <tr>
+    <td><h4>Yue Tai</h4></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><a href="githublink">Yue Tai</a> loves to write paragraphs! blah blah blah <br> Favourite Milk Beverage: Banana Milk <br> Favourite Dairy Animal: Camel </td>
+    <td><img src="cow3.png" class="portrait"></td>
+  </tr>
+
+</table>
+```
+
+<br>
+
+### Contact Us
+
+If you would like to, please <a href="mailto:@gmail.com">contact us</a>.
+
+---
+
+Thanks a lot for visiting our website!
+
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>

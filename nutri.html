@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2024-11-28" />
+
+<title>Nutrition</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="milk_cows_production_cleaning.html">Cow Production</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Webpage1
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header"></li>
+    <li class="dropdown-header"></li>
+    <li class="dropdown-header"></li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Webpage2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header"></li>
+  </ul>
+</li>
+<li class="dropdown-header">Webpage3</li>
+<li class="dropdown-header">Webpage4</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="About-us.html">About the Team</a>
+</li>
+<li>
+  <a>
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Nutrition</h1>
+<h4 class="date">2024-11-28</h4>
+
+</div>
+
+
+<pre class="r"><code>df &lt;- readxl::read_xlsx(&#39;nutri.xlsx&#39;)|&gt;
+  head(11)
+nutri &lt;- df |&gt;
+  as.data.frame() |&gt;
+  mutate(Whole = as.double(Whole))
+nutri_d &lt;- nutri |&gt;
+  mutate(mean_diff = rowMeans(across(c(Whole, `2 Percent`, `1 Percent`))) -Skim) |&gt;
+  select(c(1,6)) |&gt;
+  filter(mean_diff != 0)
+print(nutri_d)</code></pre>
+<pre><code>##   Nutritional Components mean_diff
+## 1               Calories  38.66667
+## 2           Calcium (mg)  50.40000
+## 3            Sodium (mg)  -3.20000
+## 4       Cholesterol (mg)  18.40000</code></pre>
+<p>We calculated the mean of the nutritional components for whole, 2%
+and 1% milk and subtracted the corresponding component for skim milk. If
+this mean difference is not 0 it means that there is some difference
+across the milk types for that component.</p>
+<pre class="r"><code>extra = c (0,0,0,0)
+selected_rows &lt;- nutri[c(1, 3, 5, 11), ]
+nutri_bp = cbind(selected_rows, extra)
+rows_to_plot &lt;- c(1, 2, 3, 4)
+legend_labels &lt;- names(nutri_bp)[2:(ncol(nutri_bp) - 1)]
+
+# Loop
+for (i in rows_to_plot) {
+  values &lt;- as.numeric(nutri_bp[i, 2:ncol(nutri_bp)])
+  plot_title &lt;- nutri_bp[i, 1]
+  bc = c(&quot;red&quot;,&quot;magenta&quot;,&quot;lightblue&quot;,&quot;cyan&quot;,&quot;transparent&quot;)
+  bar_pos &lt;- barplot(values, main = plot_title, col = bc, border = NA) 
+  for (j in seq_along(values)) { if (values[j] != 0) { 
+    rect(bar_pos[j] - 0.5, 0, bar_pos[j] + 0.5, values[j], border = &quot;black&quot;) } 
+    } 
+  legend(&quot;topright&quot;, legend = legend_labels, fill = bc[-length(bc)], title = &quot;Components&quot;, cex = 0.8)
+}</code></pre>
+<p><img src="nutri_files/figure-html/unnamed-chunk-2-1.png" width="672" /><img src="nutri_files/figure-html/unnamed-chunk-2-2.png" width="672" /><img src="nutri_files/figure-html/unnamed-chunk-2-3.png" width="672" /><img src="nutri_files/figure-html/unnamed-chunk-2-4.png" width="672" /></p>
+<p>There is a decreasing trend as we go towards the lower fat options
+for calories and cholesterol. Quantity of sodium is roughly the same for
+all 4 (higher in 1% and skim). Skim has the least amount of calcium. The
+rest seem to have the same amount.</p>
+<pre class="r"><code>library(plotly)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plotly&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter</code></pre>
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout</code></pre>
+<pre class="r"><code># Data for the pie charts
+percentages &lt;- c(10, 6, 3, 0)
+titles &lt;- c(&quot;Whole Milk&quot;, &quot;2% Milk&quot;, &quot;1% Milk&quot;, &quot;Skim Milk&quot;)
+colors &lt;- c(&quot;blue&quot;, &quot;white&quot;)
+custom_texts &lt;- c(&quot;Whole Milk has 10% fat&quot;, &quot;2% Milk has 6% fat&quot;, &quot;1% Milk has 3% fat&quot;, &quot;Skim Milk has no fat&quot;)
+
+# Initialize an empty list for plots
+subplot_list &lt;- list()
+
+# Create pie charts with hover text for each chart
+for (i in 1:4) {
+  values &lt;- c(percentages[i], 100 - percentages[i])
+  hover_text &lt;- c(custom_texts[i], &quot;Remaining&quot;)
+  
+  pie_chart &lt;- plot_ly(
+    type = &#39;pie&#39;,
+    labels = c(&quot;Fat&quot;, &quot;Non-fat&quot;),
+    values = values,
+    marker = list(colors = colors),
+    text = hover_text,
+    hoverinfo = &#39;text&#39;,
+    showlegend = FALSE
+  ) %&gt;% layout(title = titles[i])
+  
+  subplot_list[[i]] &lt;- pie_chart
+}
+
+# Combine all pie charts into a single layout
+subplot_combined &lt;- subplot(subplot_list, nrows = 2, titleX = TRUE, titleY = TRUE, margin = 0.05)
+
+# Add a main title
+subplot_combined &lt;- subplot_combined %&gt;% layout(title = list(text = &quot;Fat Intake /cup for a 2000 calorie diet&quot;))
+
+# Display the plot
+subplot_combined</code></pre>
+<pre><code>## Warning: &#39;layout&#39; objects don&#39;t have these attributes: &#39;NA&#39;
+## Valid attributes include:
+## &#39;_deprecated&#39;, &#39;activeshape&#39;, &#39;annotations&#39;, &#39;autosize&#39;, &#39;autotypenumbers&#39;, &#39;calendar&#39;, &#39;clickmode&#39;, &#39;coloraxis&#39;, &#39;colorscale&#39;, &#39;colorway&#39;, &#39;computed&#39;, &#39;datarevision&#39;, &#39;dragmode&#39;, &#39;editrevision&#39;, &#39;editType&#39;, &#39;font&#39;, &#39;geo&#39;, &#39;grid&#39;, &#39;height&#39;, &#39;hidesources&#39;, &#39;hoverdistance&#39;, &#39;hoverlabel&#39;, &#39;hovermode&#39;, &#39;images&#39;, &#39;legend&#39;, &#39;mapbox&#39;, &#39;margin&#39;, &#39;meta&#39;, &#39;metasrc&#39;, &#39;modebar&#39;, &#39;newshape&#39;, &#39;paper_bgcolor&#39;, &#39;plot_bgcolor&#39;, &#39;polar&#39;, &#39;scene&#39;, &#39;selectdirection&#39;, &#39;selectionrevision&#39;, &#39;separators&#39;, &#39;shapes&#39;, &#39;showlegend&#39;, &#39;sliders&#39;, &#39;smith&#39;, &#39;spikedistance&#39;, &#39;template&#39;, &#39;ternary&#39;, &#39;title&#39;, &#39;transition&#39;, &#39;uirevision&#39;, &#39;uniformtext&#39;, &#39;updatemenus&#39;, &#39;width&#39;, &#39;xaxis&#39;, &#39;yaxis&#39;, &#39;barmode&#39;, &#39;bargap&#39;, &#39;mapType&#39;</code></pre>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-a14c216a9fd80a034164" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-a14c216a9fd80a034164">{"x":{"data":[{"labels":["Fat","Non-fat"],"values":[10,90],"marker":{"color":"rgba(31,119,180,1)","colors":["blue","white"],"line":{"color":"rgba(255,255,255,1)"}},"text":["Whole Milk has 10% fat","Remaining"],"hoverinfo":["text","text"],"showlegend":false,"type":"pie","frame":null},{"labels":["Fat","Non-fat"],"values":[6,94],"marker":{"color":"rgba(255,127,14,1)","colors":["blue","white"],"line":{"color":"rgba(255,255,255,1)"}},"text":["2% Milk has 6% fat","Remaining"],"hoverinfo":["text","text"],"showlegend":false,"type":"pie","frame":null},{"labels":["Fat","Non-fat"],"values":[3,97],"marker":{"color":"rgba(44,160,44,1)","colors":["blue","white"],"line":{"color":"rgba(255,255,255,1)"}},"text":["1% Milk has 3% fat","Remaining"],"hoverinfo":["text","text"],"showlegend":false,"type":"pie","frame":null},{"labels":["Fat","Non-fat"],"values":[0,100],"marker":{"color":"rgba(214,39,40,1)","colors":["blue","white"],"line":{"color":"rgba(255,255,255,1)"}},"text":["Skim Milk has no fat","Remaining"],"hoverinfo":["text","text"],"showlegend":false,"type":"pie","frame":null}],"layout":{"NA":{"anchor":[],"domain":[0.55000000000000004,1]},"NA2":{"anchor":[],"domain":[0.55000000000000004,1]},"NA3":{"anchor":[],"domain":[0,0.45000000000000001]},"NA4":{"anchor":[],"domain":[0,0.45000000000000001]},"margin":{"b":40,"l":60,"t":25,"r":10},"title":{"text":"Fat Intake /cup for a 2000 calorie diet"},"hovermode":"closest","showlegend":false},"attrs":{"91c059646ee6":{"labels":["Fat","Non-fat"],"values":[10,90],"marker":{"colors":["blue","white"]},"text":["Whole Milk has 10% fat","Remaining"],"hoverinfo":"text","showlegend":false,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"},"91c0386fa99":{"labels":["Fat","Non-fat"],"values":[6,94],"marker":{"colors":["blue","white"]},"text":["2% Milk has 6% fat","Remaining"],"hoverinfo":"text","showlegend":false,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"},"91c060fe2b97":{"labels":["Fat","Non-fat"],"values":[3,97],"marker":{"colors":["blue","white"]},"text":["1% Milk has 3% fat","Remaining"],"hoverinfo":"text","showlegend":false,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"},"91c05202476":{"labels":["Fat","Non-fat"],"values":[0,100],"marker":{"colors":["blue","white"]},"text":["Skim Milk has no fat","Remaining"],"hoverinfo":"text","showlegend":false,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"subplot":true,"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code># Making a layout
+layout(matrix(c(1, 1, 2, 3, 4, 5), nrow=3, ncol=2, byrow=TRUE), heights=c(0.2, 1, 1))
+par(mar=c(0, 0, 2, 0)) # Adjust margins for the title
+plot.new()
+title(main=&quot;Cholesterol Intake /cup for a 2000 calorie diet&quot;, cex.main=2, font.main=2)
+percentages &lt;- c(12, 6, 5, 2)
+titles &lt;- c(&quot;Whole Milk&quot;, &quot;2% Milk&quot;, &quot;1% Milk&quot;, &quot;Skim Milk&quot;)
+colors &lt;- c(&quot;red&quot;, &quot;white&quot;)
+
+par(mar=c(4, 4, 2, 2)) # Adjusting margins
+
+#Pie charts
+for (i in 1:4) { pie(c(percentages[i], 100 - percentages[i]), labels = c(&quot;&quot;, &quot;&quot;), col = colors, main = titles[i], cex = 1.5)}</code></pre>
+<p><img src="nutri_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>The above pie charts show the cholesterol intake per cup for a 2000
+calorie diet. Obviously, higher fat means more cholesterol. This intake
+is quite important as a health conscious person is likely to lean
+towards the lower fat options because of the lower cholesterol.
+Accompany the individual cholesterol with the fact that most people will
+use milk in some way and not just drink it straight up implies that the
+way they consume it (through cereal or drinks) would increase their
+cholesterol intake due to what they added.</p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
