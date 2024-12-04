@@ -17,7 +17,7 @@
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -245,34 +245,41 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="milk_cows_production_cleaning.html">Cow Production</a>
-</li>
-<li class="dropdown">
+        <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Webpage1
+    Milk Production
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header"></li>
-    <li class="dropdown-header"></li>
-    <li class="dropdown-header"></li>
+    <li>
+      <a href="milk_cows_production_cleaning.html">milk production across states</a>
+    </li>
+    <li>
+      <a href="milk_cows_production_cleaning.html">milk production across years</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Webpage2
+    Milk Statistics
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header"></li>
+    <li>
+      <a href="fluidmilk.html">fluidmilk</a>
+    </li>
+    <li>
+      <a href="fluidmilk.html">fluidmilk_2</a>
+    </li>
   </ul>
 </li>
-<li class="dropdown-header">Webpage3</li>
 <li>
   <a href="nutri.html">Nutrition</a>
+</li>
+<li>
+  <a href="Report.html">Report</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -280,7 +287,7 @@ $(document).ready(function () {
   <a href="About-us.html">About the Team</a>
 </li>
 <li>
-  <a>
+  <a href="https://github.com/lk2776/p8105_final_project/">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -310,11 +317,12 @@ nutri_d &lt;- nutri |&gt;
   select(c(1,6)) |&gt;
   filter(mean_diff != 0)
 print(nutri_d)</code></pre>
-<pre><code>##   Nutritional Components mean_diff
-## 1               Calories  38.66667
-## 2           Calcium (mg)  50.40000
-## 3            Sodium (mg)  -3.20000
-## 4       Cholesterol (mg)  18.40000</code></pre>
+<pre><code>##   Nutritional Components     mean_diff
+## 1               Calories  3.866667e+01
+## 2           Calcium (mg)  5.040000e+01
+## 3            Sodium (mg) -3.200000e+00
+## 4            Protein (g) -8.881784e-16
+## 5       Cholesterol (mg)  1.840000e+01</code></pre>
 <p>We calculated the mean of the nutritional components for whole, 2%
 and 1% milk and subtracted the corresponding component for skim milk. If
 this mean difference is not 0 it means that there is some difference

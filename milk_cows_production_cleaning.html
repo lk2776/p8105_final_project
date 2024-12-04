@@ -17,7 +17,7 @@
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -245,36 +245,49 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown-header">Data Processing</li>
-<li class="dropdown">
+        <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Webpage1
+    Milk Production
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header"></li>
-    <li class="dropdown-header"></li>
-    <li class="dropdown-header"></li>
+    <li>
+      <a href="milk_cows_production_cleaning.html">milk production across states</a>
+    </li>
+    <li>
+      <a href="milk_cows_production_cleaning.html">milk production across years</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Webpage2
+    Milk Statistics
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header"></li>
+    <li>
+      <a href="fluidmilk.html">fluidmilk</a>
+    </li>
+    <li>
+      <a href="fluidmilk.html">fluidmilk_2</a>
+    </li>
   </ul>
 </li>
-<li class="dropdown-header">Webpage3</li>
-<li class="dropdown-header">Webpage4</li>
+<li>
+  <a href="nutri.html">Nutrition</a>
+</li>
+<li>
+  <a href="Report.html">Report</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown-header">About the Team</li>
+        <li>
+  <a href="About-us.html">About the Team</a>
+</li>
 <li>
-  <a>
+  <a href="https://github.com/lk2776/p8105_final_project/">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -400,8 +413,8 @@ ggplot(combine_milk_cows) +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 90, hjust = 1),  
         legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
-## (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale
+## range (`geom_point()`).</code></pre>
 <p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-3-2.png" width="90%" /></p>
 </div>
 <div id="milk-production-dataset" class="section level2">
@@ -568,8 +581,8 @@ ggplot(combine_data) +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 90, hjust = 1),  
         legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
-## (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale
+## range (`geom_point()`).</code></pre>
 <p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
 </div>
 <div id="region-production" class="section level2">
@@ -582,8 +595,8 @@ ggplot(combine_data) +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 90, hjust = 1),  
         legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
-## (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale
+## range (`geom_point()`).</code></pre>
 <p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
 <p>##state percent</p>
 <pre class="r"><code>ggplot(combine_data) +
@@ -594,8 +607,8 @@ ggplot(combine_data) +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 90, hjust = 1),  
         legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
-## (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale
+## range (`geom_point()`).</code></pre>
 <p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-9-1.png" width="90%" /></p>
 </div>
 <div id="region-percent" class="section level2">
@@ -608,8 +621,8 @@ ggplot(combine_data) +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 90, hjust = 1),  
         legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
-## (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale
+## range (`geom_point()`).</code></pre>
 <p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-10-1.png" width="90%" /></p>
 </div>
 
