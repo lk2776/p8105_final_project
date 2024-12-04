@@ -1,7 +1,6 @@
 ---
 title: "Nutrition"
 output: html_document
-date: "2024-11-28"
 ---
 
 ```{r setup, include=FALSE}
