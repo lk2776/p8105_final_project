@@ -10,7 +10,6 @@
 
 
 
-<meta name="date" content="2024-11-28" />
 
 <title>Nutrition</title>
 
@@ -303,7 +302,6 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Nutrition</h1>
-<h4 class="date">2024-11-28</h4>
 
 </div>
 
@@ -318,12 +316,11 @@ nutri_d &lt;- nutri |&gt;
   select(c(1,6)) |&gt;
   filter(mean_diff != 0)
 print(nutri_d)</code></pre>
-<pre><code>##   Nutritional Components     mean_diff
-## 1               Calories  3.866667e+01
-## 2           Calcium (mg)  5.040000e+01
-## 3            Sodium (mg) -3.200000e+00
-## 4            Protein (g) -8.881784e-16
-## 5       Cholesterol (mg)  1.840000e+01</code></pre>
+<pre><code>##   Nutritional Components mean_diff
+## 1               Calories  38.66667
+## 2           Calcium (mg)  50.40000
+## 3            Sodium (mg)  -3.20000
+## 4       Cholesterol (mg)  18.40000</code></pre>
 <p>We calculated the mean of the nutritional components for whole, 2%
 and 1% milk and subtracted the corresponding component for skim milk. If
 this mean difference is not 0 it means that there is some difference
@@ -343,7 +340,7 @@ for (i in rows_to_plot) {
   for (j in seq_along(values)) { if (values[j] != 0) { 
     rect(bar_pos[j] - 0.5, 0, bar_pos[j] + 0.5, values[j], border = &quot;black&quot;) } 
     } 
-  legend(&quot;topright&quot;, legend = legend_labels, fill = bc[-length(bc)], title = &quot;Components&quot;, cex = 0.8)
+  legend(&quot;topright&quot;, legend = legend_labels, fill = bc[-length(bc)], title = &quot;Milk Type&quot;, cex = 0.8)
 }</code></pre>
 <p><img src="nutri_files/figure-html/unnamed-chunk-2-1.png" width="672" /><img src="nutri_files/figure-html/unnamed-chunk-2-2.png" width="672" /><img src="nutri_files/figure-html/unnamed-chunk-2-3.png" width="672" /><img src="nutri_files/figure-html/unnamed-chunk-2-4.png" width="672" /></p>
 <p>There is a decreasing trend as we go towards the lower fat options
@@ -357,7 +354,7 @@ plot.new()
 title(main=&quot;Cholesterol Intake /cup for a 2000 calorie diet&quot;, cex.main=2, font.main=2)
 percentages &lt;- c(12, 6, 5, 2)
 titles &lt;- c(&quot;Whole Milk&quot;, &quot;2% Milk&quot;, &quot;1% Milk&quot;, &quot;Skim Milk&quot;)
-colors &lt;- c(&quot;red&quot;, &quot;white&quot;)
+colors &lt;- c(&quot;coral&quot;, &quot;white&quot;)
 
 par(mar=c(4, 4, 2, 2)) # Adjusting margins
 
@@ -372,6 +369,49 @@ Accompany the individual cholesterol with the fact that most people will
 use milk in some way and not just drink it straight up implies that the
 way they consume it (through cereal or drinks) would increase their
 cholesterol intake due to what they added.</p>
+<pre class="r"><code>data1 &lt;- data.frame(
+  Variable = factor(titles, levels = titles),  
+  Percentage = c(10, 6, 3, 0)
+)
+
+data2 &lt;- data.frame(
+  Variable = factor(titles, levels = titles),  
+  Percentage = c(25, 15, 7, 0)
+)
+
+colors &lt;- c(&quot;Whole Milk&quot; = &quot;red&quot;, &quot;2% Milk&quot; = &quot;orange&quot;, &quot;1% Milk&quot; = &quot;magenta&quot;, &quot;Skim Milk&quot; = &quot;pink&quot;)
+
+plot1 &lt;- ggplot(data1, aes(x = Variable, y = Percentage, fill = Variable)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  scale_fill_manual(values = colors) +
+  scale_y_continuous(limits = c(0, 30), breaks = seq(0, 28, by = 4)) +
+  theme_minimal() +
+  labs(title = &quot;Total Fat&quot;, x = &quot;&quot;, y = &quot;% of Daily Value for 2000 Cal. Diet&quot;) +
+  theme(plot.title = element_text(hjust = 0.5), legend.position = &quot;none&quot;)
+
+plot2 &lt;- ggplot(data2, aes(x = Variable, y = Percentage, fill = Variable)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  scale_fill_manual(values = colors) +
+  scale_y_continuous(limits = c(0, 30), breaks = seq(0, 28, by = 4)) +
+  theme_minimal() +
+  labs(title = &quot;Saturated Fat&quot;, x = &quot;&quot;, y = &quot;&quot;) +
+  theme(plot.title = element_text(hjust = 0.5), legend.position = &quot;none&quot;)
+
+get_legend &lt;- function(myplot) {
+  tmp &lt;- ggplot_gtable(ggplot_build(myplot))
+  leg &lt;- which(sapply(tmp$grobs, function(x) x$name) == &quot;guide-box&quot;)
+  legend &lt;- tmp$grobs[[leg]]
+  return(legend)
+}
+
+legend &lt;- get_legend(ggplot(data1, aes(x = Variable, y = Percentage, fill = Variable)) +
+                       geom_bar(stat = &quot;identity&quot;) +
+                       scale_fill_manual(values = colors) +
+                       theme_minimal() +
+                       labs(fill = &quot;Milk Type&quot;))
+
+grid.arrange(plot1, plot2, legend, ncol = 3, widths = c(2.5, 2.5, 1))</code></pre>
+<p><img src="nutri_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 
 
 

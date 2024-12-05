@@ -7,6 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(readxl)
+library(gridExtra)
 ```
 
 
@@ -59,7 +60,7 @@ plot.new()
 title(main="Cholesterol Intake /cup for a 2000 calorie diet", cex.main=2, font.main=2)
 percentages <- c(12, 6, 5, 2)
 titles <- c("Whole Milk", "2% Milk", "1% Milk", "Skim Milk")
-colors <- c("red", "white")
+colors <- c("coral", "white")
 
 par(mar=c(4, 4, 2, 2)) # Adjusting margins
 
@@ -68,3 +69,52 @@ for (i in 1:4) { pie(c(percentages[i], 100 - percentages[i]), labels = c("", "")
 ```
 
 The above pie charts show the cholesterol intake per cup for a 2000 calorie diet. Obviously, higher fat means more cholesterol. This intake is quite important as a health conscious person is likely to lean towards the lower fat options because of the lower cholesterol. Accompany the individual cholesterol with the fact that most people will use milk in some way and not just drink it straight up implies that the way they consume it (through cereal or drinks) would increase their cholesterol intake due to what they added.
+
+```{R}
+
+data1 <- data.frame(
+  Variable = factor(titles, levels = titles),  
+  Percentage = c(10, 6, 3, 0)
+)
+
+data2 <- data.frame(
+  Variable = factor(titles, levels = titles),  
+  Percentage = c(25, 15, 7, 0)
+)
+
+colors <- c("Whole Milk" = "red", "2% Milk" = "orange", "1% Milk" = "magenta", "Skim Milk" = "pink")
+
+plot1 <- ggplot(data1, aes(x = Variable, y = Percentage, fill = Variable)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = colors) +
+  scale_y_continuous(limits = c(0, 30), breaks = seq(0, 28, by = 4)) +
+  theme_minimal() +
+  labs(title = "Total Fat", x = "", y = "% of Daily Value for 2000 Cal. Diet") +
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")
+
+plot2 <- ggplot(data2, aes(x = Variable, y = Percentage, fill = Variable)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = colors) +
+  scale_y_continuous(limits = c(0, 30), breaks = seq(0, 28, by = 4)) +
+  theme_minimal() +
+  labs(title = "Saturated Fat", x = "", y = "") +
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")
+
+get_legend <- function(myplot) {
+  tmp <- ggplot_gtable(ggplot_build(myplot))
+  leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+  legend <- tmp$grobs[[leg]]
+  return(legend)
+}
+
+legend <- get_legend(ggplot(data1, aes(x = Variable, y = Percentage, fill = Variable)) +
+                       geom_bar(stat = "identity") +
+                       scale_fill_manual(values = colors) +
+                       theme_minimal() +
+                       labs(fill = "Milk Type"))
+
+grid.arrange(plot1, plot2, legend, ncol = 3, widths = c(2.5, 2.5, 1))
+
+
+
+```
