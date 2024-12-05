@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Tai Yue" />
 
+<meta name="date" content="2024-12-04" />
 
-<title>About Us</title>
+<title>Untitled</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,9 +31,6 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -225,69 +224,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -295,16 +231,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -377,67 +303,133 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">About Us</h1>
+<h1 class="title toc-ignore">Untitled</h1>
+<h4 class="author">Tai Yue</h4>
+<h4 class="date">2024-12-04</h4>
 
 </div>
 
 
-<style type="text/css">
-img.portrait{
-  width:20%;
-  float:bottom;
-  float:right;
-}
-</style>
-<p>Thanks for visiting our project! Our team consists of Columbia
-University graduate students. You can learn more about us, individually,
-here:</p>
-<table style="width:100%">
-  <tr>
-    <td><h4>Vidit Tripathi</h4></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><a href="githublink">Vidit Tripathi</a> united the group for this project. He's a puzzle enthusiast and enjoys watching/ reading murder mysteries. <br> Favourite Milk Beverage: Vanilla Milkshake <br> Favourite Dairy Animal: Cow </td>
-    <td><img src="cow1.png" class="portrait"></td>
-  </tr>
+<pre class="r"><code>library(readxl)
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>file_path &lt;- &quot;fluidmilk.xlsx&quot;
+fluidmilk_data &lt;- read_excel(file_path, sheet = &quot;fluidmilk&quot;)</code></pre>
+<pre><code>## New names:
+## • `` -&gt; `...2`
+## • `` -&gt; `...3`
+## • `` -&gt; `...4`
+## • `` -&gt; `...5`
+## • `` -&gt; `...6`
+## • `` -&gt; `...7`
+## • `` -&gt; `...8`
+## • `` -&gt; `...9`
+## • `` -&gt; `...10`</code></pre>
+<pre class="r"><code>colnames(fluidmilk_data) &lt;- c(&quot;Year&quot;, &quot;Whole_Milk&quot;, &quot;Reduced_Fat_2_%&quot;, 
+                              &quot;Low_Fat_1_%&quot;, &quot;Skim&quot;, &quot;Flavored_Whole&quot;, 
+                              &quot;Flavored_Other&quot;, &quot;Buttermilk&quot;, &quot;Eggnog&quot;, &quot;Total_Sales&quot;)
 
-  <tr>
-    <td><h4>Lahari Koganti</h4></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><a href="githublink">Lahari Koganti</a> is passionate about all things science. In addition, she enjoys watching TV shows and shopping. <br> Favourite Milk Beverage: Chocolate Milk <br> Favourite Dairy Animal: Buffalo </td>
-    <td><img src="cow2.png" class="portrait"></td>
-  </tr>
-  
-  <tr>
-    <td><h4>Yue Tai</h4></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><a href="githublink">Yue Tai</a> loves all kinds of sports! <br> Favourite Milk Beverage: Strawberry Milk <br> Favourite Dairy Animal: Goat </td>
-    <td><img src="cow3.png" class="portrait"></td>
-  </tr>
 
-</table>
-<p><br></p>
-<div id="contact-us" class="section level3">
-<h3>Contact Us</h3>
-<p>If you would like to, please <a href="mailto:@gmail.com">contact
-us</a>.</p>
-<hr />
-<p>Thanks a lot for visiting our website!</p>
-<div class="tocify-extend-page" data-unique="tocify-extend-page"
-style="height: 0;">
+fluidmilk_data &lt;- fluidmilk_data %&gt;%
+  mutate(Year = as.numeric(Year)) %&gt;%
+  filter(!is.na(Year))</code></pre>
+<pre><code>## Warning: There was 1 warning in `mutate()`.
+## ℹ In argument: `Year = as.numeric(Year)`.
+## Caused by warning:
+## ! NAs introduced by coercion</code></pre>
+<pre class="r"><code>fluidmilk_data &lt;- fluidmilk_data %&gt;%
+  mutate(across(Whole_Milk:Total_Sales, as.numeric))
 
+print(fluidmilk_data)</code></pre>
+<pre><code>## # A tibble: 49 × 10
+##     Year Whole_Milk `Reduced_Fat_2_%` `Low_Fat_1_%`  Skim Flavored_Whole
+##    &lt;dbl&gt;      &lt;dbl&gt;             &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;
+##  1  1975      36188              8726          2742  2480           1366
+##  2  1976      35241              9556          2875  2524           1475
+##  3  1977      34036             10423          3003  2617           1446
+##  4  1978      33235             11017          3233  2543           1359
+##  5  1979      32480             11762          3281  2604           1236
+##  6  1980      31253             12435          3483  2636           1075
+##  7  1981      30397             13088          3574  2583            843
+##  8  1982      29350             13501          3537  2449            710
+##  9  1983      28871             14183          3455  2474            749
+## 10  1984      28204             15143          3382  2726            907
+## # ℹ 39 more rows
+## # ℹ 4 more variables: Flavored_Other &lt;dbl&gt;, Buttermilk &lt;dbl&gt;, Eggnog &lt;dbl&gt;,
+## #   Total_Sales &lt;dbl&gt;</code></pre>
+<pre class="r"><code>key_stats &lt;- fluidmilk_data %&gt;%
+  summarise(
+    across(everything(), list(mean = mean, sd = sd, min = min, max = max), na.rm = TRUE)
+  )</code></pre>
+<pre><code>## Warning: There was 1 warning in `summarise()`.
+## ℹ In argument: `across(...)`.
+## Caused by warning:
+## ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
+## Supply arguments directly to `.fns` through an anonymous function instead.
+## 
+##   # Previously
+##   across(a:b, mean, na.rm = TRUE)
+## 
+##   # Now
+##   across(a:b, \(x) mean(x, na.rm = TRUE))</code></pre>
+<pre class="r"><code>print(key_stats)</code></pre>
+<pre><code>## # A tibble: 1 × 40
+##   Year_mean Year_sd Year_min Year_max Whole_Milk_mean Whole_Milk_sd
+##       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+## 1      1999    14.3     1975     2023          20872.         6578.
+## # ℹ 34 more variables: Whole_Milk_min &lt;dbl&gt;, Whole_Milk_max &lt;dbl&gt;,
+## #   `Reduced_Fat_2_%_mean` &lt;dbl&gt;, `Reduced_Fat_2_%_sd` &lt;dbl&gt;,
+## #   `Reduced_Fat_2_%_min` &lt;dbl&gt;, `Reduced_Fat_2_%_max` &lt;dbl&gt;,
+## #   `Low_Fat_1_%_mean` &lt;dbl&gt;, `Low_Fat_1_%_sd` &lt;dbl&gt;, `Low_Fat_1_%_min` &lt;dbl&gt;,
+## #   `Low_Fat_1_%_max` &lt;dbl&gt;, Skim_mean &lt;dbl&gt;, Skim_sd &lt;dbl&gt;, Skim_min &lt;dbl&gt;,
+## #   Skim_max &lt;dbl&gt;, Flavored_Whole_mean &lt;dbl&gt;, Flavored_Whole_sd &lt;dbl&gt;,
+## #   Flavored_Whole_min &lt;dbl&gt;, Flavored_Whole_max &lt;dbl&gt;, …</code></pre>
+<div id="flavored-whole-milk-vs-flavored-non-whole-milk-sales-over-time"
+class="section level2">
+<h2>Flavored Whole Milk vs Flavored Non-Whole Milk Sales Over Time</h2>
+<pre class="r"><code>library(ggplot2)
+library(tidyr)
+
+
+fluidmilk_data_comparison &lt;- fluidmilk_data %&gt;%
+  mutate(
+    Flavored_Whole_Category = Flavored_Whole, 
+    Flavored_Non_Whole_Category = Flavored_Other 
+  ) %&gt;%
+  select(Year, Flavored_Whole_Category, Flavored_Non_Whole_Category) %&gt;%
+  pivot_longer(cols = c(Flavored_Whole_Category, Flavored_Non_Whole_Category),
+               names_to = &quot;Milk_Type&quot;, values_to = &quot;Sales&quot;)
+
+
+ggplot(fluidmilk_data_comparison, aes(x = Year, y = Sales, fill = Milk_Type)) +
+  geom_bar(stat = &quot;identity&quot;, position = &quot;dodge&quot;) +
+  labs(
+    title = &quot;Flavored Whole Milk vs Flavored Non-Whole Milk Sales Over Time&quot;,
+    x = &quot;Year&quot;,
+    y = &quot;Sales (Million Pounds)&quot;,
+    fill = &quot;Milk Type&quot;
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
+<p><img src="Flavored-_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Flavored non-whole milk consistently outpaces flavored whole milk in
+sales, especially after the 1990s.Both categories show significant
+growth from the 1980s, peaking around the late 1990s to early 2000s.
+Sales for both categories decline sharply after 2010, aligning with
+broader trends of reduced fluid milk consumption.Flavored whole milk
+exhibits relatively stable sales compared to the larger fluctuations
+seen in flavored non-whole milk.</p>
 </div>
-</div>
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -470,35 +462,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
