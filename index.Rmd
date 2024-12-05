@@ -5,7 +5,12 @@ output: html_document
 
 # A Comprehensive Analysis of Milk Production & Types
 
-![Milk Nutrition](images/CoverPicW.png)
+
+![](images/CoverPicW.png){ width=1000 height=640 }
+
+<br>
+
+## Welcome
 
 Welcome to our website **Dairy Industry Insights**, your go-to source for the latest trends, research, and information on milk production in the US and milk types. 
 
