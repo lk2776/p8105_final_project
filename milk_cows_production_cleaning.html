@@ -11,7 +11,7 @@
 
 
 
-<title>milk_cows_production_cleaning</title>
+<title>Milk Cows and Milk Production</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -32,6 +32,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -299,126 +301,14 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Milk Cows and Milk Production</h1>
 
 </div>
 
 
-<div id="milk_cows_production_cleaning" class="section level1">
-<h1>milk_cows_production_cleaning</h1>
-<p>2024-11-18</p>
-<pre class="r"><code>#load packages
-library(tidyverse)
-library(ggridges)
-library(patchwork)
-library(purrr)
-library(broom)
-library(readxl)
-library(ggplot2)
-library(sf)
-library(usmap)
-
-#R figure settings
-knitr::opts_chunk$set(
-  fig.width = 9,
-  fig.asp = .6,
-  out.width = &quot;90%&quot;
-)
-theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))
-
-options(
-  ggplot2.continuous.colour = &quot;viridis&quot;,
-  ggplot2.continuous.fill = &quot;viridis&quot;
-)
-
-scale_colour_discrete = scale_colour_viridis_d
-scale_fill_discrete = scale_fill_viridis_d</code></pre>
-<div id="read-milk-cows-dataset" class="section level2">
-<h2>read milk cows dataset</h2>
-<pre class="r"><code>milk_cows = readxl::read_excel(&quot;./data/milkcowsandprod.xlsx&quot;, sheet=&quot;Milk cows&quot;, skip=1,col_names = TRUE) |&gt;
-  janitor::clean_names() |&gt;
-  #drop_na() |&gt;
-  rename(region = x1) |&gt;
-  rename(state = back_to_content_page) |&gt;
-  filter_all(any_vars(!is.na(.))) |&gt;
-  rename_with(~ gsub(&quot;^x&quot;, &quot;&quot;, .), starts_with(&quot;x&quot;)) |&gt;
- mutate(region = case_when(
-    state %in% c(&quot;Maine&quot;, &quot;New Hampshire&quot;, &quot;Vermont&quot;, &quot;Massachusetts&quot;, &quot;Rhode Island&quot;, 
-                 &quot;Connecticut&quot;, &quot;New York&quot;, &quot;New Jersey&quot;, &quot;Pennsylvania&quot;, 
-                 &quot;Delaware&quot;, &quot;Maryland&quot;) ~ &quot;Northeast&quot;,
-    state %in% c(&quot;Michigan&quot;,&quot;Wisconsin&quot;,&quot;Minnesota&quot;) ~ &quot;Lake States&quot;,
-    state %in% c(&quot;Ohio&quot;,&quot;Indiana&quot;,&quot;Illinois&quot;,&quot;Iowa&quot;,&quot;Missouri&quot;) ~ &quot;Corn Belt&quot;,
-    state %in% c(&quot;North Dakota&quot;, &quot;South Dakota&quot;, &quot;Nebraska&quot;, &quot;Kansas&quot;) ~ &quot;Northern Plains&quot;,
-    state %in% c(&quot;Virginia&quot;, &quot;West Virginia&quot;, &quot;North Carolina&quot;, &quot;Kentucky&quot;, &quot;Tennessee&quot;) ~ &quot;Appalachia&quot;,
-    state %in% c(&quot;South Carolina&quot;, &quot;Georgia&quot;, &quot;Florida&quot;, &quot;Alabama&quot;) ~ &quot;Southeast&quot;,
-    state %in% c(&quot;Mississippi&quot;, &quot;Arkansas&quot;,&quot;Louisiana&quot;) ~ &quot;Delta States&quot;,
-    state %in% c(&quot;Oklahoma&quot;,&quot;Texas&quot;) ~ &quot;Southern Plains&quot;,
-    state %in% c(&quot;Montana&quot;,&quot;Idaho&quot;,&quot;Wyoming&quot;,&quot;Colorado&quot;,&quot;New Mexico&quot;,&quot;Arizona&quot;,&quot;Utah&quot;,&quot;Nevada&quot;) ~ &quot;Mountain Region&quot;,
-    state %in% c(&quot;Washington&quot;,&quot;Oregon&quot;,&quot;California&quot;) ~ &quot;West Coast&quot;,
-    state %in% c(&quot;Alaska&quot;,&quot;Hawaii&quot;) ~ &quot;Other States&quot;
-    #TRUE ~ &quot;Other&quot;  # Default case for states not in the Northeast
-  )) |&gt;
-  filter(!is.na(state)) </code></pre>
-<pre><code>## New names:
-## • `` -&gt; `...1`</code></pre>
-<pre class="r"><code>data_milk_cows = milk_cows |&gt;
-  mutate(across(
-    .cols = matches(&quot;^\\d{4}_.*&quot;), 
-    .fns = ~ as.numeric(.),  
-    .names = &quot;{.col}&quot; 
-  )) |&gt;
-   mutate(`2019` = as.numeric(`2019`), 
-         `2020` = as.numeric(`2020`),
-         `2021` = as.numeric(`2021`),
-         `2022` = as.numeric(`2022`),
-         `2023` = as.numeric(`2023`)) |&gt;
-  pivot_longer(
-    cols = 3:ncol(milk_cows),
-    names_to = &quot;year&quot;,
-    values_to = &quot;number_of_cows&quot;
-  )  </code></pre>
-<pre><code>## Warning: There were 5 warnings in `mutate()`.
-## The first warning was:
-## ℹ In argument: `2019 = as.numeric(`2019`)`.
-## Caused by warning:
-## ! NAs introduced by coercion
-## ℹ Run `dplyr::last_dplyr_warnings()` to see the 4 remaining warnings.</code></pre>
-<pre class="r"><code>#point plot 
-
-
-
-#map coordinates of states
-us_states &lt;- usmap::us_map()
-
-#abbreviation for state names
-data_milk_cows_2 = data_milk_cows |&gt; mutate(
-  state_abbr = state.abb[match(state, state.name)]
-)
-
-#merge location data with production data
-combine_milk_cows &lt;- us_states |&gt;
- left_join(data_milk_cows_2, by = c(&quot;abbr&quot; = &quot;state_abbr&quot;))
-
-ggplot(combine_milk_cows) +
-  geom_sf(aes(fill = number_of_cows), color = &quot;white&quot;, size = 0.2) +
-  scale_fill_viridis_c(name = &quot;number_of_cows&quot;) + 
-  theme_minimal() +
-  labs(title = &quot;state number_of_cows&quot;)</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-3-1.png" width="90%" /></p>
-<pre class="r"><code>ggplot(combine_milk_cows) +
-  geom_point(aes(x = state, y = number_of_cows, size = 0.2, color = number_of_cows), 
-             alpha = 0.7) +  
-  scale_size_continuous(name = &quot;number_of_cows&quot;, range = c(3, 7)) +
-  scale_color_viridis_c(name = &quot;number_of_cows&quot;)  + 
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
-        legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale
-## range (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-3-2.png" width="90%" /></p>
-</div>
 <div id="milk-production-dataset" class="section level2">
 <h2>milk production dataset</h2>
-<pre class="r"><code>milk_production = readxl::read_excel(&quot;./data/milkcowsandprod.xlsx&quot;, sheet=&quot;Milk production&quot;, skip=1,col_names = TRUE) |&gt;
+<pre class="r"><code>milk_production = readxl::read_excel(&quot;/Users/lk/Desktop/p8105/hw_sub/p8105_final_project/data/milkcowsandprod.xlsx&quot;, sheet=&quot;Milk production&quot;, skip=1,col_names = TRUE) |&gt;
   janitor::clean_names() |&gt;
   #drop_na() |&gt;
   rename(region = x1) |&gt;
@@ -447,73 +337,10 @@ ggplot(combine_milk_cows) +
  filter(!is.na(state)) |&gt;
   filter(!is.na(region)) |&gt;
   mutate(across(
-    .cols = matches(&quot;^\\d{4}_.*&quot;), 
-    .fns = ~ as.numeric(.),  
-    .names = &quot;{.col}&quot; 
-  )) #NAs introduced by coercion</code></pre>
-<pre><code>## New names:
-## • `` -&gt; `...1`
-## • `` -&gt; `...4`
-## • `` -&gt; `...6`
-## • `` -&gt; `...8`
-## • `` -&gt; `...10`
-## • `` -&gt; `...12`
-## • `` -&gt; `...14`
-## • `` -&gt; `...16`
-## • `` -&gt; `...18`
-## • `` -&gt; `...20`
-## • `` -&gt; `...22`
-## • `` -&gt; `...24`
-## • `` -&gt; `...26`
-## • `` -&gt; `...28`
-## • `` -&gt; `...30`
-## • `` -&gt; `...32`
-## • `` -&gt; `...34`
-## • `` -&gt; `...36`
-## • `` -&gt; `...38`
-## • `` -&gt; `...40`
-## • `` -&gt; `...42`
-## • `` -&gt; `...44`
-## • `` -&gt; `...46`
-## • `` -&gt; `...48`
-## • `` -&gt; `...50`
-## • `` -&gt; `...52`
-## • `` -&gt; `...54`
-## • `` -&gt; `...56`
-## • `` -&gt; `...58`
-## • `` -&gt; `...60`
-## • `` -&gt; `...62`
-## • `` -&gt; `...64`
-## • `` -&gt; `...66`
-## • `` -&gt; `...68`
-## • `` -&gt; `...70`
-## • `` -&gt; `...72`
-## • `` -&gt; `...74`
-## • `` -&gt; `...76`
-## • `` -&gt; `...78`
-## • `` -&gt; `...80`
-## • `` -&gt; `...82`
-## • `` -&gt; `...84`
-## • `` -&gt; `...86`
-## • `` -&gt; `...88`
-## • `` -&gt; `...90`
-## • `` -&gt; `...92`
-## • `` -&gt; `...94`
-## • `` -&gt; `...96`
-## • `` -&gt; `...98`
-## • `` -&gt; `...100`
-## • `` -&gt; `...102`
-## • `` -&gt; `...104`
-## • `` -&gt; `...106`
-## • `` -&gt; `...108`
-## • `` -&gt; `...110`
-
-## Warning: There were 10 warnings in `mutate()`.
-## The first warning was:
-## ℹ In argument: `across(...)`.
-## Caused by warning:
-## ! NAs introduced by coercion
-## ℹ Run `dplyr::last_dplyr_warnings()` to see the 9 remaining warnings.</code></pre>
+  .cols = matches(&quot;^\\d{4}_.*&quot;), 
+  .fns = ~ as.numeric(.),  
+  .names = &quot;{.col}&quot; 
+)) #NAs introduced by coercion</code></pre>
 <pre class="r"><code>data = milk_production
 
 data_million_pounds &lt;- data |&gt;
@@ -538,6 +365,67 @@ data_percent_milk_production &lt;- data |&gt;
 
 # left_join
 data_long &lt;- left_join(data_million_pounds, data_percent_milk_production, by = c(&quot;region&quot;,&quot;state&quot;,&quot;year&quot;))</code></pre>
+<pre class="r"><code>#table
+top_10_states &lt;- data_long |&gt;
+  group_by(state) |&gt;
+  summarise(total_million_pounds = sum(million_pounds, na.rm = TRUE))|&gt;
+  arrange(desc(total_million_pounds)) |&gt;
+  head(10)  
+
+#print
+knitr::kable(top_10_states, caption = &quot;Top 10 States by Total Milk Production (Million Pounds)&quot;)</code></pre>
+<table>
+<caption>Top 10 States by Total Milk Production (Million
+Pounds)</caption>
+<thead>
+<tr class="header">
+<th align="left">state</th>
+<th align="right">total_million_pounds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">California</td>
+<td align="right">1466590</td>
+</tr>
+<tr class="even">
+<td align="left">Wisconsin</td>
+<td align="right">1309192</td>
+</tr>
+<tr class="odd">
+<td align="left">New York</td>
+<td align="right">653686</td>
+</tr>
+<tr class="even">
+<td align="left">Pennsylvania</td>
+<td align="right">526532</td>
+</tr>
+<tr class="odd">
+<td align="left">Minnesota</td>
+<td align="right">514405</td>
+</tr>
+<tr class="even">
+<td align="left">Idaho</td>
+<td align="right">386922</td>
+</tr>
+<tr class="odd">
+<td align="left">Texas</td>
+<td align="right">369492</td>
+</tr>
+<tr class="even">
+<td align="left">Michigan</td>
+<td align="right">368200</td>
+</tr>
+<tr class="odd">
+<td align="left">Ohio</td>
+<td align="right">259645</td>
+</tr>
+<tr class="even">
+<td align="left">Washington</td>
+<td align="right">256047</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="plots" class="section level2">
 <h2>plots</h2>
@@ -555,16 +443,19 @@ combine_data &lt;- us_states |&gt;
 
 ggplot(combine_data) +
   geom_sf(aes(fill = million_pounds), color = &quot;white&quot;, size = 0.2) +
-  scale_fill_viridis_c(name = &quot;million pounds&quot;) + 
+  scale_fill_gradientn(
+    colors = c(&quot;pink&quot;, &quot;magenta&quot;,&quot;orange&quot;,&quot;red&quot;),  #magenta
+    name = &quot;Milk in Million Pounds&quot;
+  ) +
+  #scale_fill_viridis_c(name = &quot;million pounds&quot;) + 
   theme_minimal() +
-  labs(title = &quot;state milk production&quot;)</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-6-1.png" width="90%" /></p>
-<pre class="r"><code>ggplot(combine_data) +
-  geom_sf(aes(fill = percent_of_US_milk_production), color = &quot;white&quot;, size = 0.2) +
-  scale_fill_viridis_c(name = &quot;percent_of_US_milk_production&quot;) + 
-  theme_minimal() +
-  labs(title = &quot;state - percent_of_US_milk_production&quot;)</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-6-2.png" width="90%" /></p>
+  labs(title = &quot;Milk Production in Million Pounds by State&quot;)</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
+<pre class="r"><code>#ggplot(combine_data) +
+#  geom_sf(aes(fill = percent_of_US_milk_production), color = &quot;white&quot;, size = 0.2) +
+#  scale_fill_viridis_c(name = &quot;percent_of_US_milk_production&quot;) + 
+#  theme_minimal() +
+#  labs(title = &quot;state - percent_of_US_milk_production&quot;)</code></pre>
 </div>
 <div id="state-production" class="section level2">
 <h2>state production</h2>
@@ -574,57 +465,182 @@ ggplot(combine_data) +
 #  theme_minimal()
 
 ggplot(combine_data) +
-  geom_point(aes(x = state, y = million_pounds, size = million_pounds, color = million_pounds), 
+  geom_point(aes(x = reorder(state,million_pounds), y = million_pounds, color = million_pounds, alpha = 0.7)) +  #size = million_pounds, 
+  scale_color_gradientn(
+    colors = c(&quot;pink&quot;, &quot;magenta&quot;,&quot;orange&quot;,&quot;red&quot;),  #magenta
+    name = &quot;Milk in Million Pounds&quot;
+  ) +
+  #scale_size_continuous(name = &quot;Million Pounds&quot;, range = c(3, 7)) +
+  #scale_color_viridis_c(name = &quot;Million Pounds&quot;)  + 
+    #theme_minimal() +
+    theme(axis.text.x = element_text(angle = 80, hjust = 1) )+
+  labs(title = &quot;Milk Production by State&quot;,
+       x = &quot;State&quot;, 
+       y = &quot;Milk Production in Million Pounds&quot;)</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
+<pre class="r"><code>#read milk cows data
+milk_cows = readxl::read_excel(&quot;/Users/lk/Desktop/p8105/hw_sub/p8105_final_project/data/milkcowsandprod.xlsx&quot;, 
+                               sheet=&quot;Milk cows&quot;, 
+                               skip=1,
+                               col_names = TRUE) |&gt;
+  janitor::clean_names() |&gt;
+  #drop_na() |&gt;
+  rename(region = x1) |&gt;
+  rename(state = back_to_content_page) |&gt;
+  filter_all(any_vars(!is.na(.))) |&gt;
+  rename_with(~ gsub(&quot;^x&quot;, &quot;&quot;, .), starts_with(&quot;x&quot;)) |&gt;
+ mutate(region = case_when(
+    state %in% c(&quot;Maine&quot;, &quot;New Hampshire&quot;, &quot;Vermont&quot;, &quot;Massachusetts&quot;, &quot;Rhode Island&quot;, 
+                 &quot;Connecticut&quot;, &quot;New York&quot;, &quot;New Jersey&quot;, &quot;Pennsylvania&quot;, 
+                 &quot;Delaware&quot;, &quot;Maryland&quot;) ~ &quot;Northeast&quot;,
+    state %in% c(&quot;Michigan&quot;,&quot;Wisconsin&quot;,&quot;Minnesota&quot;) ~ &quot;Lake States&quot;,
+    state %in% c(&quot;Ohio&quot;,&quot;Indiana&quot;,&quot;Illinois&quot;,&quot;Iowa&quot;,&quot;Missouri&quot;) ~ &quot;Corn Belt&quot;,
+    state %in% c(&quot;North Dakota&quot;, &quot;South Dakota&quot;, &quot;Nebraska&quot;, &quot;Kansas&quot;) ~ &quot;Northern Plains&quot;,
+    state %in% c(&quot;Virginia&quot;, &quot;West Virginia&quot;, &quot;North Carolina&quot;, &quot;Kentucky&quot;, &quot;Tennessee&quot;) ~ &quot;Appalachia&quot;,
+    state %in% c(&quot;South Carolina&quot;, &quot;Georgia&quot;, &quot;Florida&quot;, &quot;Alabama&quot;) ~ &quot;Southeast&quot;,
+    state %in% c(&quot;Mississippi&quot;, &quot;Arkansas&quot;,&quot;Louisiana&quot;) ~ &quot;Delta States&quot;,
+    state %in% c(&quot;Oklahoma&quot;,&quot;Texas&quot;) ~ &quot;Southern Plains&quot;,
+    state %in% c(&quot;Montana&quot;,&quot;Idaho&quot;,&quot;Wyoming&quot;,&quot;Colorado&quot;,&quot;New Mexico&quot;,&quot;Arizona&quot;,&quot;Utah&quot;,&quot;Nevada&quot;) ~ &quot;Mountain Region&quot;,
+    state %in% c(&quot;Washington&quot;,&quot;Oregon&quot;,&quot;California&quot;) ~ &quot;West Coast&quot;,
+    state %in% c(&quot;Alaska&quot;,&quot;Hawaii&quot;) ~ &quot;Other States&quot;
+    #TRUE ~ &quot;Other&quot;  # Default case for states not in the Northeast
+  )) |&gt;
+  filter(!is.na(state)) |&gt;
+  mutate(
+    ##remove non numeric character and convert to numeric
+    `2019` = gsub(&quot;[^0-9,.-]&quot;, &quot;&quot;, `2019`) |&gt; as.numeric(), 
+    `2020` = gsub(&quot;[^0-9,.-]&quot;, &quot;&quot;, `2020`) |&gt; as.numeric(),
+    `2021` = gsub(&quot;[^0-9,.-]&quot;, &quot;&quot;, `2021`) |&gt; as.numeric(),
+    `2022` = gsub(&quot;[^0-9,.-]&quot;, &quot;&quot;, `2022`) |&gt; as.numeric(),
+    `2023` = gsub(&quot;[^0-9,.-]&quot;, &quot;&quot;, `2023`) |&gt; as.numeric()
+  ) |&gt;
+  pivot_longer(
+    cols = 3:56,
+    names_to = &quot;year&quot;,
+    values_to = &quot;number_of_cows&quot;
+  )  
+
+#milk_cows </code></pre>
+<pre class="r"><code>#table 
+top_10_states &lt;- milk_cows |&gt;
+  group_by(state) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |&gt;
+  arrange(desc(total_cows)) |&gt;
+  head(10)  
+
+#print
+knitr::kable(top_10_states, caption = &quot;Top 10 States by Total Number of Cows&quot;)</code></pre>
+<table>
+<caption>Top 10 States by Total Number of Cows</caption>
+<thead>
+<tr class="header">
+<th align="left">state</th>
+<th align="right">total_cows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Wisconsin</td>
+<td align="right">81847</td>
+</tr>
+<tr class="even">
+<td align="left">California</td>
+<td align="right">72588</td>
+</tr>
+<tr class="odd">
+<td align="left">New York</td>
+<td align="right">40313</td>
+</tr>
+<tr class="even">
+<td align="left">Minnesota</td>
+<td align="right">34790</td>
+</tr>
+<tr class="odd">
+<td align="left">Pennsylvania</td>
+<td align="right">33446</td>
+</tr>
+<tr class="even">
+<td align="left">Texas</td>
+<td align="right">21364</td>
+</tr>
+<tr class="odd">
+<td align="left">Michigan</td>
+<td align="right">20067</td>
+</tr>
+<tr class="even">
+<td align="left">Idaho</td>
+<td align="right">18429</td>
+</tr>
+<tr class="odd">
+<td align="left">Ohio</td>
+<td align="right">17075</td>
+</tr>
+<tr class="even">
+<td align="left">Iowa</td>
+<td align="right">15154</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#map coordinates of states
+us_states &lt;- usmap::us_map()
+
+#abbreviation for state names
+data_milk_cows = milk_cows |&gt; mutate(
+  state_abbr = state.abb[match(state, state.name)]
+)
+
+#merge location data with production data
+combine_milk_cows &lt;- us_states |&gt;
+ left_join(data_milk_cows, by = c(&quot;abbr&quot; = &quot;state_abbr&quot;))
+
+ggplot(combine_milk_cows) +
+  geom_sf(aes(fill = number_of_cows), color = &quot;white&quot;, size = 0.2) +
+  #scale_fill_viridis_c(name = &quot;number_of_cows&quot;,option = &quot;plasma&quot;) +
+  scale_fill_gradientn(
+    colors = c(&quot;pink&quot;, &quot;magenta&quot;,&quot;orange&quot;,&quot;red&quot;),  #magenta
+    name = &quot;Number of Cows&quot;
+  ) + 
+  theme_minimal() +
+  labs(title = &quot;Number of Cows by State&quot;)</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
+<pre class="r"><code>ggplot(combine_milk_cows) +
+  geom_sf(aes(fill = number_of_cows), color = &quot;white&quot;, size = 0.2) +
+  #scale_fill_viridis_c(name = &quot;number_of_cows&quot;,option = &quot;plasma&quot;) +
+  scale_fill_gradientn(
+    colors = c(&quot;pink&quot;, &quot;orange&quot;,&quot;red&quot;),  #magenta
+    name = &quot;Number of Cows&quot;
+  ) + 
+  theme_minimal() +
+  labs(title = &quot;Number of Cows by State&quot;)</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-8-2.png" width="90%" /></p>
+<pre class="r"><code>ggplot(combine_milk_cows) +
+  geom_point(aes(x = reorder(state, number_of_cows), y = number_of_cows, color = number_of_cows), 
              alpha = 0.7) +  
-  scale_size_continuous(name = &quot;Million Pounds&quot;, range = c(3, 7)) +
-  scale_color_viridis_c(name = &quot;Million Pounds&quot;)  + 
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
-        legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale
-## range (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-7-1.png" width="90%" /></p>
-</div>
-<div id="region-production" class="section level2">
-<h2>region production</h2>
-<pre class="r"><code>ggplot(combine_data) +
-  geom_point(aes(x = region, y = million_pounds, size = million_pounds, color = million_pounds), 
+  #scale_size_continuous(name = &quot;number_of_cows&quot;, range = c(3, 7)) +
+ # scale_color_viridis_c(name = &quot;number_of_cows&quot;)  + 
+  scale_color_gradientn(
+    colors = c(&quot;pink&quot;, &quot;magenta&quot;, &quot;orange&quot;,&quot;red&quot;),  #magenta
+    name = &quot;Number of Cows by State&quot;
+  ) +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1))+
+  labs(title = &quot;Number of Cows by State&quot;, 
+       x = &quot;State&quot;,
+       y = &quot;Number of Cows&quot;)</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-8-3.png" width="90%" /></p>
+<pre class="r"><code>ggplot(combine_milk_cows) +
+  geom_point(aes(x = reorder(state, number_of_cows), y = number_of_cows, color = number_of_cows), 
              alpha = 0.7) +  
-  scale_size_continuous(name = &quot;Million Pounds&quot;, range = c(3, 7)) +
-  scale_color_viridis_c(name = &quot;Million Pounds&quot;)  + 
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
-        legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale
-## range (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-8-1.png" width="90%" /></p>
-<p>##state percent</p>
-<pre class="r"><code>ggplot(combine_data) +
-  geom_point(aes(x = state, y = percent_of_US_milk_production, size = million_pounds, color = percent_of_US_milk_production), 
-             alpha = 0.7) +  
-  scale_size_continuous(name = &quot;Million Pounds&quot;, range = c(3, 7)) +
-  scale_color_viridis_c(name = &quot;Million Pounds&quot;)  + 
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
-        legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale
-## range (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-9-1.png" width="90%" /></p>
-</div>
-<div id="region-percent" class="section level2">
-<h2>region percent</h2>
-<pre class="r"><code>ggplot(combine_data) +
-  geom_point(aes(x = region, y = percent_of_US_milk_production, size = million_pounds, color = percent_of_US_milk_production), 
-             alpha = 0.7) +  
-  scale_size_continuous(name = &quot;Million Pounds&quot;, range = c(3, 7)) +
-  scale_color_viridis_c(name = &quot;Million Pounds&quot;)  + 
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
-        legend.position = &quot;bottom&quot;) </code></pre>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale
-## range (`geom_point()`).</code></pre>
-<p><img src="milk_cows_production_cleaning_files/figure-gfm/unnamed-chunk-10-1.png" width="90%" /></p>
-</div>
+  #scale_size_continuous(name = &quot;number_of_cows&quot;, range = c(3, 7)) +
+ # scale_color_viridis_c(name = &quot;number_of_cows&quot;)  + 
+  scale_color_gradientn(
+    colors = c(&quot;pink&quot;, &quot;orange&quot;,&quot;red&quot;),  #magenta
+    name = &quot;Number of Cows by State&quot;
+  ) +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1))+
+  labs(title = &quot;Number of Cows by State&quot;, 
+       x = &quot;State&quot;,
+       y = &quot;Number of Cows&quot;)</code></pre>
+<p><img src="milk_cows_production_cleaning_files/figure-html/unnamed-chunk-8-4.png" width="90%" /></p>
 </div>
 
 
