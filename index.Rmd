@@ -7,13 +7,8 @@ output: html_document
 
 ![Milk Nutrition](images/CoverPicW.png)
 
-Welcome to **Dairy Industry Insights**, your go-to source for the latest trends, research, and information on the dairy industry. 
+Welcome to our website **Dairy Industry Insights**, your go-to source for the latest trends, research, and information on milk production in the US and milk types. 
 
-<br>
-
-## About Us
-
-We are a team of Biostatistics students from the Mailman School of Public health! To know more about us: <a href=About-us.html>go here</a>
 
 <br>
 
@@ -23,12 +18,19 @@ Dairy Industry Insights Project
 Our project delves into the dairy industry, focusing on:
 
 <ul> 
-<li>Milking Cows and Production: We compile data on milk production and cow numbers across various states.</li>
+<li>Milking Cows and Production: We compiled data on milk production and cow numbers across various states.</li>
 
-<li>Different Milk Types: We analyze the production dynamics of whole milk, 2%, 1%, and skim milk, highlighting trends and influencing factors.</li>
+<li>Different Milk Types: We analyzed the production dynamics of whole milk, 2%, 1%, and skim milk, highlighting the trends.</li>
 
-<li>Nutritional Analysis: We examine the nutritional content of various milk types, including fat, protein, vitamins, and minerals, offering insights into their health benefits and dietary impacts.</li>
+<li>Nutritional Analysis: We examined the nutritional content of various milk types, including cholosterol, fat and minerals, offering insights into their health benefits and dietary impacts.</li>
 </ul>
+
+<br>
+
+
+## About Us
+
+We are a team of Biostatistics students from the Mailman School of Public health! To know more about us: <a href=About-us.html>go here</a>
 
 <br>
 
@@ -212,7 +214,7 @@ htmltools::HTML('
   </script>
 </head>
 <body>
-  <p>Thank you so much for visiting our website! Here is a fun activity! One dairy animal is here- find it! <br>
+  <p>Thank you so much for visiting our website! Here is a fun activity! One dairy animal is hidden here- find it! <br>
   (Refresh site for new puzzle):</p>
   <div id="puzzleContainer"></div>
   <input type="text" id="wordInput" placeholder="Enter word">
