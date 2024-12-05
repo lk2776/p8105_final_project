@@ -17,7 +17,7 @@ navbar:
       - text: "Milk Types Compared"
         href: Trends-in-Different-Milk-Types-Over-Time.html
       - text: "Flavoured vs Non Flavoured"
-        href: Flavored.html
+        href: Flavored-.html
     - text: "Nutrition"
       href: nutri.html
     - text: "Report"
