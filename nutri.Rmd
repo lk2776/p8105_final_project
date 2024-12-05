@@ -4,14 +4,14 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(readxl)
 library(gridExtra)
+library(knitr)
+library(kableExtra)
 ```
 
-
-```{R}
+```{R, echo= FALSE}
 df <- readxl::read_xlsx('nutri.xlsx')|>
   head(11)
 nutri <- df |>
@@ -21,13 +21,29 @@ nutri_d <- nutri |>
   mutate(mean_diff = rowMeans(across(c(Whole, `2 Percent`, `1 Percent`))) -Skim) |>
   select(c(1,6)) |>
   filter(mean_diff != 0)
-print(nutri_d)
+colnames(nutri_d)[2] <- "Mean Difference"
+nutri_same <- nutri |>
+  mutate(mean_diff = rowMeans(across(c(Whole, `2 Percent`, `1 Percent`))) -Skim) |>
+  filter(mean_diff == 0) |>
+  select(1,3)
+colnames(nutri_same)[2] <- "All 4 Milk Types"
+kable(nutri_same, caption = "Nutritional Components Same Across Milk Types", format = "html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 ```
 
-We calculated the mean of the nutritional components for whole, 2% and 1% milk and subtracted the corresponding component for skim milk. If this mean difference is not 0 it means that there is some difference across the milk types for that component. 
+The above table provides us with nutritional components that are the same for all 4 types of milk.
 
+To analyze differences in milk types, we will subtract the values for skim milk from the mean of the other milk types. If the result is not zero, it indicates a difference. Since skim milk has the least fat, it and whole milk will have extreme values, meaning the mean of the others won't match skim milk.
 
 ```{R}
+kable(nutri_d, caption = "Nutritional Components Different Across Milk Types", format = "html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+
+```
+
+While the table identifies which components differ, it only indicates where to analyze further. Visualizing these differences with bar plots will provide more insightful and intuitive comparisons.
+
+```{R, echo= FALSE}
 extra = c (0,0,0,0)
 selected_rows <- nutri[c(1, 3, 5, 11), ]
 nutri_bp = cbind(selected_rows, extra)
@@ -52,7 +68,7 @@ Quantity of sodium is roughly the same for all 4 (higher in 1% and skim).
 Skim has the least amount of calcium. The rest seem to have the same amount.
 
 
-```{R}
+```{R, echo= FALSE}
 # Making a layout
 layout(matrix(c(1, 1, 2, 3, 4, 5), nrow=3, ncol=2, byrow=TRUE), heights=c(0.2, 1, 1))
 par(mar=c(0, 0, 2, 0)) # Adjust margins for the title
@@ -60,7 +76,7 @@ plot.new()
 title(main="Cholesterol Intake /cup for a 2000 calorie diet", cex.main=2, font.main=2)
 percentages <- c(12, 6, 5, 2)
 titles <- c("Whole Milk", "2% Milk", "1% Milk", "Skim Milk")
-colors <- c("coral", "white")
+colors <- c("coral", "lightyellow")
 
 par(mar=c(4, 4, 2, 2)) # Adjusting margins
 
@@ -70,8 +86,9 @@ for (i in 1:4) { pie(c(percentages[i], 100 - percentages[i]), labels = c("", "")
 
 The above pie charts show the cholesterol intake per cup for a 2000 calorie diet. Obviously, higher fat means more cholesterol. This intake is quite important as a health conscious person is likely to lean towards the lower fat options because of the lower cholesterol. Accompany the individual cholesterol with the fact that most people will use milk in some way and not just drink it straight up implies that the way they consume it (through cereal or drinks) would increase their cholesterol intake due to what they added.
 
-```{R}
+<br>
 
+```{R, echo= FALSE}
 data1 <- data.frame(
   Variable = factor(titles, levels = titles),  
   Percentage = c(10, 6, 3, 0)
@@ -83,6 +100,8 @@ data2 <- data.frame(
 )
 
 colors <- c("Whole Milk" = "red", "2% Milk" = "orange", "1% Milk" = "magenta", "Skim Milk" = "pink")
+
+empty_plot <- ggplot() + theme_void()
 
 plot1 <- ggplot(data1, aes(x = Variable, y = Percentage, fill = Variable)) +
   geom_bar(stat = "identity") +
@@ -112,9 +131,7 @@ legend <- get_legend(ggplot(data1, aes(x = Variable, y = Percentage, fill = Vari
                        scale_fill_manual(values = colors) +
                        theme_minimal() +
                        labs(fill = "Milk Type"))
-
-grid.arrange(plot1, plot2, legend, ncol = 3, widths = c(2.5, 2.5, 1))
-
-
-
+grid.arrange(empty_plot, plot1, plot2, legend, ncol = 4, widths = c(1, 2, 2, 1.5))
 ```
+
+The fat content decreases progressively from Whole Milk to 2% Milk, 1% Milk, and Skim Milk, reflecting their names. The bar plots above effectively illustrate this reduction. For instance, a 1% decrease indicates that our total and saturated fat intake is halved when transitioning from Whole to 2% Milk, and further reduced from 2% to 1%, ultimately reaching zero in Skim Milk.
