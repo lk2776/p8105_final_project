@@ -3,7 +3,7 @@ title: "Milk Cows and Milk Production"
 output: html_document
 ---
 
-```{r setup, warning=FALSE,message=FALSE}
+```{r setup, include=FALSE, warning=FALSE,message=FALSE}
 #load packages
 library(tidyverse)
 library(ggridges)
@@ -30,6 +30,12 @@ options(
 
 scale_colour_discrete = scale_colour_viridis_d
 scale_fill_discrete = scale_fill_viridis_d
+
+knitr::opts_chunk$set(
+  echo = TRUE,         #code is not displayed in output
+  warning = FALSE,     #warnings false
+  message = FALSE      #messages false
+)
 ```
 
 
@@ -69,21 +75,7 @@ milk_cows = readxl::read_excel("./data/milkcowsandprod.xlsx",
     `2021` = gsub("[^0-9,.-]", "", `2021`) |> as.numeric(),
     `2022` = gsub("[^0-9,.-]", "", `2022`) |> as.numeric(),
     `2023` = gsub("[^0-9,.-]", "", `2023`) |> as.numeric()
-  )
-```
-
-```{r}
-data_milk_cows = milk_cows |>
-  mutate(across(
-    .cols = matches("^\\d{4}_.*"), 
-    .fns = ~ as.numeric(.),  
-    .names = "{.col}" 
-  )) |>
-   mutate(`2019` = as.numeric(`2019`), 
-         `2020` = as.numeric(`2020`),
-         `2021` = as.numeric(`2021`),
-         `2022` = as.numeric(`2022`),
-         `2023` = as.numeric(`2023`)) |>
+  ) |>
   pivot_longer(
     cols = 3:ncol(milk_cows),
     names_to = "year",
@@ -91,42 +83,89 @@ data_milk_cows = milk_cows |>
   )  
 ```
 
+
 ```{r}
-#point plot 
+#table 
+top_10_states <- milk_cows |>
+  group_by(state) |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
+  arrange(desc(total_cows)) |>
+  head(10)  
 
+#print
+knitr::kable(top_10_states, caption = "Top 10 States by Total Number of Cows")
+```
 
-
+```{r}
 #map coordinates of states
 us_states <- usmap::us_map()
 
 #abbreviation for state names
-data_milk_cows_2 = data_milk_cows |> mutate(
+data_milk_cows = milk_cows |> mutate(
   state_abbr = state.abb[match(state, state.name)]
 )
 
 #merge location data with production data
 combine_milk_cows <- us_states |>
- left_join(data_milk_cows_2, by = c("abbr" = "state_abbr"))
+ left_join(data_milk_cows, by = c("abbr" = "state_abbr"))
 
 ggplot(combine_milk_cows) +
   geom_sf(aes(fill = number_of_cows), color = "white", size = 0.2) +
-  scale_fill_viridis_c(name = "number_of_cows") + 
+  #scale_fill_viridis_c(name = "number_of_cows",option = "plasma") +
+  scale_fill_gradientn(
+    colors = c("pink", "magenta","orange","red"),  #magenta
+    name = "Number of Cows"
+  ) + 
   theme_minimal() +
-  labs(title = "state number_of_cows")
+  labs(title = "Number of Cows by State")
 
 ggplot(combine_milk_cows) +
-  geom_point(aes(x = state, y = number_of_cows, size = 0.2, color = number_of_cows), 
+  geom_sf(aes(fill = number_of_cows), color = "white", size = 0.2) +
+  #scale_fill_viridis_c(name = "number_of_cows",option = "plasma") +
+  scale_fill_gradientn(
+    colors = c("pink", "orange","red"),  #magenta
+    name = "Number of Cows"
+  ) + 
+  theme_minimal() +
+  labs(title = "Number of Cows by State")
+
+ggplot(combine_milk_cows) +
+  geom_point(aes(x = reorder(state, number_of_cows), y = number_of_cows, color = number_of_cows), 
              alpha = 0.7) +  
-  scale_size_continuous(name = "number_of_cows", range = c(3, 7)) +
-  scale_color_viridis_c(name = "number_of_cows")  + 
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1),  
-        legend.position = "bottom") 
+  #scale_size_continuous(name = "number_of_cows", range = c(3, 7)) +
+ # scale_color_viridis_c(name = "number_of_cows")  + 
+  scale_color_gradientn(
+    colors = c("pink", "magenta", "orange","red"),  #magenta
+    name = "Number of Cows by State"
+  ) +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1))+
+  labs(title = "Number of Cows by State", 
+       x = "State",
+       y = "Number of Cows")
 
+ggplot(combine_milk_cows) +
+  geom_point(aes(x = reorder(state, number_of_cows), y = number_of_cows, color = number_of_cows), 
+             alpha = 0.7) +  
+  #scale_size_continuous(name = "number_of_cows", range = c(3, 7)) +
+ # scale_color_viridis_c(name = "number_of_cows")  + 
+  scale_color_gradientn(
+    colors = c("pink", "orange","red"),  #magenta
+    name = "Number of Cows by State"
+  ) +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1))+
+  labs(title = "Number of Cows by State", 
+       x = "State",
+       y = "Number of Cows")
 
+#top ten states
+top_10_milk_cows_states <- milk_cows |> 
+  arrange(number_of_cows) |> #sort increasing order
+  head(10)  #top 10 rows
 
+# table top ten states
+knitr::kable(top_10_milk_cows_states, caption = "Top 10 States by Number of Cows")
 ```
-
+head
 
 ## milk production dataset
 ```{r}
