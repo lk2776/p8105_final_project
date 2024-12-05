@@ -12,10 +12,12 @@ navbar:
         href: milk_cows_production_cleaning.html
     - text: "Milk Statistics"
       menu:
-      - text: "fluidmilk"
-        href: fluidmilk.html
-      - text: "fluidmilk_2"
-        href: fluidmilk.html
+      - text: "Milk Over the Years"
+        href: milk-over-the-years.html
+      - text: "Milk Types Compared"
+        href: Trends-in-Different-Milk-Types-Over-Time.html
+      - text: "Flavoured vs Non Flavoured"
+        href: Flavored.html
     - text: "Nutrition"
       href: nutri.html
     - text: "Report"
