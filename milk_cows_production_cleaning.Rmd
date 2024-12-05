@@ -1,12 +1,10 @@
 ---
-title: "milk_cows_production_cleaning"
+title: "Milk Cows and Milk Production"
 output: html_document
-date: "2024-11-18"
 ---
 
 ```{r setup, warning=FALSE,message=FALSE}
 #load packages
-##hello
 library(tidyverse)
 library(ggridges)
 library(patchwork)
@@ -34,10 +32,13 @@ scale_colour_discrete = scale_colour_viridis_d
 scale_fill_discrete = scale_fill_viridis_d
 ```
 
-## read milk cows dataset
-```{r}
 
-milk_cows = readxl::read_excel("./data/milkcowsandprod.xlsx", sheet="Milk cows", skip=1,col_names = TRUE) |>
+```{r}
+#read milk cows data
+milk_cows = readxl::read_excel("./data/milkcowsandprod.xlsx", 
+                               sheet="Milk cows", 
+                               skip=1,
+                               col_names = TRUE) |>
   janitor::clean_names() |>
   #drop_na() |>
   rename(region = x1) |>
@@ -60,10 +61,15 @@ milk_cows = readxl::read_excel("./data/milkcowsandprod.xlsx", sheet="Milk cows",
     state %in% c("Alaska","Hawaii") ~ "Other States"
     #TRUE ~ "Other"  # Default case for states not in the Northeast
   )) |>
-  filter(!is.na(state)) 
-   
-
-  
+  filter(!is.na(state)) |>
+  mutate(
+    ##remove non numeric character and convert to numeric
+    `2019` = gsub("[^0-9,.-]", "", `2019`) |> as.numeric(), 
+    `2020` = gsub("[^0-9,.-]", "", `2020`) |> as.numeric(),
+    `2021` = gsub("[^0-9,.-]", "", `2021`) |> as.numeric(),
+    `2022` = gsub("[^0-9,.-]", "", `2022`) |> as.numeric(),
+    `2023` = gsub("[^0-9,.-]", "", `2023`) |> as.numeric()
+  )
 ```
 
 ```{r}
