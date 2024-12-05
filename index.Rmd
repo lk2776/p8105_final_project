@@ -12,7 +12,7 @@ output: html_document
 
 ## Welcome
 
-Welcome to our website **Dairy Industry Insights**, your go-to source for the latest trends, research, and information on milk production in the US and milk types. 
+Welcome to our website **Dairy Industry Insights**, your go-to source for the latest trends, research, and information on milk production in the US and milk types. We are a team of Biostatistics students from the Mailman School of Public health! To know more about us: <a href=About-us.html>go here</a> 
 
 
 <br>
@@ -29,13 +29,6 @@ Our project delves into the dairy industry, focusing on:
 
 <li>Nutritional Analysis: We examined the nutritional content of various milk types, including cholosterol, fat and minerals, offering insights into their health benefits and dietary impacts.</li>
 </ul>
-
-<br>
-
-
-## About Us
-
-We are a team of Biostatistics students from the Mailman School of Public health! To know more about us: <a href=About-us.html>go here</a>
 
 <br>
 
