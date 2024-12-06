@@ -1,0 +1,2319 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>milk_cows.knit</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="custom.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Milk Production
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="milk_cows_production_cleaning.html">milk production across states</a>
+    </li>
+    <li>
+      <a href="milk_cows_production_cleaning.html">milk production across years</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Milk Statistics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="milk-over-the-years.html">Milk Over the Years</a>
+    </li>
+    <li>
+      <a href="Trends-in-Different-Milk-Types-Over-Time.html">Milk Types Compared</a>
+    </li>
+    <li>
+      <a href="Flavored-.html">Flavoured vs Non Flavoured</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="nutri.html">Nutrition</a>
+</li>
+<li>
+  <a href="Report.html">Report</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="About-us.html">About the Team</a>
+</li>
+<li>
+  <a href="https://github.com/lk2776/p8105_final_project/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+
+<pre class="r"><code>#read milk cows data
+milk_cows = readxl::read_excel(&quot;./data/milkcowsandprod.xlsx&quot;, 
+                               sheet=&quot;Milk cows&quot;, 
+                               skip=1,
+                               col_names = TRUE) |&gt;
+  janitor::clean_names() |&gt;
+  #drop_na() |&gt;
+  rename(region = x1) |&gt;
+  rename(state = back_to_content_page) |&gt;
+  filter_all(any_vars(!is.na(.))) |&gt;
+  rename_with(~ gsub(&quot;^x&quot;, &quot;&quot;, .), starts_with(&quot;x&quot;)) |&gt;
+ mutate(region = case_when(
+    state %in% c(&quot;Maine&quot;, &quot;New Hampshire&quot;, &quot;Vermont&quot;, &quot;Massachusetts&quot;, &quot;Rhode Island&quot;, 
+                 &quot;Connecticut&quot;, &quot;New York&quot;, &quot;New Jersey&quot;, &quot;Pennsylvania&quot;, 
+                 &quot;Delaware&quot;, &quot;Maryland&quot;) ~ &quot;Northeast&quot;,
+    state %in% c(&quot;Michigan&quot;,&quot;Wisconsin&quot;,&quot;Minnesota&quot;) ~ &quot;Lake States&quot;,
+    state %in% c(&quot;Ohio&quot;,&quot;Indiana&quot;,&quot;Illinois&quot;,&quot;Iowa&quot;,&quot;Missouri&quot;) ~ &quot;Corn Belt&quot;,
+    state %in% c(&quot;North Dakota&quot;, &quot;South Dakota&quot;, &quot;Nebraska&quot;, &quot;Kansas&quot;) ~ &quot;Northern Plains&quot;,
+    state %in% c(&quot;Virginia&quot;, &quot;West Virginia&quot;, &quot;North Carolina&quot;, &quot;Kentucky&quot;, &quot;Tennessee&quot;) ~ &quot;Appalachia&quot;,
+    state %in% c(&quot;South Carolina&quot;, &quot;Georgia&quot;, &quot;Florida&quot;, &quot;Alabama&quot;) ~ &quot;Southeast&quot;,
+    state %in% c(&quot;Mississippi&quot;, &quot;Arkansas&quot;,&quot;Louisiana&quot;) ~ &quot;Delta States&quot;,
+    state %in% c(&quot;Oklahoma&quot;,&quot;Texas&quot;) ~ &quot;Southern Plains&quot;,
+    state %in% c(&quot;Montana&quot;,&quot;Idaho&quot;,&quot;Wyoming&quot;,&quot;Colorado&quot;,&quot;New Mexico&quot;,&quot;Arizona&quot;,&quot;Utah&quot;,&quot;Nevada&quot;) ~ &quot;Mountain Region&quot;,
+    state %in% c(&quot;Washington&quot;,&quot;Oregon&quot;,&quot;California&quot;) ~ &quot;West Coast&quot;,
+    state %in% c(&quot;Alaska&quot;,&quot;Hawaii&quot;) ~ &quot;Other States&quot;
+    #TRUE ~ &quot;Other&quot;  # Default case for states not in the Northeast
+  )) |&gt;
+  filter(!is.na(state)) |&gt;
+  filter(region != &quot;Other States&quot;) |&gt;
+  mutate(
+    ##remove non numeric character and convert to numeric
+    `2019` = gsub(&quot;[^0-9,.-]&quot;, &quot;&quot;, `2019`) |&gt; as.numeric(), 
+    `2020` = gsub(&quot;[^0-9,.-]&quot;, &quot;&quot;, `2020`) |&gt; as.numeric(),
+    `2021` = gsub(&quot;[^0-9,.-]&quot;, &quot;&quot;, `2021`) |&gt; as.numeric(),
+    `2022` = gsub(&quot;[^0-9,.-]&quot;, &quot;&quot;, `2022`) |&gt; as.numeric(),
+    `2023` = gsub(&quot;[^0-9,.-]&quot;, &quot;&quot;, `2023`) |&gt; as.numeric()
+  ) |&gt;
+  pivot_longer(
+    cols = 3:56,
+    names_to = &quot;year&quot;,
+    values_to = &quot;number_of_cows&quot;
+  )  |&gt;
+  drop_na()</code></pre>
+<div id="milk-cows-statistics" class="section level2">
+<h2>Milk Cows Statistics</h2>
+<pre class="r"><code>#table 
+
+milk_cows |&gt;
+  filter(year == 1970) |&gt;
+  group_by(state,year) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |&gt;
+  arrange(desc(total_cows)) |&gt;
+  rename(State = state, 
+         &quot;Total Cows 1970&quot; = total_cows) |&gt;
+  head(5)  |&gt;
+  knitr::kable(caption = &quot;Top 5 States in Total Cows (per Thousand Head) (1970)&quot;, format=&quot;html&quot;) |&gt;
+  kable_styling(full_width = TRUE, bootstrap_options = &quot;bordered&quot;)</code></pre>
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<caption>
+Top 5 States in Total Cows (per Thousand Head) (1970)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+State
+</th>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:right;">
+Total Cows 1970
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Wisconsin
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+1814
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+New York
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+950
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minnesota
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+949
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+California
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+755
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pennsylvania
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+705
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>milk_cows |&gt;
+  filter(year == 2023) |&gt;
+  group_by(state,year) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |&gt;
+  arrange(desc(total_cows)) |&gt;
+  rename(State = state, 
+         Year = year,
+         &quot;Total Cows 2023&quot; = total_cows) |&gt;
+  head(5)  |&gt;
+  knitr::kable(caption = &quot;Top 5 States in Total Cows (per Thousand Head) (2023)&quot;, format=&quot;html&quot;) |&gt;
+  kable_styling(full_width = TRUE, bootstrap_options = &quot;bordered&quot;)</code></pre>
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<caption>
+Top 5 States in Total Cows (per Thousand Head) (2023)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+State
+</th>
+<th style="text-align:left;">
+Year
+</th>
+<th style="text-align:right;">
+Total Cows 2023
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+California
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+1714
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Wisconsin
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+1270
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Idaho
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+667
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Texas
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+642
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+New York
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+630
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>top_5_states &lt;- milk_cows |&gt;
+  group_by(state) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |&gt;
+  arrange(desc(total_cows)) |&gt;
+  rename(State = state, 
+         &quot;Total Cows&quot; = total_cows) |&gt;
+  head(5)  
+
+total_cows_usa &lt;- round(sum(milk_cows$number_of_cows, na.rm = TRUE))
+avg_cows_state &lt;- round(mean(top_5_states$`Total Cows`, na.rm = TRUE))
+#min_cows_state &lt;- min(top_5_states$`Total Cows`, na.rm = TRUE)
+
+summary_stats &lt;- tibble(
+   State = c(&quot;Total Cows in USA&quot;,  &quot;Avg Number of Cows in USA&quot;), #&quot;Min Number of Cows in USA&quot;,
+  `Total Cows` = c(total_cows_usa, avg_cows_state) #min_cows_state, 
+) 
+
+final_table &lt;- bind_rows(top_5_states, summary_stats) 
+
+#print
+knitr::kable(final_table, caption = &quot;Top 5 States and Summary Statistics for Total Cows (per Thousand Head) (1970-2023)&quot;, format=&quot;html&quot;) |&gt;
+  kable_styling(full_width = TRUE, bootstrap_options = &quot;bordered&quot;)</code></pre>
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<caption>
+Top 5 States and Summary Statistics for Total Cows (per Thousand Head)
+(1970-2023)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+State
+</th>
+<th style="text-align:right;">
+Total Cows
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Wisconsin
+</td>
+<td style="text-align:right;">
+81847
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+California
+</td>
+<td style="text-align:right;">
+72588
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+New York
+</td>
+<td style="text-align:right;">
+40313
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minnesota
+</td>
+<td style="text-align:right;">
+34790
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pennsylvania
+</td>
+<td style="text-align:right;">
+33446
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total Cows in USA
+</td>
+<td style="text-align:right;">
+536298
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Avg Number of Cows in USA
+</td>
+<td style="text-align:right;">
+52597
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="trend-of-milk-cows-across-states-over-the-years"
+class="section level2">
+<h2>trend of milk cows across states over the years</h2>
+<pre class="r"><code>#line plot for milk cows over years across states - increasing and decreasing trend
+custom_colors &lt;- c(
+  &quot;#FF9999&quot;, &quot;#FF6666&quot;, &quot;#FF3333&quot;, &quot;#FF0000&quot;, &quot;#990000&quot;, &quot;#660000&quot;, 
+  &quot;#99FF99&quot;, &quot;#66CC66&quot;, &quot;#33CC33&quot;, &quot;#009900&quot;, &quot;#006600&quot;, &quot;#003300&quot;, 
+  &quot;#99CCFF&quot;, &quot;#66CCFF&quot;, &quot;#33CCFF&quot;, &quot;#0099FF&quot;, &quot;#0066FF&quot;, &quot;#0033FF&quot;, 
+  &quot;#CCCCFF&quot;, &quot;#9999FF&quot;, &quot;#6666FF&quot;, &quot;#3333FF&quot;, &quot;#0000FF&quot;, &quot;#000099&quot;, 
+  &quot;#FF99FF&quot;, &quot;#FF66FF&quot;, &quot;#FF33FF&quot;, &quot;#FF00FF&quot;, &quot;#9900FF&quot;, &quot;#6600FF&quot;, 
+  &quot;#6600CC&quot;, &quot;#660099&quot;, &quot;#660066&quot;, &quot;#6666CC&quot;, &quot;#9999CC&quot;, &quot;#99CC99&quot;, 
+  &quot;#FFCC99&quot;, &quot;#FFCC66&quot;, &quot;#FFCC33&quot;, &quot;#FF9966&quot;, &quot;#FF9966&quot;, &quot;#FF6699&quot;, 
+  &quot;#FF3366&quot;, &quot;#FF0033&quot;, &quot;#FF0000&quot;, &quot;#990033&quot;, &quot;#660033&quot;, &quot;#330033&quot;, 
+  &quot;#9933CC&quot;, &quot;#6600CC&quot;, &quot;#3300CC&quot;
+)
+
+milk_cows |&gt;
+  group_by(state, year) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = &quot;drop&quot;) |&gt;  
+  ggplot( aes(x = year, y = total_cows, color = state, group = state)) +  
+  geom_point() +  
+  geom_line() +    
+  scale_color_manual(values = custom_colors) +  
+  #scale_colour_discrete() + #don&#39;t like it
+  labs(
+    title = &quot;Trend of Total Cows by Region (1970-2023)&quot;,
+    x = &quot;Year&quot;,
+    y = &quot;Total Number of Cows&quot;,
+    color = &quot;Region&quot;
+  ) +
+  theme_classic() + 
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )</code></pre>
+<p><img src="milk_cows_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
+</div>
+<div id="states-with-increasing-trend-of-total-cows"
+class="section level2">
+<h2>states with increasing trend of total cows</h2>
+<pre class="r"><code>#increasing trend
+##total number of cows per state, year, and region
+state_region_cows_summary &lt;-milk_cows |&gt;
+  filter(year &gt;= 1970 &amp; year &lt;= 2023) |&gt;
+  group_by(region, state, year) %&gt;%
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = &quot;drop&quot;)
+
+#year 1970
+cows_1970 &lt;- state_region_cows_summary |&gt;
+  filter(year == 1970) |&gt;
+  select(region, state, total_cows_1970 = total_cows)
+
+#year2023
+cows_2023 &lt;- state_region_cows_summary |&gt;
+  filter(year == 2023) |&gt;
+  select(region, state, total_cows_2023 = total_cows)
+
+#combine data
+state_region_comparison &lt;- left_join(cows_1970, cows_2023, by = c(&quot;region&quot;, &quot;state&quot;)) |&gt;
+  mutate(percentage_increase = round(((total_cows_2023 - total_cows_1970) / total_cows_1970) * 100, 2)) |&gt;
+  filter(percentage_increase &gt; 0) |&gt;
+  arrange(desc(percentage_increase)) |&gt;
+  rename(
+    Region = region,
+    State = state, 
+    &quot;Total Cows 1970&quot; = total_cows_1970,
+    &quot;Total Cows 2023&quot; = total_cows_2023, 
+    Percentage_Increase = percentage_increase
+  )
+
+#table
+kable(state_region_comparison, caption = &quot;States and Regions with Percentage Increase in Total Number of Cows (Per Thousand Head) (1970–2023)&quot;, format = &quot;html&quot;) |&gt;
+  kable_styling(full_width = TRUE, bootstrap_options = &quot;bordered&quot;) </code></pre>
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<caption>
+States and Regions with Percentage Increase in Total Number of Cows (Per
+Thousand Head) (1970–2023)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Region
+</th>
+<th style="text-align:left;">
+State
+</th>
+<th style="text-align:right;">
+Total Cows 1970
+</th>
+<th style="text-align:right;">
+Total Cows 2023
+</th>
+<th style="text-align:right;">
+Percentage_Increase
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Mountain Region
+</td>
+<td style="text-align:left;">
+New Mexico
+</td>
+<td style="text-align:right;">
+32.0
+</td>
+<td style="text-align:right;">
+271
+</td>
+<td style="text-align:right;">
+746.88
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mountain Region
+</td>
+<td style="text-align:left;">
+Idaho
+</td>
+<td style="text-align:right;">
+144.0
+</td>
+<td style="text-align:right;">
+667
+</td>
+<td style="text-align:right;">
+363.19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mountain Region
+</td>
+<td style="text-align:left;">
+Arizona
+</td>
+<td style="text-align:right;">
+50.0
+</td>
+<td style="text-align:right;">
+198
+</td>
+<td style="text-align:right;">
+296.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mountain Region
+</td>
+<td style="text-align:left;">
+Colorado
+</td>
+<td style="text-align:right;">
+81.0
+</td>
+<td style="text-align:right;">
+201
+</td>
+<td style="text-align:right;">
+148.15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mountain Region
+</td>
+<td style="text-align:left;">
+Nevada
+</td>
+<td style="text-align:right;">
+13.9
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+137.41
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+West Coast
+</td>
+<td style="text-align:left;">
+California
+</td>
+<td style="text-align:right;">
+755.0
+</td>
+<td style="text-align:right;">
+1714
+</td>
+<td style="text-align:right;">
+127.02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Southern Plains
+</td>
+<td style="text-align:left;">
+Texas
+</td>
+<td style="text-align:right;">
+355.0
+</td>
+<td style="text-align:right;">
+642
+</td>
+<td style="text-align:right;">
+80.85
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+West Coast
+</td>
+<td style="text-align:left;">
+Washington
+</td>
+<td style="text-align:right;">
+176.0
+</td>
+<td style="text-align:right;">
+258
+</td>
+<td style="text-align:right;">
+46.59
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+West Coast
+</td>
+<td style="text-align:left;">
+Oregon
+</td>
+<td style="text-align:right;">
+97.0
+</td>
+<td style="text-align:right;">
+122
+</td>
+<td style="text-align:right;">
+25.77
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mountain Region
+</td>
+<td style="text-align:left;">
+Utah
+</td>
+<td style="text-align:right;">
+78.0
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+15.38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northern Plains
+</td>
+<td style="text-align:left;">
+South Dakota
+</td>
+<td style="text-align:right;">
+183.0
+</td>
+<td style="text-align:right;">
+195
+</td>
+<td style="text-align:right;">
+6.56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lake States
+</td>
+<td style="text-align:left;">
+Michigan
+</td>
+<td style="text-align:right;">
+433.0
+</td>
+<td style="text-align:right;">
+438
+</td>
+<td style="text-align:right;">
+1.15
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#increasing trend plot
+#custom colors
+custom_colors &lt;- c(
+  &quot;#FF9999&quot;, &quot;#FF6666&quot;, &quot;#FF3333&quot;, &quot;#FF0000&quot;, &quot;#990000&quot;, &quot;#660000&quot;, 
+  &quot;#99FF99&quot;, &quot;#66CC66&quot;, &quot;#33CC33&quot;, &quot;#009900&quot;, &quot;#006600&quot;, &quot;#003300&quot;, 
+  &quot;#99CCFF&quot;, &quot;#66CCFF&quot;, &quot;#33CCFF&quot;, &quot;#0099FF&quot;, &quot;#0066FF&quot;, &quot;#0033FF&quot;, 
+  &quot;#CCCCFF&quot;, &quot;#9999FF&quot;, &quot;#6666FF&quot;, &quot;#3333FF&quot;, &quot;#0000FF&quot;, &quot;#000099&quot;, 
+  &quot;#FF99FF&quot;, &quot;#FF66FF&quot;, &quot;#FF33FF&quot;, &quot;#FF00FF&quot;, &quot;#9900FF&quot;, &quot;#6600FF&quot;, 
+  &quot;#6600CC&quot;, &quot;#660099&quot;, &quot;#660066&quot;, &quot;#6666CC&quot;, &quot;turquoise&quot;, &quot;#99CC99&quot;, 
+  &quot;#FFCC99&quot;, &quot;#FFCC66&quot;, &quot;#FFCC33&quot;, &quot;#FF9966&quot;, &quot;#FF9966&quot;, &quot;#FF6699&quot;, 
+  &quot;#FF3366&quot;, &quot;#FF0033&quot;, &quot;#FF0000&quot;, &quot;#990033&quot;, &quot;#660033&quot;, &quot;#330033&quot;, 
+  &quot;#9933CC&quot;, &quot;#6600CC&quot;, &quot;#3300CC&quot;
+)
+
+custom_colors = c(&quot;pink&quot;,&quot;red2&quot;,&quot;magenta2&quot;,&quot;magenta3&quot;,&quot;chartreuse3&quot;,&quot;salmon&quot;,&quot;maroon&quot;,
+                  &quot;mediumturquoise&quot;,&quot;purple1&quot;,&quot;burlywood3&quot;,&quot;orange&quot;,&quot;blue&quot;)
+
+#decreasing trend
+milk_cows |&gt;
+  filter(state %in% c(&quot;New Mexico&quot;,&quot;Idaho&quot;,&quot;Arizona&quot;,&quot;Colorado&quot;,&quot;Nevada&quot;,
+                      &quot;California&quot;,&quot;Texas&quot;,&quot;Washington&quot;,&quot;Oregon&quot;,&quot;Utah&quot;,&quot;South Dakota&quot;,&quot;Michigan&quot;)) |&gt;
+  group_by(state, year) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = &quot;drop&quot;) |&gt;  
+  ggplot(aes(x = year, y = total_cows, color = state, group = state)) +  
+  geom_point() +  
+  geom_line() +    
+  scale_color_manual(values = custom_colors) +  
+  #scale_color_viridis_d(option=&quot;plasma&quot;)
+  labs(
+    title = &quot;Increasing Trend of Total Cows by State (1970-2023)&quot;,
+    x = &quot;Year&quot;,
+    y = &quot;Total Number of Cows (Thousands)&quot;,
+    color = &quot;State&quot;
+  ) +
+  theme_classic() + 
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )</code></pre>
+<p><img src="milk_cows_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
+</div>
+<div id="states-with-decreasing-trend" class="section level2">
+<h2>states with decreasing trend</h2>
+<pre class="r"><code>#decreasing trend
+state_region_cows_summary &lt;- milk_cows |&gt;
+  filter(year &gt;= 1970 &amp; year &lt;= 2023) |&gt;
+  group_by(region, state, year) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = &quot;drop&quot;)
+
+#1970
+cows_1970 &lt;- state_region_cows_summary |&gt;
+  filter(year == 1970) |&gt;
+  select(region, state, total_cows_1970 = total_cows)
+
+#2023
+cows_2023 &lt;- state_region_cows_summary |&gt;
+  filter(year == 2023) |&gt;
+  select(region, state, total_cows_2023 = total_cows)
+
+#combine
+state_region_comparison &lt;- left_join(cows_1970, cows_2023, by = c(&quot;region&quot;, &quot;state&quot;)) |&gt;
+  mutate(percentage_decrease = round(((total_cows_2023 - total_cows_1970) / total_cows_1970) * 100, 2)) |&gt;
+  filter(percentage_decrease &lt; 0) |&gt;
+  arrange(percentage_decrease) |&gt;
+  rename(
+    Region = region,
+    State = state, 
+    &quot;Total Cows 1970&quot; = total_cows_1970,
+    &quot;Total Cows 2023&quot; = total_cows_2023, 
+    Percentage_Decrease = percentage_decrease
+  )
+
+#table
+kable(state_region_comparison, caption = &quot;States and Regions with Percentage Decrease in Total Number of Cows (Per Thousand Head) (1970–2023)&quot;, format = &quot;html&quot;) |&gt;
+  kable_styling(full_width = TRUE, bootstrap_options = &quot;bordered&quot;)</code></pre>
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<caption>
+States and Regions with Percentage Decrease in Total Number of Cows (Per
+Thousand Head) (1970–2023)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Region
+</th>
+<th style="text-align:left;">
+State
+</th>
+<th style="text-align:right;">
+Total Cows 1970
+</th>
+<th style="text-align:right;">
+Total Cows 2023
+</th>
+<th style="text-align:right;">
+Percentage_Decrease
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Southeast
+</td>
+<td style="text-align:left;">
+Alabama
+</td>
+<td style="text-align:right;">
+122.0
+</td>
+<td style="text-align:right;">
+2.0
+</td>
+<td style="text-align:right;">
+-98.36
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Delta States
+</td>
+<td style="text-align:left;">
+Arkansas
+</td>
+<td style="text-align:right;">
+97.0
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+-96.91
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Delta States
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+179.0
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+-96.65
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Delta States
+</td>
+<td style="text-align:left;">
+Louisiana
+</td>
+<td style="text-align:right;">
+164.0
+</td>
+<td style="text-align:right;">
+8.0
+</td>
+<td style="text-align:right;">
+-95.12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+New Jersey
+</td>
+<td style="text-align:right;">
+68.0
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+-94.12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+Rhode Island
+</td>
+<td style="text-align:right;">
+6.9
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+-92.75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Appalachia
+</td>
+<td style="text-align:left;">
+Tennessee
+</td>
+<td style="text-align:right;">
+288.0
+</td>
+<td style="text-align:right;">
+25.0
+</td>
+<td style="text-align:right;">
+-91.32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northern Plains
+</td>
+<td style="text-align:left;">
+North Dakota
+</td>
+<td style="text-align:right;">
+137.0
+</td>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:right;">
+-91.24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Appalachia
+</td>
+<td style="text-align:left;">
+West Virginia
+</td>
+<td style="text-align:right;">
+52.0
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+-90.38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Southeast
+</td>
+<td style="text-align:left;">
+South Carolina
+</td>
+<td style="text-align:right;">
+64.0
+</td>
+<td style="text-align:right;">
+8.0
+</td>
+<td style="text-align:right;">
+-87.50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Appalachia
+</td>
+<td style="text-align:left;">
+Kentucky
+</td>
+<td style="text-align:right;">
+337.0
+</td>
+<td style="text-align:right;">
+45.0
+</td>
+<td style="text-align:right;">
+-86.65
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+Massachusetts
+</td>
+<td style="text-align:right;">
+60.0
+</td>
+<td style="text-align:right;">
+9.0
+</td>
+<td style="text-align:right;">
+-85.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Corn Belt
+</td>
+<td style="text-align:left;">
+Missouri
+</td>
+<td style="text-align:right;">
+337.0
+</td>
+<td style="text-align:right;">
+62.0
+</td>
+<td style="text-align:right;">
+-81.60
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+Delaware
+</td>
+<td style="text-align:right;">
+13.5
+</td>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:right;">
+-80.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Appalachia
+</td>
+<td style="text-align:left;">
+North Carolina
+</td>
+<td style="text-align:right;">
+170.0
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+<td style="text-align:right;">
+-77.65
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mountain Region
+</td>
+<td style="text-align:left;">
+Montana
+</td>
+<td style="text-align:right;">
+39.0
+</td>
+<td style="text-align:right;">
+9.0
+</td>
+<td style="text-align:right;">
+-76.92
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+Maryland
+</td>
+<td style="text-align:right;">
+152.0
+</td>
+<td style="text-align:right;">
+40.0
+</td>
+<td style="text-align:right;">
+-73.68
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Corn Belt
+</td>
+<td style="text-align:left;">
+Illinois
+</td>
+<td style="text-align:right;">
+297.0
+</td>
+<td style="text-align:right;">
+79.0
+</td>
+<td style="text-align:right;">
+-73.40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Southern Plains
+</td>
+<td style="text-align:left;">
+Oklahoma
+</td>
+<td style="text-align:right;">
+142.0
+</td>
+<td style="text-align:right;">
+39.0
+</td>
+<td style="text-align:right;">
+-72.54
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+New Hampshire
+</td>
+<td style="text-align:right;">
+36.0
+</td>
+<td style="text-align:right;">
+10.0
+</td>
+<td style="text-align:right;">
+-72.22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+Connecticut
+</td>
+<td style="text-align:right;">
+59.0
+</td>
+<td style="text-align:right;">
+18.0
+</td>
+<td style="text-align:right;">
+-69.49
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northern Plains
+</td>
+<td style="text-align:left;">
+Nebraska
+</td>
+<td style="text-align:right;">
+174.0
+</td>
+<td style="text-align:right;">
+54.0
+</td>
+<td style="text-align:right;">
+-68.97
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Appalachia
+</td>
+<td style="text-align:left;">
+Virginia
+</td>
+<td style="text-align:right;">
+197.0
+</td>
+<td style="text-align:right;">
+68.0
+</td>
+<td style="text-align:right;">
+-65.48
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+Maine
+</td>
+<td style="text-align:right;">
+62.0
+</td>
+<td style="text-align:right;">
+25.0
+</td>
+<td style="text-align:right;">
+-59.68
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lake States
+</td>
+<td style="text-align:left;">
+Minnesota
+</td>
+<td style="text-align:right;">
+949.0
+</td>
+<td style="text-align:right;">
+452.0
+</td>
+<td style="text-align:right;">
+-52.37
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Corn Belt
+</td>
+<td style="text-align:left;">
+Iowa
+</td>
+<td style="text-align:right;">
+497.0
+</td>
+<td style="text-align:right;">
+240.0
+</td>
+<td style="text-align:right;">
+-51.71
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Southeast
+</td>
+<td style="text-align:left;">
+Florida
+</td>
+<td style="text-align:right;">
+191.0
+</td>
+<td style="text-align:right;">
+96.0
+</td>
+<td style="text-align:right;">
+-49.74
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mountain Region
+</td>
+<td style="text-align:left;">
+Wyoming
+</td>
+<td style="text-align:right;">
+16.5
+</td>
+<td style="text-align:right;">
+9.3
+</td>
+<td style="text-align:right;">
+-43.64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Corn Belt
+</td>
+<td style="text-align:left;">
+Ohio
+</td>
+<td style="text-align:right;">
+446.0
+</td>
+<td style="text-align:right;">
+253.0
+</td>
+<td style="text-align:right;">
+-43.27
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+Vermont
+</td>
+<td style="text-align:right;">
+194.0
+</td>
+<td style="text-align:right;">
+117.0
+</td>
+<td style="text-align:right;">
+-39.69
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Southeast
+</td>
+<td style="text-align:left;">
+Georgia
+</td>
+<td style="text-align:right;">
+146.0
+</td>
+<td style="text-align:right;">
+91.0
+</td>
+<td style="text-align:right;">
+-37.67
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+Pennsylvania
+</td>
+<td style="text-align:right;">
+705.0
+</td>
+<td style="text-align:right;">
+466.0
+</td>
+<td style="text-align:right;">
+-33.90
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+New York
+</td>
+<td style="text-align:right;">
+950.0
+</td>
+<td style="text-align:right;">
+630.0
+</td>
+<td style="text-align:right;">
+-33.68
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lake States
+</td>
+<td style="text-align:left;">
+Wisconsin
+</td>
+<td style="text-align:right;">
+1814.0
+</td>
+<td style="text-align:right;">
+1270.0
+</td>
+<td style="text-align:right;">
+-29.99
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Corn Belt
+</td>
+<td style="text-align:left;">
+Indiana
+</td>
+<td style="text-align:right;">
+237.0
+</td>
+<td style="text-align:right;">
+190.0
+</td>
+<td style="text-align:right;">
+-19.83
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northern Plains
+</td>
+<td style="text-align:left;">
+Kansas
+</td>
+<td style="text-align:right;">
+188.0
+</td>
+<td style="text-align:right;">
+176.0
+</td>
+<td style="text-align:right;">
+-6.38
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#decreasing trend plot
+#custom colors
+custom_colors &lt;- c(
+  &quot;#FF9999&quot;, &quot;#FF6666&quot;, &quot;#FF3333&quot;, &quot;#FF0000&quot;, &quot;#990000&quot;, &quot;#660000&quot;, 
+  &quot;#99FF99&quot;, &quot;#66CC66&quot;, &quot;#33CC33&quot;, &quot;#009900&quot;, &quot;#006600&quot;, &quot;#003300&quot;, 
+  &quot;#99CCFF&quot;, &quot;#66CCFF&quot;, &quot;#33CCFF&quot;, &quot;#0099FF&quot;, &quot;#0066FF&quot;, &quot;#0033FF&quot;, 
+  &quot;#CCCCFF&quot;, &quot;#9999FF&quot;, &quot;#6666FF&quot;, &quot;#3333FF&quot;, &quot;#0000FF&quot;, &quot;#000099&quot;, 
+  &quot;#FF99FF&quot;, &quot;#FF66FF&quot;, &quot;#FF33FF&quot;, &quot;#FF00FF&quot;, &quot;#9900FF&quot;, &quot;#6600FF&quot;, 
+  &quot;#6600CC&quot;, &quot;#660099&quot;, &quot;#660066&quot;, &quot;#6666CC&quot;, &quot;turquoise&quot;, &quot;#99CC99&quot;, 
+  &quot;#FFCC99&quot;, &quot;#FFCC66&quot;, &quot;#FFCC33&quot;, &quot;#FF9966&quot;, &quot;#FF9966&quot;, &quot;#FF6699&quot;, 
+  &quot;#FF3366&quot;, &quot;#FF0033&quot;, &quot;#FF0000&quot;, &quot;#990033&quot;, &quot;#660033&quot;, &quot;#330033&quot;, 
+  &quot;#9933CC&quot;, &quot;#6600CC&quot;, &quot;#3300CC&quot;
+)
+
+#decreasing trend
+milk_cows |&gt;
+  filter(state %in% c(&quot;Alabama&quot;, &quot;Arkansas&quot;, &quot;Mississippi&quot;, &quot;Louisiana&quot;, &quot;New Jersey&quot;,
+                     &quot;Rhode Island&quot;, &quot;Tennessee&quot;, &quot;North Dakota&quot;, &quot;West Virginia&quot;,
+                     &quot;South Carolina&quot;, &quot;Kentucky&quot;, &quot;Massachusetts&quot;, &quot;Missouri&quot;,
+                     &quot;Delaware&quot;, &quot;North Carolina&quot;, &quot;Montana&quot;, &quot;Maryland&quot;, &quot;Illinois&quot;, &quot;Oklahoma&quot;,
+                     &quot;New Hampshire&quot;, &quot;Connecticut&quot;, &quot;Nebraska&quot;, &quot;Virginia&quot;, &quot;Maine&quot;,
+                     &quot;Minnesota&quot;, &quot;Iowa&quot;, &quot;Florida&quot;, &quot;Wyoming&quot;, &quot;Ohio&quot;, &quot;Vermont&quot;, &quot;Georgia&quot;,
+                     &quot;Pennsylvania&quot;, &quot;New York&quot;, &quot;Wisconsin&quot;, &quot;Indiana&quot;, &quot;Kansas&quot;)) |&gt;
+  group_by(state, year) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = &quot;drop&quot;) |&gt;  
+  ggplot(aes(x = year, y = total_cows, color = state, group = state)) +  
+  geom_point() +  
+  geom_line() +    
+  scale_color_manual(values = custom_colors) +  
+  #scale_color_viridis_d(option=&quot;plasma&quot;)
+  labs(
+    title = &quot;Decreasing Trend of Total Cows by State (1970-2023)&quot;,
+    x = &quot;Year&quot;,
+    y = &quot;Total Number of Cows (Thousands)&quot;,
+    color = &quot;State&quot;
+  ) +
+  theme_classic() + 
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )</code></pre>
+<p><img src="milk_cows_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
+</div>
+<div id="us-map-distribution" class="section level2">
+<h2>US map distribution</h2>
+<pre class="r"><code>#map coordinates of states
+us_states &lt;- usmap::us_map()
+
+#abbreviation for state names
+data_milk_cows = milk_cows |&gt; mutate(
+  state_abbr = state.abb[match(state, state.name)]
+)
+
+#merge location data with production data
+combine_milk_cows_1970 &lt;- us_states |&gt;
+ left_join(data_milk_cows, by = c(&quot;abbr&quot; = &quot;state_abbr&quot;)) |&gt;
+  filter (year == &quot;1970&quot;)
+
+ggplot(combine_milk_cows_1970) +
+  geom_sf(aes(fill = number_of_cows), color = &quot;white&quot;, size = 0.2) +
+  #scale_fill_viridis_c(name = &quot;number_of_cows&quot;,option = &quot;plasma&quot;) +
+  scale_fill_gradientn(
+    #colors = c(&quot;pink&quot;, &quot;magenta&quot;,&quot;orange&quot;,&quot;red&quot;),  #magenta
+    colors = c(&quot;lavender&quot;,&quot;magenta&quot;,&quot;darkmagenta&quot;,&quot;red2&quot;), #&quot;purple1&quot;
+    name = &quot;Number of Cows&quot;
+  ) + 
+  theme_minimal() +
+  labs(title = &quot;Milk Cows Distribution by State (per Thousand Head) (1970)&quot;) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = &quot;bottom&quot;
+  )</code></pre>
+<p><img src="milk_cows_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
+<pre class="r"><code>combine_milk_cows_2023 &lt;- us_states |&gt;
+ left_join(data_milk_cows, by = c(&quot;abbr&quot; = &quot;state_abbr&quot;)) |&gt;
+  filter (year == &quot;2023&quot;)
+
+ggplot(combine_milk_cows_2023) +
+  geom_sf(aes(fill = number_of_cows), color = &quot;white&quot;, size = 0.2) +
+  #scale_fill_viridis_c(name = &quot;number_of_cows&quot;,option = &quot;plasma&quot;) +
+  scale_fill_gradientn(
+    #colors = c(&quot;pink&quot;, &quot;magenta&quot;,&quot;orange&quot;,&quot;red&quot;),  #magenta
+    colors = c(&quot;lavender&quot;,&quot;magenta&quot;,&quot;darkmagenta&quot;,&quot;red2&quot;), #&quot;purple1&quot;
+    name = &quot;Number of Cows&quot;
+  ) + 
+  theme_minimal() +
+  labs(title = &quot;Milk Cows Distribution by State (per Thousand Head) (2023)&quot;) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = &quot;bottom&quot;
+  )</code></pre>
+<p><img src="milk_cows_files/figure-html/unnamed-chunk-8-2.png" width="90%" /></p>
+<pre class="r"><code>combine_milk_cows = milk_cows |&gt; 
+group_by(region, state, year) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = &quot;drop&quot;)
+
+ggplot(combine_milk_cows) +
+  geom_point(aes(x = reorder(state, total_cows), y = total_cows, color = total_cows), 
+             alpha = 0.7) +  
+  #scale_size_continuous(name = &quot;number_of_cows&quot;, range = c(3, 7)) +
+ # scale_color_viridis_c(name = &quot;number_of_cows&quot;)  + 
+  scale_color_gradientn(
+    colors = c(&quot;pink&quot;, &quot;magenta&quot;, &quot;orange&quot;,&quot;red&quot;),  #magenta
+    name = &quot;Number of Cows by State&quot;
+  ) +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1))+
+  labs(title = &quot;Number of Cows by State&quot;, 
+       x = &quot;State&quot;,
+       y = &quot;Number of Cows&quot;)</code></pre>
+<p><img src="milk_cows_files/figure-html/unnamed-chunk-9-1.png" width="90%" /></p>
+</div>
+<div id="by-region" class="section level2">
+<h2>by region</h2>
+<pre class="r"><code>#line plot milk cows over years by region
+milk_cows |&gt;
+  group_by(region, year) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = &quot;drop&quot;) |&gt;  
+  ggplot(aes(x = year, y = total_cows, color = region, group = region)) +  
+  geom_point() +  
+  geom_line() +    
+  #scale_color_brewer(palette = &quot;Set3&quot;) +  
+  scale_color_manual(
+    values = c(&quot;Appalachia&quot; = &quot;pink&quot;, 
+               &quot;Delta States&quot; = &quot;orange&quot;, 
+               &quot;Mountain Region&quot; = &quot;magenta2&quot;, 
+               &quot;Corn Belt&quot; = &quot;chartreuse3&quot;, 
+               &quot;Northern Plains&quot; = &quot;salmon&quot;, 
+              &quot;Southern Plains&quot; = &quot;maroon&quot;, 
+              &quot;Lake States&quot; = &quot;mediumturquoise&quot;,
+              &quot;Northeast&quot; = &quot;purple1&quot;,
+              &quot;Southeast&quot; = &quot;burlywood2&quot;,
+                &quot;West Coast&quot; =&quot;red2&quot; )) + 
+  labs(
+    title = &quot;Trend of Total Cows by Region (1970-2023)&quot;,
+    x = &quot;Year&quot;,
+    y = &quot;Total Number of Cows&quot;,
+    color = &quot;Region&quot;
+  ) +
+  theme_classic() + 
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),  
+    legend.position = &quot;bottom&quot;
+  )</code></pre>
+<p><img src="milk_cows_files/figure-html/unnamed-chunk-10-1.png" width="90%" /></p>
+<pre class="r"><code>#region 1970
+combine_region_cows_1970 &lt;- us_states |&gt;
+ left_join(data_milk_cows, by = c(&quot;abbr&quot; = &quot;state_abbr&quot;)) |&gt;
+  filter (year == &quot;1970&quot;) |&gt;
+  group_by(region, year) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = &quot;drop&quot;)
+
+#table 1970
+milk_cows |&gt; 
+group_by(region, year) |&gt;
+filter(year == &quot;1970&quot;) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = &quot;drop&quot;) |&gt;
+  arrange(desc(total_cows)) |&gt;
+  rename(Region = region, 
+         &quot;Total Cows&quot; = total_cows) |&gt;
+  knitr::kable(caption = &quot;Total Number of Cows by Region (1970)&quot;, format = &quot;html&quot;) |&gt;
+  kableExtra::kable_styling(full_width = TRUE, bootstrap_options = &quot;bordered&quot;)</code></pre>
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<caption>
+Total Number of Cows by Region (1970)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Region
+</th>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:right;">
+Total Cows
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Lake States
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+3196.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+2306.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Corn Belt
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+1814.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Appalachia
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+1044.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+West Coast
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+1028.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northern Plains
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+682.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Southeast
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+523.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Southern Plains
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+497.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mountain Region
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+454.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Delta States
+</td>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:right;">
+440.0
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#line plot
+ggplot(combine_region_cows_1970, aes(x = reorder(region, total_cows), y = total_cows, color = region)) +
+  geom_point() +  
+  geom_line(group = 1, color = &quot;gray&quot;) +  
+  scale_color_manual(values = c(&quot;Northeast&quot; = &quot;blue&quot;, &quot;Lake States&quot; = &quot;green&quot;, 
+                               &quot;Corn Belt&quot; = &quot;red&quot;, &quot;Northern Plains&quot; = &quot;purple&quot;, 
+                               &quot;Appalachia&quot; = &quot;orange&quot;, &quot;Southeast&quot; = &quot;pink&quot;,
+                               &quot;Delta States&quot; = &quot;yellow&quot;, &quot;Southern Plains&quot; = &quot;cyan&quot;, 
+                               &quot;Mountain Region&quot; = &quot;brown&quot;, &quot;West Coast&quot; = &quot;magenta&quot;)) +
+  labs(
+    title = &quot;Total Number of Cows by Region (per Thousand Head) (1970)&quot;,
+    x = &quot;Region&quot;,
+    y = &quot;Total Cows&quot;,
+    color = &quot;Region&quot;
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
+<p><img src="milk_cows_files/figure-html/unnamed-chunk-11-1.png" width="90%" /></p>
+<pre class="r"><code>#us map 1970
+ggplot(combine_region_cows_1970) +
+  geom_sf(aes(fill = total_cows), color = &quot;white&quot;, size = 0.2) +
+  scale_fill_gradientn(
+    #colors = c(&quot;pink&quot;, &quot;magenta&quot;,&quot;orange&quot;,&quot;red&quot;),  #magenta
+    colors = c(&quot;lavender&quot;,&quot;magenta&quot;,&quot;darkmagenta&quot;,&quot;red2&quot;), #&quot;purple1&quot;
+    name = &quot;Number of Cows&quot;
+  )+ 
+  theme_minimal() +
+  labs(title = &quot;Milk Cows Distribution by Region (1970)&quot;) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = &quot;bottom&quot;
+  )</code></pre>
+<p><img src="milk_cows_files/figure-html/unnamed-chunk-11-2.png" width="90%" /></p>
+<pre class="r"><code>#region 2023
+combine_region_cows_2023 &lt;- us_states |&gt;
+ left_join(data_milk_cows, by = c(&quot;abbr&quot; = &quot;state_abbr&quot;)) |&gt;
+  filter (year == &quot;2023&quot;) |&gt;
+  group_by(region, year) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = &quot;drop&quot;)
+
+#table 
+milk_cows |&gt; 
+group_by(region, year) |&gt;
+filter(year == &quot;2023&quot; ) |&gt;
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = &quot;drop&quot;) |&gt;
+  arrange(desc(total_cows)) |&gt;
+  rename(Region = region, 
+         &quot;Total Cows&quot; = total_cows) |&gt;
+  knitr::kable(caption = &quot;Total Number of Cows by Region (1970)&quot;, format = &quot;html&quot;) |&gt;
+  kableExtra::kable_styling(full_width = TRUE, bootstrap_options = &quot;bordered&quot;)</code></pre>
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<caption>
+Total Number of Cows by Region (1970)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Region
+</th>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:right;">
+Total Cows
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Lake States
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+2160.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+West Coast
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+2094.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mountain Region
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+1478.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northeast
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+1322.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Corn Belt
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+824.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Southern Plains
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+681.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Northern Plains
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+437.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Southeast
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+197.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Appalachia
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+181.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Delta States
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+17.0
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#line plot 
+ggplot(combine_region_cows_2023, aes(x = reorder(region, total_cows), y = total_cows, color = region)) +
+  geom_point() +  
+  geom_line(group = 1, color = &quot;gray&quot;) +  
+  scale_color_manual(values = c(&quot;Northeast&quot; = &quot;blue&quot;, &quot;Lake States&quot; = &quot;green&quot;, 
+                               &quot;Corn Belt&quot; = &quot;red&quot;, &quot;Northern Plains&quot; = &quot;purple&quot;, 
+                               &quot;Appalachia&quot; = &quot;orange&quot;, &quot;Southeast&quot; = &quot;pink&quot;,
+                               &quot;Delta States&quot; = &quot;yellow&quot;, &quot;Southern Plains&quot; = &quot;cyan&quot;, 
+                               &quot;Mountain Region&quot; = &quot;brown&quot;, &quot;West Coast&quot; = &quot;magenta&quot;)) +
+  labs(
+    title = &quot;Total Number of Cows by Region (per Thousand Head) (1970)&quot;,
+    x = &quot;Region&quot;,
+    y = &quot;Total Cows&quot;,
+    color = &quot;Region&quot;
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
+<p><img src="milk_cows_files/figure-html/unnamed-chunk-11-3.png" width="90%" /></p>
+<pre class="r"><code>#us map 2023
+ggplot(combine_region_cows_2023) +
+  geom_sf(aes(fill = total_cows), color = &quot;white&quot;, size = 0.2) +
+  scale_fill_gradientn(
+    #colors = c(&quot;pink&quot;, &quot;magenta&quot;,&quot;orange&quot;,&quot;red&quot;),  #magenta
+    colors = c(&quot;lavender&quot;,&quot;magenta&quot;,&quot;darkmagenta&quot;,&quot;red2&quot;), #&quot;purple1&quot;
+    name = &quot;Number of Cows&quot;
+  )+ 
+  theme_minimal() +
+  labs(title = &quot;Milk Cows Distribution by Region (2023)&quot;) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = &quot;bottom&quot;
+  )</code></pre>
+<p><img src="milk_cows_files/figure-html/unnamed-chunk-11-4.png" width="90%" /></p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
