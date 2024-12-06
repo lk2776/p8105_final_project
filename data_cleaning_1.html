@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+box-sizing: border-box;
+min-width: 200px;
+max-width: 980px;
+margin: 0 auto;
+padding: 45px;
+padding-top: 0px;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="data_cleaning_1">data_cleaning_1</h1>
+<p>2024-11-18</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>milk_cows <span class="ot">=</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;./data/milkcowsandprod.xlsx&quot;</span>, <span class="at">sheet=</span><span class="st">&quot;Milk cows&quot;</span>, <span class="at">skip=</span><span class="dv">1</span>,<span class="at">col_names =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="co">#drop_na() |&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">region =</span> x1) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">state =</span> back_to_content_page) <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="fu">filter_all</span>(<span class="fu">any_vars</span>(<span class="sc">!</span><span class="fu">is.na</span>(.))) <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">gsub</span>(<span class="st">&quot;^x&quot;</span>, <span class="st">&quot;&quot;</span>, .), <span class="fu">starts_with</span>(<span class="st">&quot;x&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">region =</span> <span class="fu">case_when</span>(</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Maine&quot;</span>, <span class="st">&quot;New Hampshire&quot;</span>, <span class="st">&quot;Vermont&quot;</span>, <span class="st">&quot;Massachusetts&quot;</span>, <span class="st">&quot;Rhode Island&quot;</span>, </span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>                 <span class="st">&quot;Connecticut&quot;</span>, <span class="st">&quot;New York&quot;</span>, <span class="st">&quot;New Jersey&quot;</span>, <span class="st">&quot;Pennsylvania&quot;</span>, </span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>                 <span class="st">&quot;Delaware&quot;</span>, <span class="st">&quot;Maryland&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Northeast&quot;</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Michigan&quot;</span>,<span class="st">&quot;Wisconsin&quot;</span>,<span class="st">&quot;Minnesota&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Lake States&quot;</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Ohio&quot;</span>,<span class="st">&quot;Indiana&quot;</span>,<span class="st">&quot;Illinois&quot;</span>,<span class="st">&quot;Iowa&quot;</span>,<span class="st">&quot;Missouri&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Corn Belt&quot;</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;North Dakota&quot;</span>, <span class="st">&quot;South Dakota&quot;</span>, <span class="st">&quot;Nebraska&quot;</span>, <span class="st">&quot;Kansas&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Northern Plains&quot;</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Virginia&quot;</span>, <span class="st">&quot;West Virginia&quot;</span>, <span class="st">&quot;North Carolina&quot;</span>, <span class="st">&quot;Kentucky&quot;</span>, <span class="st">&quot;Tennessee&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Appalachia&quot;</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;South Carolina&quot;</span>, <span class="st">&quot;Georgia&quot;</span>, <span class="st">&quot;Florida&quot;</span>, <span class="st">&quot;Alabama&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Southeast&quot;</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Mississippi&quot;</span>, <span class="st">&quot;Arkansas&quot;</span>,<span class="st">&quot;Louisiana&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Delta States&quot;</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Oklahoma&quot;</span>,<span class="st">&quot;Texas&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Southern Plains&quot;</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Montana&quot;</span>,<span class="st">&quot;Idaho&quot;</span>,<span class="st">&quot;Wyoming&quot;</span>,<span class="st">&quot;Colorado&quot;</span>,<span class="st">&quot;New Mexico&quot;</span>,<span class="st">&quot;Arizona&quot;</span>,<span class="st">&quot;Utah&quot;</span>,<span class="st">&quot;Nevada&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Mountain Region&quot;</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Washington&quot;</span>,<span class="st">&quot;Oregon&quot;</span>,<span class="st">&quot;California&quot;</span>) <span class="sc">~</span> <span class="st">&quot;West Coast&quot;</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Alaska&quot;</span>,<span class="st">&quot;Hawaii&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Other States&quot;</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>    <span class="co">#TRUE ~ &quot;Other&quot;  # Default case for states not in the Northeast</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(state))</span></code></pre></div>
+<pre><code>## New names:
+## • `` -&gt; `...1`</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>milk_production <span class="ot">=</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;./data/milkcowsandprod.xlsx&quot;</span>, <span class="at">sheet=</span><span class="st">&quot;Milk production&quot;</span>, <span class="at">skip=</span><span class="dv">1</span>,<span class="at">col_names =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="co">#drop_na() |&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">region =</span> x1) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">state =</span> back_to_content_page) <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="co">#filter_all(any_vars(!is.na(.))) |&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">gsub</span>(<span class="st">&quot;^x&quot;</span>, <span class="st">&quot;&quot;</span>, .), <span class="fu">starts_with</span>(<span class="st">&quot;x&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;1970_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1970&quot;</span>,<span class="st">&quot;1971_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1971&quot;</span>,<span class="st">&quot;1972_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1972&quot;</span>,<span class="st">&quot;1973_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1973&quot;</span>,<span class="st">&quot;1974_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1974&quot;</span>,<span class="st">&quot;1975_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1975&quot;</span>,<span class="st">&quot;1976_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1976&quot;</span>,<span class="st">&quot;1977_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1977&quot;</span>,<span class="st">&quot;1978_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1978&quot;</span>,<span class="st">&quot;1979_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1979&quot;</span>,<span class="st">&quot;1980_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1980&quot;</span>,<span class="st">&quot;1981_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1981&quot;</span>,<span class="st">&quot;1982_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1982&quot;</span>,<span class="st">&quot;1983_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1983&quot;</span>,<span class="st">&quot;1984_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1984&quot;</span>,<span class="st">&quot;1985_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1985&quot;</span>,<span class="st">&quot;1986_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1986&quot;</span>,<span class="st">&quot;1987_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1987&quot;</span>,<span class="st">&quot;1988_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1988&quot;</span>,<span class="st">&quot;1989_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1989&quot;</span>,<span class="st">&quot;1990_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1990&quot;</span>,<span class="st">&quot;1991_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1991&quot;</span>,<span class="st">&quot;1992_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1992&quot;</span>,<span class="st">&quot;1993_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1993&quot;</span>,<span class="st">&quot;1994_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1994&quot;</span>,<span class="st">&quot;1995_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1995&quot;</span>,<span class="st">&quot;1996_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1996&quot;</span>,<span class="st">&quot;1997_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1997&quot;</span>,<span class="st">&quot;1998_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1998&quot;</span>,<span class="st">&quot;1999_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;1999&quot;</span>,<span class="st">&quot;2000_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2000&quot;</span>,<span class="st">&quot;2001_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2001&quot;</span>,<span class="st">&quot;2002_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2002&quot;</span>,<span class="st">&quot;2003_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2003&quot;</span>,<span class="st">&quot;2004_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2004&quot;</span>,<span class="st">&quot;2005_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2005&quot;</span>,<span class="st">&quot;2006_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2006&quot;</span>,<span class="st">&quot;2007_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2007&quot;</span>,<span class="st">&quot;2008_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2008&quot;</span>,<span class="st">&quot;2009_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2009&quot;</span>,<span class="st">&quot;2010_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2010&quot;</span>,<span class="st">&quot;2011_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2011&quot;</span>,<span class="st">&quot;2012_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2012&quot;</span>,<span class="st">&quot;2013_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2013&quot;</span>,<span class="st">&quot;2014_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2014&quot;</span>,<span class="st">&quot;2015_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2015&quot;</span>,<span class="st">&quot;2016_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2016&quot;</span>,<span class="st">&quot;2017_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2017&quot;</span>,<span class="st">&quot;2018_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2018&quot;</span>,<span class="st">&quot;2019_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2019&quot;</span>,<span class="st">&quot;2020_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2020&quot;</span>,<span class="st">&quot;2021_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2021&quot;</span>,<span class="st">&quot;2022_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2022&quot;</span>,<span class="st">&quot;2023_million_pounds&quot;</span> <span class="ot">=</span> <span class="st">&quot;2023&quot;</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>       <span class="st">&quot;1970_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;4&quot;</span>,<span class="st">&quot;1971_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;6&quot;</span>,<span class="st">&quot;1972_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;8&quot;</span>,<span class="st">&quot;1973_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;10&quot;</span>,<span class="st">&quot;1974_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;12&quot;</span>,<span class="st">&quot;1975_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;14&quot;</span>,<span class="st">&quot;1976_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;16&quot;</span>,<span class="st">&quot;1977_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;18&quot;</span>,<span class="st">&quot;1978_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;20&quot;</span>,<span class="st">&quot;1979_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;22&quot;</span>,<span class="st">&quot;1980_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;24&quot;</span>,<span class="st">&quot;1981_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;26&quot;</span>,<span class="st">&quot;1982_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;28&quot;</span>,<span class="st">&quot;1983_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;30&quot;</span>,<span class="st">&quot;1984_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;32&quot;</span>,<span class="st">&quot;1985_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;34&quot;</span>,<span class="st">&quot;1986_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;36&quot;</span>,<span class="st">&quot;1987_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;38&quot;</span>,<span class="st">&quot;1988_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;40&quot;</span>,<span class="st">&quot;1989_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;42&quot;</span>,<span class="st">&quot;1990_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;44&quot;</span>,<span class="st">&quot;1991_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;46&quot;</span>,<span class="st">&quot;1992_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;48&quot;</span>,<span class="st">&quot;1993_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;50&quot;</span>,<span class="st">&quot;1994_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;52&quot;</span>,<span class="st">&quot;1995_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;54&quot;</span>,<span class="st">&quot;1996_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;56&quot;</span>,<span class="st">&quot;1997_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;58&quot;</span>,<span class="st">&quot;1998_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;60&quot;</span>,<span class="st">&quot;1999_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;62&quot;</span>,<span class="st">&quot;2000_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;64&quot;</span>,<span class="st">&quot;2001_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;66&quot;</span>,<span class="st">&quot;2002_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;68&quot;</span>,<span class="st">&quot;2003_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;70&quot;</span>,<span class="st">&quot;2004_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;72&quot;</span>,<span class="st">&quot;2005_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;74&quot;</span>,<span class="st">&quot;2006_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;76&quot;</span>,<span class="st">&quot;2007_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;78&quot;</span>,<span class="st">&quot;2008_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;80&quot;</span>,<span class="st">&quot;2009_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;82&quot;</span>,<span class="st">&quot;2010_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;84&quot;</span>,<span class="st">&quot;2011_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;86&quot;</span>,<span class="st">&quot;2012_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;88&quot;</span>,<span class="st">&quot;2013_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;90&quot;</span>,<span class="st">&quot;2014_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;92&quot;</span>,<span class="st">&quot;2015_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;94&quot;</span>,<span class="st">&quot;2016_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;96&quot;</span>,<span class="st">&quot;2017_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;98&quot;</span>,<span class="st">&quot;2018_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;100&quot;</span>,<span class="st">&quot;2019_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;102&quot;</span>,<span class="st">&quot;2020_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;104&quot;</span>,<span class="st">&quot;2021_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;106&quot;</span>,<span class="st">&quot;2022_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;108&quot;</span>,<span class="st">&quot;2023_percent_of_US_milk_production&quot;</span><span class="ot">=</span><span class="st">&quot;110&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">region =</span> <span class="fu">case_when</span>(</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Maine&quot;</span>, <span class="st">&quot;New Hampshire&quot;</span>, <span class="st">&quot;Vermont&quot;</span>, <span class="st">&quot;Massachusetts&quot;</span>, <span class="st">&quot;Rhode Island&quot;</span>, </span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>                 <span class="st">&quot;Connecticut&quot;</span>, <span class="st">&quot;New York&quot;</span>, <span class="st">&quot;New Jersey&quot;</span>, <span class="st">&quot;Pennsylvania&quot;</span>, </span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>                 <span class="st">&quot;Delaware&quot;</span>, <span class="st">&quot;Maryland&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Northeast&quot;</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Michigan&quot;</span>,<span class="st">&quot;Wisconsin&quot;</span>,<span class="st">&quot;Minnesota&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Lake States&quot;</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Ohio&quot;</span>,<span class="st">&quot;Indiana&quot;</span>,<span class="st">&quot;Illinois&quot;</span>,<span class="st">&quot;Iowa&quot;</span>,<span class="st">&quot;Missouri&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Corn Belt&quot;</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;North Dakota&quot;</span>, <span class="st">&quot;South Dakota&quot;</span>, <span class="st">&quot;Nebraska&quot;</span>, <span class="st">&quot;Kansas&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Northern Plains&quot;</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Virginia&quot;</span>, <span class="st">&quot;West Virginia&quot;</span>, <span class="st">&quot;North Carolina&quot;</span>, <span class="st">&quot;Kentucky&quot;</span>, <span class="st">&quot;Tennessee&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Appalachia&quot;</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;South Carolina&quot;</span>, <span class="st">&quot;Georgia&quot;</span>, <span class="st">&quot;Florida&quot;</span>, <span class="st">&quot;Alabama&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Southeast&quot;</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Mississippi&quot;</span>, <span class="st">&quot;Arkansas&quot;</span>,<span class="st">&quot;Louisiana&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Delta States&quot;</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Oklahoma&quot;</span>,<span class="st">&quot;Texas&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Southern Plains&quot;</span>,</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Montana&quot;</span>,<span class="st">&quot;Idaho&quot;</span>,<span class="st">&quot;Wyoming&quot;</span>,<span class="st">&quot;Colorado&quot;</span>,<span class="st">&quot;New Mexico&quot;</span>,<span class="st">&quot;Arizona&quot;</span>,<span class="st">&quot;Utah&quot;</span>,<span class="st">&quot;Nevada&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Mountain Region&quot;</span>,</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Washington&quot;</span>,<span class="st">&quot;Oregon&quot;</span>,<span class="st">&quot;California&quot;</span>) <span class="sc">~</span> <span class="st">&quot;West Coast&quot;</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>    state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Alaska&quot;</span>,<span class="st">&quot;Hawaii&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Other States&quot;</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>    <span class="co">#TRUE ~ &quot;Other&quot;  # Default case for states not in the Northeast</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(state)) <span class="sc">|&gt;</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(region))</span></code></pre></div>
+<pre><code>## New names:
+## • `` -&gt; `...1`
+## • `` -&gt; `...4`
+## • `` -&gt; `...6`
+## • `` -&gt; `...8`
+## • `` -&gt; `...10`
+## • `` -&gt; `...12`
+## • `` -&gt; `...14`
+## • `` -&gt; `...16`
+## • `` -&gt; `...18`
+## • `` -&gt; `...20`
+## • `` -&gt; `...22`
+## • `` -&gt; `...24`
+## • `` -&gt; `...26`
+## • `` -&gt; `...28`
+## • `` -&gt; `...30`
+## • `` -&gt; `...32`
+## • `` -&gt; `...34`
+## • `` -&gt; `...36`
+## • `` -&gt; `...38`
+## • `` -&gt; `...40`
+## • `` -&gt; `...42`
+## • `` -&gt; `...44`
+## • `` -&gt; `...46`
+## • `` -&gt; `...48`
+## • `` -&gt; `...50`
+## • `` -&gt; `...52`
+## • `` -&gt; `...54`
+## • `` -&gt; `...56`
+## • `` -&gt; `...58`
+## • `` -&gt; `...60`
+## • `` -&gt; `...62`
+## • `` -&gt; `...64`
+## • `` -&gt; `...66`
+## • `` -&gt; `...68`
+## • `` -&gt; `...70`
+## • `` -&gt; `...72`
+## • `` -&gt; `...74`
+## • `` -&gt; `...76`
+## • `` -&gt; `...78`
+## • `` -&gt; `...80`
+## • `` -&gt; `...82`
+## • `` -&gt; `...84`
+## • `` -&gt; `...86`
+## • `` -&gt; `...88`
+## • `` -&gt; `...90`
+## • `` -&gt; `...92`
+## • `` -&gt; `...94`
+## • `` -&gt; `...96`
+## • `` -&gt; `...98`
+## • `` -&gt; `...100`
+## • `` -&gt; `...102`
+## • `` -&gt; `...104`
+## • `` -&gt; `...106`
+## • `` -&gt; `...108`
+## • `` -&gt; `...110`</code></pre>
+
+</body>
+</html>
