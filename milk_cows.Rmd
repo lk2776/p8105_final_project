@@ -146,7 +146,7 @@ milk_cows_state_1970 = milk_cows |>
 
 
 ggplot(milk_cows_state_1970, aes(x = reorder(State, `Total Cows 1970`), y = `Total Cows 1970`, color = State)) +
-  geom_point() +  
+  geom_point(size=0.8) +  
   geom_line(group = 1, color = "lightblue") + 
   labs(
     title = "Total Number of Cows by State (per Thousand Head) (1970)",
@@ -220,7 +220,7 @@ milk_cows_state_2023 = milk_cows |>
 
 
 ggplot(milk_cows_state_2023, aes(x = reorder(State, `Total Cows 2023`), y = `Total Cows 2023`, color = State)) +
-  geom_point() +  
+  geom_point(size=0.8) +  
   geom_line(group = 1, color = "lightblue") + 
   labs(
     title = "Total Number of Cows by State (per Thousand Head) (2023)",
@@ -283,7 +283,7 @@ milk_cows_over_years = milk_cows |>
          Year = year, 
          `Total Cows` = total_cows) |> 
   ggplot(aes(x = Year, y = `Total Cows`, color = State, group = State)) +  
-  geom_point() +  
+  geom_point(size=0.8) +  
   geom_line() +    
   scale_color_manual(values = custom_colors) +  
   #scale_colour_discrete() + #don't like it
@@ -345,7 +345,7 @@ kable(state_region_comparison, caption = "States with Percentage Increase in Tot
 custom_colors = c("pink","red2","magenta2","magenta3","chartreuse3","salmon","maroon",
                   "mediumturquoise","purple1","burlywood3","orange","blue")
 
-#decreasing trend
+#increasing trend
 milk_cows |>
   filter(state %in% c("New Mexico","Idaho","Arizona","Colorado","Nevada",
                       "California","Texas","Washington","Oregon","Utah","South Dakota","Michigan")) |>
@@ -356,8 +356,8 @@ milk_cows |>
     Year = year,
     `Total Cows` = total_cows
   ) |>
-  ggplot(aes(x = Year, y = `Total Cows`, color = State)) +  
-  geom_point() +  
+  ggplot(aes(x = Year, y = `Total Cows`, color = State, group = State)) +  
+  geom_point(size=0.8) +  
   geom_line() +    
   scale_color_manual(values = custom_colors) +  
   #scale_color_viridis_d(option="plasma")
@@ -444,8 +444,8 @@ milk_cows |>
     State = state,
     `Total Cows` = total_cows
   ) |>
-  ggplot(aes(x = Year, y = `Total Cows`, color = State)) +  
-  geom_point() +  
+  ggplot(aes(x = Year, y = `Total Cows`, color = State, group = State)) +  
+  geom_point(size=0.8) +  
   geom_line() +    
   scale_color_manual(values = custom_colors) +  
   #scale_color_viridis_d(option="plasma")
@@ -513,7 +513,7 @@ filter(year == "1970") |>
 
 #line plot 1970
 ggplot(combine_region_cows_1970, aes(x = reorder(Region, `Total Cows`), y = `Total Cows`, color = Region)) +
-  geom_point() +  
+  geom_point(size=0.8) +  
   geom_line(group = 1, color = "gray") +  
   scale_color_manual(values = c("Northeast" = "blue", "Lake States" = "green", 
                                "Corn Belt" = "red", "Northern Plains" = "purple", 
@@ -576,7 +576,7 @@ filter(year == "2023" ) |>
 
 #line plot 
 ggplot(combine_region_cows_2023, aes(x = reorder(Region, `Total Cows`), y = `Total Cows`, color = Region)) +
-  geom_point() +  
+  geom_point(size=0.8) +  
   geom_line(group = 1, color = "gray") +  
   scale_color_manual(values = c("Northeast" = "blue", "Lake States" = "green", 
                                "Corn Belt" = "red", "Northern Plains" = "purple", 
@@ -622,8 +622,8 @@ milk_cows |>
     Region = region,
     `Total Cows` = total_cows
   ) |>
-  ggplot(aes(x = Year, y = `Total Cows` , color = Region)) +  
-  geom_point() +  
+  ggplot(aes(x = Year, y = `Total Cows` , color = Region, group = Region)) +  
+  geom_point(size=0.8) +  
   geom_line() +    
   #scale_color_brewer(palette = "Set3") +  
   scale_color_manual(
@@ -650,3 +650,61 @@ milk_cows |>
   ) -> trend_region
 ggplotly(trend_region)
 ```
+
+## Statistical Analysis by State
+States like California, Minnesota, Wisconsin, and Michigan have much higher milk production compared to the baseline state Alabama. 
+
+Overall Milk Production is significantly increased by year, with a general increase in production over time.
+
+ANOVA test indicates a highly significant difference in number of cows across the different states.
+
+```{r}
+
+#lm model milk production by state
+milk_cows |> 
+  mutate(
+    state = as.factor(state),  
+    year = as.numeric(year)     
+  ) |> 
+  lm(number_of_cows ~ state + year, data = _) |>  
+  broom::tidy() 
+
+
+milk_cows |> 
+  mutate(
+    region = as.factor(state), 
+    year = as.numeric(year)) |>
+  aov(number_of_cows ~ state, data = _) |>  
+  broom::tidy() |>
+  knitr::kable()
+
+```
+## Statistical Analysis by Region
+
+The  Corn Belt, Lake States, West Coast, and Southern Plains all show significantly higher milk production compared to the reference region Appalachia. 
+
+The year has a significant positive effect on number of cows.
+
+ANOVA test indicates a highly significant difference in number of milk cows across the different regions.
+
+```{r}
+#lm model milk production by region 
+milk_cows |> 
+  mutate(
+    region = as.factor(region),  
+    year = as.numeric(year)     
+  ) |> 
+  lm(number_of_cows ~ region + year, data = _) |>  
+  broom::tidy() |>
+  knitr::kable()
+
+
+milk_cows |> 
+  mutate(
+    region = as.factor(region), 
+    year = as.numeric(year)) |>
+  aov(number_of_cows ~ region, data = _) |>  
+  broom::tidy() |>
+  knitr::kable()
+```
+
