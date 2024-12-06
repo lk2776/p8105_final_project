@@ -1,5 +1,5 @@
 ---
-title: "Nutrition"
+title: "Nutrition Analysis"
 output: html_document
 ---
 
@@ -10,6 +10,8 @@ library(gridExtra)
 library(knitr)
 library(kableExtra)
 ```
+
+<br>
 
 ```{R, echo= FALSE}
 df <- readxl::read_xlsx('nutri.xlsx')|>
@@ -27,8 +29,12 @@ nutri_same <- nutri |>
   filter(mean_diff == 0) |>
   select(1,3)
 colnames(nutri_same)[2] <- "All 4 Milk Types"
-kable(nutri_same, caption = "Nutritional Components Same Across Milk Types", format = "html") |>
-  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+kable(nutri_same, format = "html") |>
+  kable_styling(bootstrap_options = "striped", full_width = TRUE) |>
+  add_header_above(c("Nutritional Components Same Across Milk Types" = ncol(nutri_same)), 
+                   bold = TRUE, align = "c", background = "pink") |>
+  row_spec(0, bold = TRUE)
+
 ```
 
 The above table provides us with nutritional components that are the same for all 4 types of milk.
@@ -36,31 +42,83 @@ The above table provides us with nutritional components that are the same for al
 To analyze differences in milk types, we will subtract the values for skim milk from the mean of the other milk types. If the result is not zero, it indicates a difference. Since skim milk has the least fat, it and whole milk will have extreme values, meaning the mean of the others won't match skim milk.
 
 ```{R, echo = FALSE}
-kable(nutri_d, caption = "Nutritional Components Different Across Milk Types", format = "html") |>
-  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
-
+kable(nutri_d, format = "html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered") |>
+  add_header_above(c("Nutritional Components Different Across Milk Types" = ncol(nutri_d)), 
+                   bold = TRUE, align = "c", background = "pink") |>
+  row_spec(0, bold = TRUE)
 ```
 
 While the table identifies which components differ, it only indicates where to analyze further. Visualizing these differences with bar plots will provide more insightful and intuitive comparisons.
 
-```{R, echo= FALSE}
-extra = c (0,0,0,0)
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+extra <- c(0, 0, 0, 0)
 selected_rows <- nutri[c(1, 3, 5, 11), ]
-nutri_bp = cbind(selected_rows, extra)
+nutri_bp <- cbind(selected_rows, extra)
 rows_to_plot <- c(1, 2, 3, 4)
 legend_labels <- names(nutri_bp)[2:(ncol(nutri_bp) - 1)]
+bc <- c("red", "orange", "magenta", "pink", "transparent")
 
-# Loop
 for (i in rows_to_plot) {
   values <- as.numeric(nutri_bp[i, 2:ncol(nutri_bp)])
-  plot_title <- nutri_bp[i, 1]
-  bc = c("red","orange","magenta","pink","transparent")
-  bar_pos <- barplot(values, main = plot_title, col = bc, border = NA) 
-  for (j in seq_along(values)) { if (values[j] != 0) { 
-    rect(bar_pos[j] - 0.5, 0, bar_pos[j] + 0.5, values[j], border = "black") } 
-    } 
+  plot_title <- as.character(nutri_bp[i, 1])
+  png(filename = paste0("plot_", i, ".png"), width = 800, height = 600, res = 150)
+  bar_pos <- barplot(values, main = plot_title, col = bc, border = NA)
+  for (j in seq_along(values)) { 
+    if (values[j] != 0) { 
+      rect(bar_pos[j] - 0.5, 0, bar_pos[j] + 0.5, values[j], border = "black")
+    }
+  }
   legend("topright", legend = legend_labels, fill = bc[-length(bc)], title = "Milk Type", cex = 0.8)
+  dev.off()
 }
+
+```
+
+```{r, results='asis', echo=FALSE}
+htmltools::HTML('
+<div class="slideshow-container">
+
+    <div class="slides">
+        <img src="plot_1.png" style="width:100%">
+    </div>
+
+    <div class="slides">
+        <img src="plot_2.png" style="width:100%">
+    </div>
+
+    <div class="slides">
+        <img src="plot_3.png" style="width:100%">
+    </div>
+
+    <div class="slides">
+        <img src="plot_4.png" style="width:100%">
+    </div>
+
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+
+<script>
+let slideIndex = 0;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+function showSlides(n) {
+    let i;
+    let slides = document.getElementsByClassName("slides");
+    if (n >= slides.length) {slideIndex = 0}
+    if (n < 0) {slideIndex = slides.length - 1}
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    slides[slideIndex].style.display = "block";
+}
+</script>
+')
 ```
 
 There is a decreasing trend as we go towards the lower fat options for calories and cholesterol.
