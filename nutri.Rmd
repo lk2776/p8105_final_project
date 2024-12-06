@@ -210,7 +210,7 @@ plot1 <- ggplot(data1, aes(x = Variable, y = Percentage, fill = Variable)) +
   scale_y_continuous(limits = c(0, 30), breaks = seq(0, 28, by = 4)) +
   theme_minimal() +
   labs(title = "Total Fat", x = "", y = "% of Daily Value for 2000 Cal. Diet") +
-  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")
+  theme(plot.title = element_text(hjust = 0.5),axis.text.x = element_blank(), legend.position = "none")
 
 plot2 <- ggplot(data2, aes(x = Variable, y = Percentage, fill = Variable)) +
   geom_bar(stat = "identity") +
@@ -218,7 +218,7 @@ plot2 <- ggplot(data2, aes(x = Variable, y = Percentage, fill = Variable)) +
   scale_y_continuous(limits = c(0, 30), breaks = seq(0, 28, by = 4)) +
   theme_minimal() +
   labs(title = "Saturated Fat", x = "", y = "") +
-  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")
+  theme(plot.title = element_text(hjust = 0.5), axis.text.x = element_blank(), legend.position = "none")
 
 get_legend <- function(myplot) {
   tmp <- ggplot_gtable(ggplot_build(myplot))

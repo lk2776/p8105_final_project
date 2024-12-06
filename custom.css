@@ -15,3 +15,13 @@
 .navbar-default .navbar-nav > li > a:focus {
   color: gold !important;
 }
+/* Set the cow print background */
+/* Set the cow print background with translucency */
+body {
+    background: url('images/cow-print.png') repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-blend-mode: lighten; /* Blend the background image with the background color for translucency */
+    background-color: rgba(255, 255, 255, 0.8); /* White background color with opacity */
+}
