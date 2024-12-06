@@ -35,7 +35,7 @@ The above table provides us with nutritional components that are the same for al
 
 To analyze differences in milk types, we will subtract the values for skim milk from the mean of the other milk types. If the result is not zero, it indicates a difference. Since skim milk has the least fat, it and whole milk will have extreme values, meaning the mean of the others won't match skim milk.
 
-```{R}
+```{R, echo = FALSE}
 kable(nutri_d, caption = "Nutritional Components Different Across Milk Types", format = "html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 
