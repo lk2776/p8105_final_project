@@ -2,8 +2,6 @@
 title: "About Us"
 output:
   html_document:
-    toc: true
-    toc_float: true
     theme: flatly
     css: custom.css
 ---
@@ -58,5 +56,3 @@ If you would like to, please <a href="mailto:@gmail.com">contact us</a>.
 ---
 
 Thanks a lot for visiting our website!
-
-<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>

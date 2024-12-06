@@ -75,6 +75,8 @@ for (i in rows_to_plot) {
 
 ```
 
+<h3> <b> <center> Bar Plots for Nutritional Components with Different Values Across Milk Types </center> </b> </h3>
+
 ```{r, results='asis', echo=FALSE}
 htmltools::HTML('
 <div class="slideshow-container">
