@@ -42,7 +42,7 @@ Thanks for visiting our project! Our team consists of Columbia University gradua
     <td></td>
   </tr>
   <tr>
-    <td><a href="githublink">Yue Tai</a> loves all kinds of sports! <br> Favourite Milk Beverage: Strawberry Milk <br> Favourite Dairy Animal: Goat </td>
+    <td><a href="githublink">Yue Tai</a> loves all kinds of sports! I graduated from UIUC. <br> Favourite Milk Beverage: Strawberry Milk <br> Favourite Dairy Animal: Goat </td>
     <td><img src="cow3.png" class="portrait"></td>
   </tr>
 
