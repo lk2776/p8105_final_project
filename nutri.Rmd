@@ -63,13 +63,13 @@ for (i in rows_to_plot) {
   values <- as.numeric(nutri_bp[i, 2:ncol(nutri_bp)])
   plot_title <- as.character(nutri_bp[i, 1])
   png(filename = paste0("plot_", i, ".png"), width = 800, height = 600, res = 150)
-  bar_pos <- barplot(values, main = plot_title, col = bc, border = NA)
+  bar_pos <- barplot(values, main = plot_title, col = bc, border = NA, cex.main = 0.9)
   for (j in seq_along(values)) { 
     if (values[j] != 0) { 
       rect(bar_pos[j] - 0.5, 0, bar_pos[j] + 0.5, values[j], border = "black")
     }
   }
-  legend("topright", legend = legend_labels, fill = bc[-length(bc)], title = "Milk Type", cex = 0.8)
+  legend("topright", legend = legend_labels, fill = bc[-length(bc)], title = "Milk Type", cex = 0.65)
   dev.off()
 }
 
@@ -99,8 +99,46 @@ htmltools::HTML('
     <a class="next" onclick="plusSlides(1)">&#10095;</a>
 </div>
 
+<style>
+    .slideshow-container {
+        max-width: 100%;
+        position: relative;
+        margin: auto;
+    }
+    .slides {
+        display: none;
+    }
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 48px; /* Increased font size */
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        transform: translateY(-50%);
+        z-index: 2; /* Ensure arrows are on top of other elements */
+        background-color: rgba(0,0,0,0.5); /* Adding background for better visibility */
+    }
+    .next {
+        right: 10px; /* Adjusted to prevent overlap with edge */
+        border-radius: 3px 0 0 3px;
+    }
+    .prev {
+        left: 10px; /* Adjusted to prevent overlap with edge */
+        border-radius: 3px 0 0 3px;
+    }
+    .prev:hover, .next:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+</style>
+
 <script>
-let slideIndex = 0;
+let slideIndex = 1;
 showSlides(slideIndex);
 
 function plusSlides(n) {
@@ -110,15 +148,17 @@ function plusSlides(n) {
 function showSlides(n) {
     let i;
     let slides = document.getElementsByClassName("slides");
-    if (n >= slides.length) {slideIndex = 0}
-    if (n < 0) {slideIndex = slides.length - 1}
+    if (n > slides.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slides.length}
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }
-    slides[slideIndex].style.display = "block";
+    slides[slideIndex-1].style.display = "block";
 }
 </script>
 ')
+
+
 ```
 
 There is a decreasing trend as we go towards the lower fat options for calories and cholesterol.

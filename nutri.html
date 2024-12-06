@@ -475,8 +475,46 @@ will provide more insightful and intuitive comparisons.</p>
     <a class="next" onclick="plusSlides(1)">&#10095;</a>
 </div>
 
+<style>
+    .slideshow-container {
+        max-width: 100%;
+        position: relative;
+        margin: auto;
+    }
+    .slides {
+        display: none;
+    }
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 48px; /* Increased font size */
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        transform: translateY(-50%);
+        z-index: 2; /* Ensure arrows are on top of other elements */
+        background-color: rgba(0,0,0,0.5); /* Adding background for better visibility */
+    }
+    .next {
+        right: 10px; /* Adjusted to prevent overlap with edge */
+        border-radius: 3px 0 0 3px;
+    }
+    .prev {
+        left: 10px; /* Adjusted to prevent overlap with edge */
+        border-radius: 3px 0 0 3px;
+    }
+    .prev:hover, .next:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+</style>
+
 <script>
-let slideIndex = 0;
+let slideIndex = 1;
 showSlides(slideIndex);
 
 function plusSlides(n) {
@@ -486,12 +524,12 @@ function plusSlides(n) {
 function showSlides(n) {
     let i;
     let slides = document.getElementsByClassName("slides");
-    if (n >= slides.length) {slideIndex = 0}
-    if (n < 0) {slideIndex = slides.length - 1}
+    if (n > slides.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slides.length}
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }
-    slides[slideIndex].style.display = "block";
+    slides[slideIndex-1].style.display = "block";
 }
 </script>
 
