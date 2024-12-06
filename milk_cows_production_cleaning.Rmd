@@ -1,7 +1,13 @@
 ---
 title: "Milk Cows and Milk Production"
-output: html_document
+output: 
+  html_document:
+    code_folding: hide
+    always_allow_html: true
+    toc: true
+    toc_float: true
 ---
+<br>
 
 ```{r setup, include=FALSE, warning=FALSE,message=FALSE}
 #load packages
@@ -14,6 +20,7 @@ library(readxl)
 library(ggplot2)
 library(sf)
 library(usmap)
+library(kableExtra)
 
 #R figure settings
 knitr::opts_chunk$set(
@@ -38,7 +45,129 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Milk Cows 
+```{r}
+#read milk cows data
+milk_cows = readxl::read_excel("/Users/lk/Desktop/p8105/hw_sub/p8105_final_project/data/milkcowsandprod.xlsx", 
+                               sheet="Milk cows", 
+                               skip=1,
+                               col_names = TRUE) |>
+  janitor::clean_names() |>
+  #drop_na() |>
+  rename(region = x1) |>
+  rename(state = back_to_content_page) |>
+  filter_all(any_vars(!is.na(.))) |>
+  rename_with(~ gsub("^x", "", .), starts_with("x")) |>
+ mutate(region = case_when(
+    state %in% c("Maine", "New Hampshire", "Vermont", "Massachusetts", "Rhode Island", 
+                 "Connecticut", "New York", "New Jersey", "Pennsylvania", 
+                 "Delaware", "Maryland") ~ "Northeast",
+    state %in% c("Michigan","Wisconsin","Minnesota") ~ "Lake States",
+    state %in% c("Ohio","Indiana","Illinois","Iowa","Missouri") ~ "Corn Belt",
+    state %in% c("North Dakota", "South Dakota", "Nebraska", "Kansas") ~ "Northern Plains",
+    state %in% c("Virginia", "West Virginia", "North Carolina", "Kentucky", "Tennessee") ~ "Appalachia",
+    state %in% c("South Carolina", "Georgia", "Florida", "Alabama") ~ "Southeast",
+    state %in% c("Mississippi", "Arkansas","Louisiana") ~ "Delta States",
+    state %in% c("Oklahoma","Texas") ~ "Southern Plains",
+    state %in% c("Montana","Idaho","Wyoming","Colorado","New Mexico","Arizona","Utah","Nevada") ~ "Mountain Region",
+    state %in% c("Washington","Oregon","California") ~ "West Coast",
+    state %in% c("Alaska","Hawaii") ~ "Other States"
+    #TRUE ~ "Other"  # Default case for states not in the Northeast
+  )) |>
+  filter(!is.na(state)) |>
+  mutate(
+    ##remove non numeric character and convert to numeric
+    `2019` = gsub("[^0-9,.-]", "", `2019`) |> as.numeric(), 
+    `2020` = gsub("[^0-9,.-]", "", `2020`) |> as.numeric(),
+    `2021` = gsub("[^0-9,.-]", "", `2021`) |> as.numeric(),
+    `2022` = gsub("[^0-9,.-]", "", `2022`) |> as.numeric(),
+    `2023` = gsub("[^0-9,.-]", "", `2023`) |> as.numeric()
+  ) |>
+  pivot_longer(
+    cols = 3:56,
+    names_to = "year",
+    values_to = "number_of_cows"
+  )  
 
+```
+
+
+```{r}
+#table 
+top_5_states <- milk_cows |>
+  group_by(state) |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
+  arrange(desc(total_cows)) |>
+  rename(State = state, 
+         "Total Cows" = total_cows) |>
+  head(5)  
+
+#print
+knitr::kable(top_5_states, caption = "Top 10 States by Total Number of Cows", format="html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+```
+
+```{r}
+#map coordinates of states
+us_states <- usmap::us_map()
+
+#abbreviation for state names
+data_milk_cows = milk_cows |> mutate(
+  state_abbr = state.abb[match(state, state.name)]
+)
+
+#merge location data with production data
+combine_milk_cows <- us_states |>
+ left_join(data_milk_cows, by = c("abbr" = "state_abbr"))
+
+ggplot(combine_milk_cows) +
+  geom_sf(aes(fill = number_of_cows), color = "white", size = 0.2) +
+  #scale_fill_viridis_c(name = "number_of_cows",option = "plasma") +
+  scale_fill_gradientn(
+    colors = c("pink", "magenta","orange","red"),  #magenta
+    name = "Number of Cows"
+  ) + 
+  theme_minimal() +
+  labs(title = "Number of Cows by State")
+
+ggplot(combine_milk_cows) +
+  geom_sf(aes(fill = number_of_cows), color = "white", size = 0.2) +
+  #scale_fill_viridis_c(name = "number_of_cows",option = "plasma") +
+  scale_fill_gradientn(
+    colors = c("pink", "orange","red"),  #magenta
+    name = "Number of Cows"
+  ) + 
+  theme_minimal() +
+  labs(title = "Number of Cows by State")
+
+ggplot(combine_milk_cows) +
+  geom_point(aes(x = reorder(state, number_of_cows), y = number_of_cows, color = number_of_cows), 
+             alpha = 0.7) +  
+  #scale_size_continuous(name = "number_of_cows", range = c(3, 7)) +
+ # scale_color_viridis_c(name = "number_of_cows")  + 
+  scale_color_gradientn(
+    colors = c("pink", "magenta", "orange","red"),  #magenta
+    name = "Number of Cows by State"
+  ) +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1))+
+  labs(title = "Number of Cows by State", 
+       x = "State",
+       y = "Number of Cows")
+
+ggplot(combine_milk_cows) +
+  geom_point(aes(x = reorder(state, number_of_cows), y = number_of_cows, color = number_of_cows), 
+             alpha = 0.7) +  
+  #scale_size_continuous(name = "number_of_cows", range = c(3, 7)) +
+ # scale_color_viridis_c(name = "number_of_cows")  + 
+  scale_color_gradientn(
+    colors = c("pink", "orange","red"),  #magenta
+    name = "Number of Cows by State"
+  ) +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1))+
+  labs(title = "Number of Cows by State", 
+       x = "State",
+       y = "Number of Cows")
+```
 
 ## milk production dataset
 ```{r}
@@ -177,124 +306,3 @@ ggplot(combine_data) +
 ```
 
 
-
-```{r}
-#read milk cows data
-milk_cows = readxl::read_excel("/Users/lk/Desktop/p8105/hw_sub/p8105_final_project/data/milkcowsandprod.xlsx", 
-                               sheet="Milk cows", 
-                               skip=1,
-                               col_names = TRUE) |>
-  janitor::clean_names() |>
-  #drop_na() |>
-  rename(region = x1) |>
-  rename(state = back_to_content_page) |>
-  filter_all(any_vars(!is.na(.))) |>
-  rename_with(~ gsub("^x", "", .), starts_with("x")) |>
- mutate(region = case_when(
-    state %in% c("Maine", "New Hampshire", "Vermont", "Massachusetts", "Rhode Island", 
-                 "Connecticut", "New York", "New Jersey", "Pennsylvania", 
-                 "Delaware", "Maryland") ~ "Northeast",
-    state %in% c("Michigan","Wisconsin","Minnesota") ~ "Lake States",
-    state %in% c("Ohio","Indiana","Illinois","Iowa","Missouri") ~ "Corn Belt",
-    state %in% c("North Dakota", "South Dakota", "Nebraska", "Kansas") ~ "Northern Plains",
-    state %in% c("Virginia", "West Virginia", "North Carolina", "Kentucky", "Tennessee") ~ "Appalachia",
-    state %in% c("South Carolina", "Georgia", "Florida", "Alabama") ~ "Southeast",
-    state %in% c("Mississippi", "Arkansas","Louisiana") ~ "Delta States",
-    state %in% c("Oklahoma","Texas") ~ "Southern Plains",
-    state %in% c("Montana","Idaho","Wyoming","Colorado","New Mexico","Arizona","Utah","Nevada") ~ "Mountain Region",
-    state %in% c("Washington","Oregon","California") ~ "West Coast",
-    state %in% c("Alaska","Hawaii") ~ "Other States"
-    #TRUE ~ "Other"  # Default case for states not in the Northeast
-  )) |>
-  filter(!is.na(state)) |>
-  mutate(
-    ##remove non numeric character and convert to numeric
-    `2019` = gsub("[^0-9,.-]", "", `2019`) |> as.numeric(), 
-    `2020` = gsub("[^0-9,.-]", "", `2020`) |> as.numeric(),
-    `2021` = gsub("[^0-9,.-]", "", `2021`) |> as.numeric(),
-    `2022` = gsub("[^0-9,.-]", "", `2022`) |> as.numeric(),
-    `2023` = gsub("[^0-9,.-]", "", `2023`) |> as.numeric()
-  ) |>
-  pivot_longer(
-    cols = 3:56,
-    names_to = "year",
-    values_to = "number_of_cows"
-  )  
-
-#milk_cows 
-```
-
-
-```{r}
-#table 
-top_10_states <- milk_cows |>
-  group_by(state) |>
-  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
-  arrange(desc(total_cows)) |>
-  head(10)  
-
-#print
-knitr::kable(top_10_states, caption = "Top 10 States by Total Number of Cows")
-```
-
-```{r}
-#map coordinates of states
-us_states <- usmap::us_map()
-
-#abbreviation for state names
-data_milk_cows = milk_cows |> mutate(
-  state_abbr = state.abb[match(state, state.name)]
-)
-
-#merge location data with production data
-combine_milk_cows <- us_states |>
- left_join(data_milk_cows, by = c("abbr" = "state_abbr"))
-
-ggplot(combine_milk_cows) +
-  geom_sf(aes(fill = number_of_cows), color = "white", size = 0.2) +
-  #scale_fill_viridis_c(name = "number_of_cows",option = "plasma") +
-  scale_fill_gradientn(
-    colors = c("pink", "magenta","orange","red"),  #magenta
-    name = "Number of Cows"
-  ) + 
-  theme_minimal() +
-  labs(title = "Number of Cows by State")
-
-ggplot(combine_milk_cows) +
-  geom_sf(aes(fill = number_of_cows), color = "white", size = 0.2) +
-  #scale_fill_viridis_c(name = "number_of_cows",option = "plasma") +
-  scale_fill_gradientn(
-    colors = c("pink", "orange","red"),  #magenta
-    name = "Number of Cows"
-  ) + 
-  theme_minimal() +
-  labs(title = "Number of Cows by State")
-
-ggplot(combine_milk_cows) +
-  geom_point(aes(x = reorder(state, number_of_cows), y = number_of_cows, color = number_of_cows), 
-             alpha = 0.7) +  
-  #scale_size_continuous(name = "number_of_cows", range = c(3, 7)) +
- # scale_color_viridis_c(name = "number_of_cows")  + 
-  scale_color_gradientn(
-    colors = c("pink", "magenta", "orange","red"),  #magenta
-    name = "Number of Cows by State"
-  ) +
-  theme(axis.text.x = element_text(angle = 80, hjust = 1))+
-  labs(title = "Number of Cows by State", 
-       x = "State",
-       y = "Number of Cows")
-
-ggplot(combine_milk_cows) +
-  geom_point(aes(x = reorder(state, number_of_cows), y = number_of_cows, color = number_of_cows), 
-             alpha = 0.7) +  
-  #scale_size_continuous(name = "number_of_cows", range = c(3, 7)) +
- # scale_color_viridis_c(name = "number_of_cows")  + 
-  scale_color_gradientn(
-    colors = c("pink", "orange","red"),  #magenta
-    name = "Number of Cows by State"
-  ) +
-  theme(axis.text.x = element_text(angle = 80, hjust = 1))+
-  labs(title = "Number of Cows by State", 
-       x = "State",
-       y = "Number of Cows")
-```
