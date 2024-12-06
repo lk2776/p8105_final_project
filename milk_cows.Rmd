@@ -2,17 +2,18 @@
 #title: "Milk Cows per Thousand Head Analysis"
 output: 
   html_document:
-    code_folding: hide
     always_allow_html: true
     toc: true
     toc_float: true
 ---
 
 ```{r setup, include=FALSE, warning=FALSE,message=FALSE}
+#code_folding: hide
 #load packages
 library(tidyverse)
 library(ggridges)
 library(patchwork)
+library(plotly)
 library(purrr)
 library(broom)
 library(readxl)
@@ -39,7 +40,7 @@ scale_colour_discrete = scale_colour_viridis_d
 scale_fill_discrete = scale_fill_viridis_d
 
 knitr::opts_chunk$set(
-  echo = TRUE,         #code is not displayed in output
+  echo = FALSE,         #code is not displayed in output
   warning = FALSE,     #warnings false
   message = FALSE      #messages false
 )
@@ -93,33 +94,8 @@ milk_cows = readxl::read_excel("./data/milkcowsandprod.xlsx",
 
 ```
 
-## Milk Cows Statistics
+## Milk Cows Statistics by State
 ```{r}
-#table 
-
-milk_cows |>
-  filter(year == 1970) |>
-  group_by(state,year) |>
-  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
-  arrange(desc(total_cows)) |>
-  rename(State = state, 
-         "Total Cows 1970" = total_cows) |>
-  head(5)  |>
-  knitr::kable(caption = "Top 5 States in Total Cows (per Thousand Head) (1970)", format="html") |>
-  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
-
-milk_cows |>
-  filter(year == 2023) |>
-  group_by(state,year) |>
-  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
-  arrange(desc(total_cows)) |>
-  rename(State = state, 
-         Year = year,
-         "Total Cows 2023" = total_cows) |>
-  head(5)  |>
-  knitr::kable(caption = "Top 5 States in Total Cows (per Thousand Head) (2023)", format="html") |>
-  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
-
 top_5_states <- milk_cows |>
   group_by(state) |>
   summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
@@ -142,11 +118,150 @@ final_table <- bind_rows(top_5_states, summary_stats)
 #print
 knitr::kable(final_table, caption = "Top 5 States and Summary Statistics for Total Cows (per Thousand Head) (1970-2023)", format="html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+```
+
+```{r}
+#table 1970 by state
+milk_cows |>
+  filter(year == 1970) |>
+  group_by(state,year) |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
+  arrange(desc(total_cows)) |>
+  rename(State = state, 
+         "Total Cows 1970" = total_cows) |>
+  head(5)  |>
+  knitr::kable(caption = "Top 5 States in Total Cows (per Thousand Head) (1970)", format="html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+
+
+#line plots 1970 by state
+milk_cows_state_1970 = milk_cows |>
+  filter(year == 1970) |>
+  group_by(state,year) |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
+  arrange(desc(total_cows)) |>
+  rename(State = state, 
+         "Total Cows 1970" = total_cows, 
+         Year = year) 
+
+
+ggplot(milk_cows_state_1970, aes(x = reorder(State, `Total Cows 1970`), y = `Total Cows 1970`, color = State)) +
+  geom_point() +  
+  geom_line(group = 1, color = "lightblue") + 
+  labs(
+    title = "Total Number of Cows by State (per Thousand Head) (1970)",
+    x = "State",
+    y = "Total Cows",
+    color = "State"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> static_line_state_1970
+
+ggplotly(static_line_state_1970)
+
+#us map by state 1970
+#map coordinates of states
+us_states <- usmap::us_map()
+
+#abbreviation for state names
+data_milk_cows = milk_cows |> mutate(
+  state_abbr = state.abb[match(state, state.name)]
+)
+
+#merge location data with production data
+combine_milk_cows_1970 <- us_states |>
+ left_join(data_milk_cows, by = c("abbr" = "state_abbr")) |>
+  filter (year == "1970") |>
+  rename("Number of Cows" = number_of_cows)
+
+ggplot(combine_milk_cows_1970) +
+  geom_sf(aes(fill = `Number of Cows`), color = "white", size = 0.2) +
+  #scale_fill_viridis_c(name = "number_of_cows",option = "plasma") +
+  scale_fill_gradientn(
+    #colors = c("pink", "magenta","orange","red"),  #magenta
+    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
+    name = "Number of Cows"
+  ) + 
+  theme_minimal() +
+  labs(title = "Milk Cows Distribution by State (per Thousand Head) (1970)") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "bottom"
+  ) -> static_map_state_1970
+
+ggplotly(static_map_state_1970)
 
 ```
 
-## trend of milk cows across states over the years
 
+```{r}
+#table 2023 state
+milk_cows |>
+  filter(year == 2023) |>
+  group_by(state,year) |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
+  arrange(desc(total_cows)) |>
+  rename(State = state, 
+         Year = year,
+         "Total Cows 2023" = total_cows) |>
+  head(5)  |>
+  knitr::kable(caption = "Top 5 States in Total Cows (per Thousand Head) (2023)", format="html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+
+#line plot state 2023
+milk_cows_state_2023 = milk_cows |>
+  filter(year == 2023) |>
+  group_by(state,year) |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
+  arrange(desc(total_cows)) |>
+  rename(State = state, 
+         "Total Cows 2023" = total_cows, 
+         Year = year)
+
+
+ggplot(milk_cows_state_2023, aes(x = reorder(State, `Total Cows 2023`), y = `Total Cows 2023`, color = State)) +
+  geom_point() +  
+  geom_line(group = 1, color = "lightblue") + 
+  labs(
+    title = "Total Number of Cows by State (per Thousand Head) (2023)",
+    x = "State",
+    y = "Total Cows",
+    color = "State"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> static_line_state_2023
+
+ggplotly(static_line_state_2023)
+
+#us map state 2023
+combine_milk_cows_2023 <- us_states |>
+ left_join(data_milk_cows, by = c("abbr" = "state_abbr")) |>
+  filter (year == "2023")
+
+ggplot(combine_milk_cows_2023) +
+  geom_sf(aes(fill = number_of_cows), color = "white", size = 0.2) +
+  #scale_fill_viridis_c(name = "number_of_cows",option = "plasma") +
+  scale_fill_gradientn(
+    #colors = c("pink", "magenta","orange","red"),  #magenta
+    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
+    name = "Number of Cows"
+  ) + 
+  theme_minimal() +
+  labs(title = "Milk Cows Distribution by State (per Thousand Head) (2023)") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+    #legend.position = "bottom"
+  ) -> static_map_state_2023
+
+ggplotly(static_map_state_2023)
+
+
+
+```
+
+
+
+## Trend of Total Cows by State 
 ```{r}
 #line plot for milk cows over years across states - increasing and decreasing trend
 custom_colors <- c(
@@ -161,29 +276,34 @@ custom_colors <- c(
   "#9933CC", "#6600CC", "#3300CC"
 )
 
-milk_cows |>
+milk_cows_over_years = milk_cows |>
   group_by(state, year) |>
   summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop") |>  
-  ggplot( aes(x = year, y = total_cows, color = state, group = state)) +  
+  rename(State = state, 
+         Year = year, 
+         `Total Cows` = total_cows) |> 
+  ggplot(aes(x = Year, y = `Total Cows`, color = State, group = State)) +  
   geom_point() +  
   geom_line() +    
   scale_color_manual(values = custom_colors) +  
   #scale_colour_discrete() + #don't like it
   labs(
-    title = "Trend of Total Cows by Region (1970-2023)",
+    title = "Trend of Total Cows by State (1970-2023)",
     x = "Year",
     y = "Total Number of Cows",
-    color = "Region"
+    color = "State"
   ) +
-  theme_classic() + 
+  theme_minimal() + 
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1)
+    axis.text.x = element_text(angle = 85, hjust = 1)
   )
+
+ggplotly(milk_cows_over_years)
 ```
 
-## states with increasing trend of total cows
+
 ```{r}
-#increasing trend
+#increasing trend table
 ##total number of cows per state, year, and region
 state_region_cows_summary <-milk_cows |>
   filter(year >= 1970 & year <= 2023) |>
@@ -210,11 +330,11 @@ state_region_comparison <- left_join(cows_1970, cows_2023, by = c("region", "sta
     State = state, 
     "Total Cows 1970" = total_cows_1970,
     "Total Cows 2023" = total_cows_2023, 
-    Percentage_Increase = percentage_increase
+    "Percentage Increase" = percentage_increase
   )
 
 #table
-kable(state_region_comparison, caption = "States and Regions with Percentage Increase in Total Number of Cows (Per Thousand Head) (1970–2023)", format = "html") |>
+kable(state_region_comparison, caption = "States with Percentage Increase in Total Number of Cows (Per Thousand Head) (1970–2023)", format = "html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered") 
 
 ```
@@ -222,18 +342,6 @@ kable(state_region_comparison, caption = "States and Regions with Percentage Inc
 ```{r}
 #increasing trend plot
 #custom colors
-custom_colors <- c(
-  "#FF9999", "#FF6666", "#FF3333", "#FF0000", "#990000", "#660000", 
-  "#99FF99", "#66CC66", "#33CC33", "#009900", "#006600", "#003300", 
-  "#99CCFF", "#66CCFF", "#33CCFF", "#0099FF", "#0066FF", "#0033FF", 
-  "#CCCCFF", "#9999FF", "#6666FF", "#3333FF", "#0000FF", "#000099", 
-  "#FF99FF", "#FF66FF", "#FF33FF", "#FF00FF", "#9900FF", "#6600FF", 
-  "#6600CC", "#660099", "#660066", "#6666CC", "turquoise", "#99CC99", 
-  "#FFCC99", "#FFCC66", "#FFCC33", "#FF9966", "#FF9966", "#FF6699", 
-  "#FF3366", "#FF0033", "#FF0000", "#990033", "#660033", "#330033", 
-  "#9933CC", "#6600CC", "#3300CC"
-)
-
 custom_colors = c("pink","red2","magenta2","magenta3","chartreuse3","salmon","maroon",
                   "mediumturquoise","purple1","burlywood3","orange","blue")
 
@@ -242,8 +350,13 @@ milk_cows |>
   filter(state %in% c("New Mexico","Idaho","Arizona","Colorado","Nevada",
                       "California","Texas","Washington","Oregon","Utah","South Dakota","Michigan")) |>
   group_by(state, year) |>
-  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop") |>  
-  ggplot(aes(x = year, y = total_cows, color = state, group = state)) +  
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop") |> 
+  rename(
+    State = state,
+    Year = year,
+    `Total Cows` = total_cows
+  ) |>
+  ggplot(aes(x = Year, y = `Total Cows`, color = State)) +  
   geom_point() +  
   geom_line() +    
   scale_color_manual(values = custom_colors) +  
@@ -254,17 +367,17 @@ milk_cows |>
     y = "Total Number of Cows (Thousands)",
     color = "State"
   ) +
-  theme_classic() + 
+  theme_minimal() + 
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1)
-  )
+    axis.text.x = element_text(angle = 80, hjust = 1)) -> state_increasing_trend
+ggplotly(state_increasing_trend)
 
 ```
 
 
-## states with decreasing trend
+
 ```{r}
-#decreasing trend
+#decreasing trend table
 state_region_cows_summary <- milk_cows |>
   filter(year >= 1970 & year <= 2023) |>
   group_by(region, state, year) |>
@@ -290,11 +403,11 @@ state_region_comparison <- left_join(cows_1970, cows_2023, by = c("region", "sta
     State = state, 
     "Total Cows 1970" = total_cows_1970,
     "Total Cows 2023" = total_cows_2023, 
-    Percentage_Decrease = percentage_decrease
+    "Percentage Decrease" = percentage_decrease
   )
 
 #table
-kable(state_region_comparison, caption = "States and Regions with Percentage Decrease in Total Number of Cows (Per Thousand Head) (1970–2023)", format = "html") |>
+kable(state_region_comparison, caption = "States with Percentage Decrease in Total Number of Cows (Per Thousand Head) (1970–2023)", format = "html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 
 ```
@@ -326,7 +439,12 @@ milk_cows |>
                      "Pennsylvania", "New York", "Wisconsin", "Indiana", "Kansas")) |>
   group_by(state, year) |>
   summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop") |>  
-  ggplot(aes(x = year, y = total_cows, color = state, group = state)) +  
+  rename(
+    Year = year, 
+    State = state,
+    `Total Cows` = total_cows
+  ) |>
+  ggplot(aes(x = Year, y = `Total Cows`, color = State)) +  
   geom_point() +  
   geom_line() +    
   scale_color_manual(values = custom_colors) +  
@@ -337,66 +455,15 @@ milk_cows |>
     y = "Total Number of Cows (Thousands)",
     color = "State"
   ) +
-  theme_classic() + 
+  theme_minimal() + 
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1)
-  )
-
-```
-
-## US map distribution
-```{r}
-#map coordinates of states
-us_states <- usmap::us_map()
-
-#abbreviation for state names
-data_milk_cows = milk_cows |> mutate(
-  state_abbr = state.abb[match(state, state.name)]
-)
-
-#merge location data with production data
-combine_milk_cows_1970 <- us_states |>
- left_join(data_milk_cows, by = c("abbr" = "state_abbr")) |>
-  filter (year == "1970")
-
-ggplot(combine_milk_cows_1970) +
-  geom_sf(aes(fill = number_of_cows), color = "white", size = 0.2) +
-  #scale_fill_viridis_c(name = "number_of_cows",option = "plasma") +
-  scale_fill_gradientn(
-    #colors = c("pink", "magenta","orange","red"),  #magenta
-    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
-    name = "Number of Cows"
-  ) + 
-  theme_minimal() +
-  labs(title = "Milk Cows Distribution by State (per Thousand Head) (1970)") +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "bottom"
-  )
-
-combine_milk_cows_2023 <- us_states |>
- left_join(data_milk_cows, by = c("abbr" = "state_abbr")) |>
-  filter (year == "2023")
-
-ggplot(combine_milk_cows_2023) +
-  geom_sf(aes(fill = number_of_cows), color = "white", size = 0.2) +
-  #scale_fill_viridis_c(name = "number_of_cows",option = "plasma") +
-  scale_fill_gradientn(
-    #colors = c("pink", "magenta","orange","red"),  #magenta
-    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
-    name = "Number of Cows"
-  ) + 
-  theme_minimal() +
-  labs(title = "Milk Cows Distribution by State (per Thousand Head) (2023)") +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "bottom"
-  )
+    axis.text.x = element_text(angle = 80, hjust = 1)
+  ) -> state_decreasing_trend
+ggplotly(state_decreasing_trend)
 
 ```
 
 ```{r}
-
 combine_milk_cows = milk_cows |> 
 group_by(region, state, year) |>
   summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop")
@@ -411,7 +478,7 @@ ggplot(combine_milk_cows) +
     name = "Number of Cows by State"
   ) +
   theme(axis.text.x = element_text(angle = 80, hjust = 1))+
-  labs(title = "Number of Cows by State", 
+  labs(title = "Number of Cows by State (1970-2023)", 
        x = "State",
        y = "Number of Cows")
 
@@ -419,13 +486,143 @@ ggplot(combine_milk_cows) +
 
 
 
-## by region
+## Milk Cows Statistics by Region
+
+```{r}
+#region 1970
+combine_region_cows_1970 <- us_states |>
+ left_join(data_milk_cows, by = c("abbr" = "state_abbr")) |>
+  filter (year == "1970") |>
+  group_by(region, year) |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop") |>
+  rename(Region = region, 
+         Year = year,
+         `Total Cows` = total_cows)
+
+#table 1970
+milk_cows |> 
+group_by(region, year) |>
+filter(year == "1970") |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop") |>
+  arrange(desc(total_cows)) |>
+  select(region,total_cows) |>
+  rename(Region = region, 
+         "Total Cows 1970" = total_cows) |>
+  knitr::kable(caption = "Total Number of Cows by Region (1970)", format = "html") |>
+  kableExtra::kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+
+#line plot 1970
+ggplot(combine_region_cows_1970, aes(x = reorder(Region, `Total Cows`), y = `Total Cows`, color = Region)) +
+  geom_point() +  
+  geom_line(group = 1, color = "gray") +  
+  scale_color_manual(values = c("Northeast" = "blue", "Lake States" = "green", 
+                               "Corn Belt" = "red", "Northern Plains" = "purple", 
+                               "Appalachia" = "orange", "Southeast" = "pink",
+                               "Delta States" = "yellow", "Southern Plains" = "cyan", 
+                               "Mountain Region" = "brown", "West Coast" = "magenta")) +
+  labs(
+    title = "Total Number of Cows by Region (per Thousand Head) (1970)",
+    x = "Region",
+    y = "Total Cows",
+    color = "Region"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> line_plot_region_2023
+ggplotly(line_plot_region_2023)
+
+
+#us map 1970
+ggplot(combine_region_cows_1970) +
+  geom_sf(aes(fill = `Total Cows`), color = "white", size = 0.2) +
+  scale_fill_gradientn(
+    #colors = c("pink", "magenta","orange","red"),  #magenta
+    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
+    name = "Number of Cows"
+  )+ 
+  theme_minimal() +
+  labs(title = "Milk Cows Distribution by Region (1970)") +
+  theme(
+    axis.text.x = element_text(angle = 80, hjust = 1),
+    legend.position = "bottom"
+  ) #-> us_plot_region_1970
+#ggplotly(us_plot_region_1970)
+```
+
+
+```{r}
+#region 2023
+combine_region_cows_2023 <- us_states |>
+ left_join(data_milk_cows, by = c("abbr" = "state_abbr")) |>
+  filter (year == "2023") |>
+  group_by(region, year) |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop") |>
+  rename(Region = region, 
+         Year = year,
+         `Total Cows` = total_cows)
+
+
+#table 
+milk_cows |> 
+group_by(region, year) |>
+filter(year == "2023" ) |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop") |>
+  arrange(desc(total_cows)) |>
+  select(region, total_cows) |>
+  rename(Region = region, 
+         "Total Cows 2023" = total_cows) |>
+  knitr::kable(caption = "Total Number of Cows by Region (2023)", format = "html") |>
+  kableExtra::kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+  
+
+#line plot 
+ggplot(combine_region_cows_2023, aes(x = reorder(Region, `Total Cows`), y = `Total Cows`, color = Region)) +
+  geom_point() +  
+  geom_line(group = 1, color = "gray") +  
+  scale_color_manual(values = c("Northeast" = "blue", "Lake States" = "green", 
+                               "Corn Belt" = "red", "Northern Plains" = "purple", 
+                               "Appalachia" = "orange", "Southeast" = "pink",
+                               "Delta States" = "yellow", "Southern Plains" = "cyan", 
+                               "Mountain Region" = "brown", "West Coast" = "magenta")) +
+  labs(
+    title = "Total Number of Cows by Region (per Thousand Head) (1970)",
+    x = "Region",
+    y = "Total Cows",
+    color = "Region"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> line_plot_region_2023
+ggplotly(line_plot_region_2023)
+  
+#us map 2023
+ggplot(combine_region_cows_2023) +
+  geom_sf(aes(fill = `Total Cows`), color = "white", size = 0.2) +
+  scale_fill_gradientn(
+    #colors = c("pink", "magenta","orange","red"),  #magenta
+    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
+    name = "Number of Cows"
+  )+ 
+  theme_minimal() +
+  labs(title = "Milk Cows Distribution by Region (2023)") +
+  theme(
+    axis.text.x = element_text(angle = 80, hjust = 1),
+    legend.position = "bottom"
+  ) #-> us_plot_region_2023
+#ggplotly(us_plot_region_2023)
+
+```
+
+## Trend of Total Cows by Region
 ```{r}
 #line plot milk cows over years by region
 milk_cows |>
   group_by(region, year) |>
   summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop") |>  
-  ggplot(aes(x = year, y = total_cows, color = region, group = region)) +  
+  rename(
+    Year = year, 
+    Region = region,
+    `Total Cows` = total_cows
+  ) |>
+  ggplot(aes(x = Year, y = `Total Cows` , color = Region)) +  
   geom_point() +  
   geom_line() +    
   #scale_color_brewer(palette = "Set3") +  
@@ -446,117 +643,10 @@ milk_cows |>
     y = "Total Number of Cows",
     color = "Region"
   ) +
-  theme_classic() + 
+  theme_minimal() + 
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),  
+    axis.text.x = element_text(angle = 80, hjust = 1),  
     legend.position = "bottom"
-  )
+  ) -> trend_region
+ggplotly(trend_region)
 ```
-
-```{r}
-#region 1970
-combine_region_cows_1970 <- us_states |>
- left_join(data_milk_cows, by = c("abbr" = "state_abbr")) |>
-  filter (year == "1970") |>
-  group_by(region, year) |>
-  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop")
-
-#table 1970
-milk_cows |> 
-group_by(region, year) |>
-filter(year == "1970") |>
-  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop") |>
-  arrange(desc(total_cows)) |>
-  rename(Region = region, 
-         "Total Cows" = total_cows) |>
-  knitr::kable(caption = "Total Number of Cows by Region (1970)", format = "html") |>
-  kableExtra::kable_styling(full_width = TRUE, bootstrap_options = "bordered")
-
-#line plot
-ggplot(combine_region_cows_1970, aes(x = reorder(region, total_cows), y = total_cows, color = region)) +
-  geom_point() +  
-  geom_line(group = 1, color = "gray") +  
-  scale_color_manual(values = c("Northeast" = "blue", "Lake States" = "green", 
-                               "Corn Belt" = "red", "Northern Plains" = "purple", 
-                               "Appalachia" = "orange", "Southeast" = "pink",
-                               "Delta States" = "yellow", "Southern Plains" = "cyan", 
-                               "Mountain Region" = "brown", "West Coast" = "magenta")) +
-  labs(
-    title = "Total Number of Cows by Region (per Thousand Head) (1970)",
-    x = "Region",
-    y = "Total Cows",
-    color = "Region"
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-
-
-#us map 1970
-ggplot(combine_region_cows_1970) +
-  geom_sf(aes(fill = total_cows), color = "white", size = 0.2) +
-  scale_fill_gradientn(
-    #colors = c("pink", "magenta","orange","red"),  #magenta
-    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
-    name = "Number of Cows"
-  )+ 
-  theme_minimal() +
-  labs(title = "Milk Cows Distribution by Region (1970)") +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "bottom"
-  )
-
-#region 2023
-combine_region_cows_2023 <- us_states |>
- left_join(data_milk_cows, by = c("abbr" = "state_abbr")) |>
-  filter (year == "2023") |>
-  group_by(region, year) |>
-  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop")
-
-#table 
-milk_cows |> 
-group_by(region, year) |>
-filter(year == "2023" ) |>
-  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop") |>
-  arrange(desc(total_cows)) |>
-  rename(Region = region, 
-         "Total Cows" = total_cows) |>
-  knitr::kable(caption = "Total Number of Cows by Region (1970)", format = "html") |>
-  kableExtra::kable_styling(full_width = TRUE, bootstrap_options = "bordered")
-  
-#line plot 
-ggplot(combine_region_cows_2023, aes(x = reorder(region, total_cows), y = total_cows, color = region)) +
-  geom_point() +  
-  geom_line(group = 1, color = "gray") +  
-  scale_color_manual(values = c("Northeast" = "blue", "Lake States" = "green", 
-                               "Corn Belt" = "red", "Northern Plains" = "purple", 
-                               "Appalachia" = "orange", "Southeast" = "pink",
-                               "Delta States" = "yellow", "Southern Plains" = "cyan", 
-                               "Mountain Region" = "brown", "West Coast" = "magenta")) +
-  labs(
-    title = "Total Number of Cows by Region (per Thousand Head) (1970)",
-    x = "Region",
-    y = "Total Cows",
-    color = "Region"
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-  
-#us map 2023
-ggplot(combine_region_cows_2023) +
-  geom_sf(aes(fill = total_cows), color = "white", size = 0.2) +
-  scale_fill_gradientn(
-    #colors = c("pink", "magenta","orange","red"),  #magenta
-    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
-    name = "Number of Cows"
-  )+ 
-  theme_minimal() +
-  labs(title = "Milk Cows Distribution by Region (2023)") +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "bottom"
-  )
-
-```
-

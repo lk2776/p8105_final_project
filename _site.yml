@@ -6,10 +6,10 @@ navbar:
   left: 
     - text: "Milk Production"
       menu:
-      - text: "milk production across states"
-        href: milk_cows_production_cleaning.html
+      - text: "Milk Cows"
+        href: milk_cows.html
       - text: "milk production across years"
-        href: milk_cows_production_cleaning.html
+        href: milk_production.html
     - text: "Milk Statistics"
       menu:
       - text: "Milk Over the Years"
