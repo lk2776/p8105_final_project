@@ -47,7 +47,7 @@ Thanks for visiting our project! Our team consists of Columbia University gradua
 </table>
 ```
 
-<br>
+<hr>
 
 ### Contact Us
 
@@ -55,4 +55,4 @@ If you would like to, please <a href="mailto:@gmail.com">contact us</a>.
 
 ---
 
-Thanks a lot for visiting our website!
+<center> <small> Thanks a lot for visiting our website! </small> </center>
