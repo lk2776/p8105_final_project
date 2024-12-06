@@ -255,10 +255,10 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="milk_cows_production_cleaning.html">milk production across states</a>
+      <a href="milk_cows.html">Milk Cows</a>
     </li>
     <li>
-      <a href="milk_cows_production_cleaning.html">milk production across years</a>
+      <a href="milk_production.html">Milk Production</a>
     </li>
   </ul>
 </li>
@@ -270,10 +270,13 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="fluidmilk.html">fluidmilk</a>
+      <a href="milk-over-the-years.html">Milk Over the Years</a>
     </li>
     <li>
-      <a href="fluidmilk.html">fluidmilk_2</a>
+      <a href="Trends-in-Different-Milk-Types-Over-Time.html">Milk Types Compared</a>
+    </li>
+    <li>
+      <a href="Flavored-.html">Flavoured vs Non Flavoured</a>
     </li>
   </ul>
 </li>
@@ -285,7 +288,8 @@ $(document).ready(function () {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
+        <li class="dropdown-header">Data</li>
+<li>
   <a href="About-us.html">About the Team</a>
 </li>
 <li>
@@ -313,16 +317,9 @@ $(document).ready(function () {
 <div id="milk-over-the-years" class="section level1">
 <h1>milk over the years</h1>
 <pre class="r"><code>library(readxl)
-library(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>file_path &lt;- &quot;fluidmilk.xlsx&quot;
+library(dplyr)
+
+file_path &lt;- &quot;fluidmilk.xlsx&quot;
 fluidmilk_data &lt;- read_excel(file_path, sheet = &quot;fluidmilk&quot;)</code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...2`
@@ -369,19 +366,10 @@ print(fluidmilk_data)</code></pre>
 <pre class="r"><code>key_stats &lt;- fluidmilk_data %&gt;%
   summarise(
     across(everything(), list(mean = mean, sd = sd, min = min, max = max), na.rm = TRUE)
-  )</code></pre>
-<pre><code>## Warning: There was 1 warning in `summarise()`.
-## ℹ In argument: `across(...)`.
-## Caused by warning:
-## ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
-## Supply arguments directly to `.fns` through an anonymous function instead.
-## 
-##   # Previously
-##   across(a:b, mean, na.rm = TRUE)
-## 
-##   # Now
-##   across(a:b, \(x) mean(x, na.rm = TRUE))</code></pre>
-<pre class="r"><code>print(key_stats)</code></pre>
+  )
+
+
+print(key_stats)</code></pre>
 <pre><code>## # A tibble: 1 × 40
 ##   Year_mean Year_sd Year_min Year_max Whole_Milk_mean Whole_Milk_sd
 ##       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
@@ -408,11 +396,12 @@ ggplot(fluidmilk_data, aes(x = Year, y = Total_Sales)) +
     y = &quot;Total Sales (Million Pounds)&quot;
   ) +
   theme_minimal()</code></pre>
-<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in
+## ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to see
+## where this warning was generated.</code></pre>
 <p><img src="milk-over-the-years_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>a.Growth Period (1975 to mid-1980s): During this period, total fluid
 milk sales experienced steady growth, likely driven by population growth
