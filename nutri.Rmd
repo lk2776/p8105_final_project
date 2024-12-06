@@ -75,6 +75,8 @@ for (i in rows_to_plot) {
 
 ```
 
+<h3> <b> <center> Bar Plots for Nutritional Components with Different Values Across Milk Types </center> </b> </h3>
+
 ```{r, results='asis', echo=FALSE}
 htmltools::HTML('
 <div class="slideshow-container">
@@ -165,6 +167,7 @@ There is a decreasing trend as we go towards the lower fat options for calories 
 Quantity of sodium is roughly the same for all 4 (higher in 1% and skim).
 Skim has the least amount of calcium. The rest seem to have the same amount.
 
+<br>
 
 ```{R, echo= FALSE}
 # Making a layout

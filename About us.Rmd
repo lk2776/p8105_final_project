@@ -2,8 +2,6 @@
 title: "About Us"
 output:
   html_document:
-    toc: true
-    toc_float: true
     theme: flatly
     css: custom.css
 ---
@@ -42,14 +40,14 @@ Thanks for visiting our project! Our team consists of Columbia University gradua
     <td></td>
   </tr>
   <tr>
-    <td><a href="githublink">Yue Tai</a> loves all kinds of sports! I graduated from UIUC. <br> Favourite Milk Beverage: Strawberry Milk <br> Favourite Dairy Animal: Goat </td>
+    <td><a href="githublink">Yue Tai</a> loves all kinds of sports! He graduated from UIUC. <br> Favourite Milk Beverage: Strawberry Milk <br> Favourite Dairy Animal: Goat </td>
     <td><img src="cow3.png" class="portrait"></td>
   </tr>
 
 </table>
 ```
 
-<br>
+<hr>
 
 ### Contact Us
 
@@ -57,6 +55,4 @@ If you would like to, please <a href="mailto:@gmail.com">contact us</a>.
 
 ---
 
-Thanks a lot for visiting our website!
-
-<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>
+<center> <small> Thanks a lot for visiting our website! </small> </center>
