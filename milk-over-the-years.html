@@ -247,7 +247,10 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
+        <li>
+  <a href="data.html">Data</a>
+</li>
+<li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Milk Production
      
@@ -270,13 +273,13 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="milk-over-the-years.html">Milk Over the Years</a>
+      <a href="milk-over-the-years-1.html">Milk Over the Years</a>
     </li>
     <li>
-      <a href="Trends-in-Different-Milk-Types-Over-Time.html">Milk Types Compared</a>
+      <a href="Trends-in-Different-Milk-Types-Over-Time-1.html">Milk Types Compared</a>
     </li>
     <li>
-      <a href="Flavored-.html">Flavoured vs Non Flavoured</a>
+      <a href="Flavored--1.html">Flavoured vs Non Flavoured</a>
     </li>
   </ul>
 </li>
@@ -288,8 +291,7 @@ $(document).ready(function () {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown-header">Data</li>
-<li>
+        <li>
   <a href="About-us.html">About the Team</a>
 </li>
 <li>
@@ -396,12 +398,6 @@ ggplot(fluidmilk_data, aes(x = Year, y = Total_Sales)) +
     y = &quot;Total Sales (Million Pounds)&quot;
   ) +
   theme_minimal()</code></pre>
-<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in
-## ggplot2 3.4.0.
-## ℹ Please use `linewidth` instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see
-## where this warning was generated.</code></pre>
 <p><img src="milk-over-the-years_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>a.Growth Period (1975 to mid-1980s): During this period, total fluid
 milk sales experienced steady growth, likely driven by population growth
