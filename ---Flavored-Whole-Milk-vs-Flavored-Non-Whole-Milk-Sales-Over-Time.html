@@ -347,8 +347,7 @@ fluidmilk_data &lt;- fluidmilk_data %&gt;%
   mutate(Year = as.numeric(Year)) %&gt;%
   filter(!is.na(Year))</code></pre>
 <pre><code>## Warning: There was 1 warning in `mutate()`.
-## ℹ In argument: `Year =
-##   as.numeric(Year)`.
+## ℹ In argument: `Year = as.numeric(Year)`.
 ## Caused by warning:
 ## ! NAs introduced by coercion</code></pre>
 <pre class="r"><code>fluidmilk_data &lt;- fluidmilk_data %&gt;%
@@ -375,22 +374,19 @@ print(fluidmilk_data)</code></pre>
   summarise(
     across(everything(), list(mean = mean, sd = sd, min = min, max = max), na.rm = TRUE)
   )</code></pre>
-<pre><code>## Warning: There was 1 warning in
-## `summarise()`.
+<pre><code>## Warning: There was 1 warning in `summarise()`.
 ## ℹ In argument: `across(...)`.
 ## Caused by warning:
-## ! The `...` argument of `across()`
-##   is deprecated as of dplyr 1.1.0.
-## Supply arguments directly to `.fns`
-## through an anonymous function
-## instead.
+## ! The `...` argument of `across()` is deprecated as of dplyr
+##   1.1.0.
+## Supply arguments directly to `.fns` through an anonymous
+## function instead.
 ## 
 ##   # Previously
 ##   across(a:b, mean, na.rm = TRUE)
 ## 
 ##   # Now
-##   across(a:b, \(x) mean(x, na.rm =
-##   TRUE))</code></pre>
+##   across(a:b, \(x) mean(x, na.rm = TRUE))</code></pre>
 <pre class="r"><code>print(key_stats)</code></pre>
 <pre><code>## # A tibble: 1 × 40
 ##   Year_mean Year_sd Year_min Year_max Whole_Milk_mean Whole_Milk_sd
