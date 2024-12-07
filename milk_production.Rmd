@@ -405,8 +405,7 @@ state_region_comparison <- left_join(production_1970, production_2023, by = c("r
     "Total Production 1970" = total_production_1970,
     "Total Production 2023" = total_production_2023, 
     "Percentage Decrease" = percentage_decrease
-  ) |> 
-  head(5)
+  ) #|> head(5)
 
 #table
 kable(state_region_comparison, caption = "States with Percentage Decrease in Total production (Million Pounds) (1970–2023)", format = "html") |>
@@ -660,6 +659,8 @@ ggplotly(trend_region)
 
 # Statistical Analysis by State
 
+The results of the linear regression model for milk cow production by state and year are provided below. The state-year interaction results show how milk production (in million pounds) trends differ across states over time. For example, California exhibits substantial positive growth in milk production, with an interaction coefficient of 767.01 million pounds per year (p < 0.001), suggesting significant annual increases in production. Similarly, Texas (229.81 million pounds/year) and New Mexico (208.66 million pounds/year) also show notable increases over time. In contrast, states like Tennessee (-23.16 million pounds/year) experience declines in milk production, indicating a regional decrease in dairy production. The year variable itself has a negative coefficient of -15.24 million pounds (p = 0.009), suggesting an overall decline in milk production across all states over time, though this trend is not uniform.
+
 ```{r}
 #lm model milk production by state
 milk_production |> 
@@ -670,23 +671,27 @@ milk_production |>
   lm(milk_production ~ state * year, data = _) |>  
   broom::tidy() |>
   head(5) |>
-  knitr::kable(digits=3)
+  knitr::kable(digits=3, format="html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 
 ```
 
 # Statistical Analysis by Region
+
+The linear regression model results for milk production by region and year, with Appalachia as the reference region, are given below. While the year variable itself has a non-significant effect on milk production across all regions (estimate = -20.576, p = 0.237), significant region-year interactions indicate that some regions have seen increases in milk production over time. Notably, the Lake States (estimate = 130.39, p < 0.001), Mountain Region (estimate = 114.22, p < 0.001), and West Coast (estimate = 314.34, p < 0.001) have experienced positive trends in milk production over time, showing significant growth.
 
 ```{r}
 #lm model milk production by region 
 milk_production |> 
   mutate(
     #region = as.factor(region), 
-    region = relevel(as.factor(region), ref = "Southern Plains"),
+    #region = relevel(as.factor(region), ref = "Southern Plains"),
     year = as.numeric(year)     
   ) |> 
   lm(milk_production ~ region * year, data = _) |>  
   broom::tidy() |>
-  head(5) |>
-  knitr::kable()
+  #head(5) |>
+  knitr::kable(digits=3, format="html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 ```
 
