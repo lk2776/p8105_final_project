@@ -1,0 +1,98 @@
+
+
+
+# Milk over the years
+
+
+
+```{r,echo=FALSE}
+library(readxl)
+library(dplyr)
+
+file_path <- "fluidmilk.xlsx"
+fluidmilk_data <- read_excel(file_path, sheet = "fluidmilk")
+
+
+colnames(fluidmilk_data) <- c("Year", "Whole_Milk", "Reduced_Fat_2_%", 
+                              "Low_Fat_1_%", "Skim", "Flavored_Whole", 
+                              "Flavored_Other", "Buttermilk", "Eggnog", "Total_Sales")
+
+
+fluidmilk_data <- fluidmilk_data %>%
+  mutate(Year = as.numeric(Year)) %>%
+  filter(!is.na(Year))
+
+
+fluidmilk_data <- fluidmilk_data %>%
+  mutate(across(Whole_Milk:Total_Sales, as.numeric))
+
+print(fluidmilk_data)
+
+key_stats <- fluidmilk_data %>%
+  summarise(
+    across(everything(), list(mean = mean, sd = sd, min = min, max = max), na.rm = TRUE)
+  )
+
+
+print(key_stats)
+```
+
+
+## sales over time
+```{r,echo=FALSE}
+
+
+library(ggplot2)
+library(tidyr)
+
+
+ggplot(fluidmilk_data, aes(x = Year, y = Total_Sales)) +
+  geom_line(color = "pink", size = 1) +
+  scale_y_continuous(limits = c(25000, NA)) +  
+  labs(
+    title = "Total Fluid Milk Sales Over Time",
+    x = "Year",
+    y = "Total Sales (Million Pounds)"
+  ) +
+  theme_minimal()
+```
+
+a.Growth Period (1975 to mid-1980s): During this period, total fluid milk sales experienced steady growth, likely driven by population growth and increased demand for dairy products.
+
+b.Plateau Phase (mid-1980s to around 2010): Sales remained relatively stable, indicating a period of sus- tained consumption where demand neither increased nor decreased significantly.
+
+c.Decline Period (2010 to 2023): After 2010, a sharp and continuous decline in fluid milk sales is observed, reflecting a significant shift in consumer preferences and market trends.
+
+the data suggests a major transformation in the dairy industry, particularly in the last decade, as consumer behaviors evolve. Understanding the underlying factors driving these trends would be key for stakeholders in the dairy market to adapt to these changes.
+
+
+## mean sales over decades
+```{r,echo=FALSE}
+
+library(ggplot2)
+library(dplyr)
+
+
+fluidmilk_data <- fluidmilk_data %>%
+  mutate(Decade = floor(Year / 10) * 10)  
+
+
+mean_sales_by_decade <- fluidmilk_data %>%
+  group_by(Decade) %>%
+  summarise(Mean_Sales = mean(Total_Sales, na.rm = TRUE))  
+
+
+ggplot(mean_sales_by_decade, aes(x = as.factor(Decade), y = Mean_Sales)) +
+  geom_col(fill = "pink") +
+  labs(
+    title = "Mean Fluid Milk Sales by Decade",
+    x = "Decade",
+    y = "Mean Sales (Million Pounds)"
+  ) +
+  theme_minimal()
+
+```
+
+
+
+This histogram shows the mean fluid milk sales by decade. Sales remained relatively stable from the 1970s to the 2000s, hovering around similar levels. A noticeable decline begins in the 2010s and continues into the 2020s, reflecting shifting consumer preferences and reduced demand for fluid milk. This trend highlights a major change in the milk market over the past two decades.
