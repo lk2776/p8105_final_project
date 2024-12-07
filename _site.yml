@@ -12,7 +12,7 @@ navbar:
         href: milk_cows.html
       - text: "Milk Production"
         href: milk_production.html
-    - text: "Milk Statistics"
+    - text: "Milk Sales"
       menu:
       - text: "Milk Over the Years"
         href: milk-over-the-years-1.html
