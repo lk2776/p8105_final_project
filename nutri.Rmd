@@ -10,6 +10,7 @@ library(readxl)
 library(gridExtra)
 library(knitr)
 library(kableExtra)
+library(plotly)
 ```
 
 <br>
@@ -275,25 +276,28 @@ recent_ratios <- fluidmilk_ratios %>%
 # Transform to long format
 df_long <- recent_ratios |>
   rename('Whole' = WholeRatio,
-         '1_Percent' = ReducedFat2Ratio,
-         '2_Percent' = LowFat1Ratio,
+         '1 Percent' = ReducedFat2Ratio,
+         '2 Percent' = LowFat1Ratio,
          'Skim' = SkimRatio) |>
-  pivot_longer(cols = c('Whole', '2_Percent' , '1_Percent', 'Skim'),
+  pivot_longer(cols = c('Whole', '2 Percent' , '1 Percent', 'Skim'),
                names_to = "Milk_Type",
                values_to = "Sales_Ratio")
 
 # Data frame with cholesterol and saturated fat values - values entered directly instead of reading from excel as it is just 4 values and hence easier to directly enter
 df_health <- data.frame(
-  'Milk_Type' = c('Whole', '2_Percent' , '1_Percent', 'Skim'),
+  'Milk_Type' = c('Whole', '2 Percent' , '1 Percent', 'Skim'),
   'Cholesterol_mg'= c(36, 19.2, 14.4, 4.8),
   'SaturatedFat_g' = c(4.992, 3, 1.488, 0)
 )
 
 # Merge sales ratios with health data
 df_merged <- left_join(df_long, df_health, by = "Milk_Type")
+df_merged <- df_merged |> 
+  mutate(Milk_Type = factor(Milk_Type, levels = c("Whole", "2 Percent", "1 Percent", "Skim")))
 
 #Regression model
 model <- lm(Sales_Ratio ~ Year + Cholesterol_mg + SaturatedFat_g, data = df_merged)
+model2 <- lm(Sales_Ratio ~ Year + SaturatedFat_g, data = df_merged)
 
 # Tidy the model results
 tidy_model <- broom::tidy(model)
@@ -328,6 +332,34 @@ This positive coefficient, 0.006719714, suggests that higher cholesterol content
 
 This negative coefficient, -0.021363109, indicates that higher saturated fat is associated with a lower Sales Ratio, but again, this is not statistically significant (p-value 0.3802799).
 
-<b>Conclusion</b>:
-
 Based on this regression analysis, there is no strong or significant evidence to suggest that people have become more health-conscious over the years based on changes in sales ratios of milk types associated with cholesterol and saturated fat content.
+
+It is common knowledge that as we go from Skim to 1% and eventually to Whole we are increasing our fat intake. Saturated fat is not considered a good type of Fat. Based on our previous results, we saw that higher saturated fat is associated with a lower Sales Ratio but not statistically significant. Here is a plot with Saturated Fat as a predictor for Sales Ratio to better understand our result.
+
+```{R, echo = FALSE, warning = FALSE}
+# Predicted vs Actual Sales Ratio
+df_merged$Predicted <- predict(model2)
+
+plotpr <- ggplot(df_merged, aes(x = Sales_Ratio, y = Predicted, color = Milk_Type)) +
+  geom_point(size = 2, aes(text = paste("Year:", Year, "<br>", "Actual:", Sales_Ratio, "<br>", "Predicted:", Predicted))) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
+  scale_color_manual(values = c("Whole" = "red", "2 Percent" = "orange", "1 Percent" = "magenta", "Skim" = "pink")) +
+  labs(title = "Actual vs Predicted Sales Ratio", x = "Actual Sales Ratio", y = "Predicted Sales Ratio", color = "Milk Type")
+
+
+
+ggplotly(plotpr, tooltip = c("text"))
+
+
+```
+
+<b> Conclusions based on above plot and ANOVA results </b>
+<ul>
+ <li> Saturated fat and Sales: For the lower fat options, most of the points lie above the dashed line. This suggests that the model tends to overestimate the sales ratios for these lower fat milk types.<br>
+For the higher Fat Options (Whole and 2% Milk), most of the points lie below the dashed line. This indicates that the model tends to underestimate the sales ratios for these higher fat milk types.
+ </li>
+ <li>Bias in Predictions: The model tends to overestimate sales ratios for lower fat milk types and underestimate them for higher fat milk types, indicating that other factors might be at play which are not accounted for by just using saturated fat as a predictor.
+ </li>
+ <li>Further Analysis Needed: To improve the model, it might be beneficial to include additional predictors such as price, marketing efforts, consumer preferences, or other nutritional information.
+ </li>
+</ul>
