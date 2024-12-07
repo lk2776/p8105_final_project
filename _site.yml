@@ -15,11 +15,11 @@ navbar:
     - text: "Milk Statistics"
       menu:
       - text: "Milk Over the Years"
-        href: milk-over-the-years.html
+        href: milk-over-the-years-1.html
       - text: "Milk Types Compared"
-        href: Trends-in-Different-Milk-Types-Over-Time.html
+        href: Trends-in-Different-Milk-Types-Over-Time-1.html
       - text: "Flavoured vs Non Flavoured"
-        href: Flavored-.html
+        href: Flavored--1.html
     - text: "Nutrition"
       href: nutri.html
     - text: "Report"
