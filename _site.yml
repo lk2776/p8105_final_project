@@ -12,12 +12,12 @@ navbar:
         href: milk_cows.html
       - text: "Milk Production"
         href: milk_production.html
-    - text: "Milk Statistics"
+    - text: "Milk Sales"
       menu:
       - text: "Milk Over the Years"
         href: milk-over-the-years-1.html
       - text: "Milk Types Compared"
-        href: Trends-in-Different-Milk-Types-Over-Time-1.html
+        href: trends_milktypes.html
       - text: "Flavoured vs Non Flavoured"
         href: Flavored--2.html
       - text: "Flavoured Milk: Whole VS Non Whole"
