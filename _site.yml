@@ -5,7 +5,7 @@ navbar:
   title: "Home"
   left: 
     - text: "Data"
-      href: 
+      href: data.html
     - text: "Milk Production"
       menu:
       - text: "Milk Cows"
