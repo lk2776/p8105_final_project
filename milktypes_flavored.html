@@ -11,7 +11,7 @@
 
 
 
-<title>Data</title>
+<title>milktypes_flavored.knit</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -307,63 +307,108 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Data</h1>
 
 </div>
 
 
-<p>For this project, we downloaded three different datasets to answer
-specific research questions.</p>
-<div
-id="historical-fluid-beverage-milk-sales-quantities-by-product-data"
-class="section level3">
-<h3>1. Historical Fluid Beverage Milk Sales Quantities by Product
-Data</h3>
-<p>This dataset was downloaded from the <a
-href="https://www.ers.usda.gov/data-products/dairy-data/">U.S.
-Department of Agriculture</a>. The variables in this dataset are:</p>
-<ul>
-<li><code>year</code>: 1970-2023<br />
-</li>
-<li><code>whole</code>: Whole milk sales<br />
-</li>
-<li><code>2%-reduced-fat</code>: 2% reduced-fat milk sales<br />
-</li>
-<li><code>1%-reduced-fat</code>: 1% reduced-fat milk sales<br />
-</li>
-<li><code>skim</code>: Skim milk sales<br />
-</li>
-<li><code>flavored-whole</code>: Flavored whole milk sales<br />
-</li>
-<li><code>flavored-other-than-whole</code>: Flavored non-whole milk
-sales</li>
-</ul>
+<div id="flavored-whole-milk-vs-flavored-non-whole-milk-sales-over-time"
+class="section level2">
+<h2>Flavored Whole Milk vs Flavored Non-Whole Milk Sales Over Time</h2>
+<p>Flavored non-whole milk consistently outpaces flavored whole milk in
+sales, especially after the 1990s.Both categories show significant
+growth from the 1980s, peaking around the late 1990s to early 2000s.
+Sales for both categories decline sharply after 2010, aligning with
+broader trends of reduced fluid milk consumption.Flavored whole milk
+exhibits relatively stable sales compared to the larger fluctuations
+seen in flavored non-whole milk.</p>
+<p><img src="milktypes_flavored_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
-<div
-id="historical-milk-cows-and-milk-production-data-by-state-and-region"
-class="section level3">
-<h3>2. Historical Milk Cows and Milk Production Data by State and
-Region</h3>
-<p>This dataset was downloaded from the <a
-href="https://www.ers.usda.gov/data-products/dairy-data/">U.S.
-Department of Agriculture</a>. The variables in this dataset are:</p>
-<ul>
-<li><code>region</code>: U.S. regions</li>
-<li><code>state</code>: U.S. states</li>
-<li><code>year</code>: Year (1970-2023)</li>
-<li><code>milk_cows</code>: Number of milk cows (in thousands)</li>
-<li><code>milk_production</code>: Milk production (in million
-pounds)</li>
-</ul>
-</div>
-<div id="nutrional-data" class="section level3">
-<h3>3. Nutrional Data</h3>
-<p>The data for our nutritional analysis was found in four separate
-Excel files. We compiled these files into one sheet and then created a
-new, cleaner Excel sheet for analysis. The data pertains to the
-nutritional information of Cream-O-Land Dairy (a producer of milk). This
-information was compared to other brands, but the differences were
-marginal enough to be considered negligible for our analysis.</p>
+<div id="t-test-results" class="section level2">
+<h2>T-Test Results</h2>
+<p>When camparing flavored milk vs non-whole milk sales, the t-statistic
+is -1.3685, which indicates the difference between the means of the two
+groups relative to their variability.The p-value is 0.1778, which is
+greater than 0.05. The mean difference between the Flavored Whole and
+Non-Whole ratios is -02019007 , suggesting that on average, Flavored
+Whole ratios are slightly lower than Non-Whole ratios. However, this
+difference is not significant.This means the result is not statistically
+significant.The confidence interval for the mean difference is
+[-0.049886552 0.009506417], which includes 0. This further indicates
+that the difference in means is not statistically significant.</p>
+<table>
+<caption>Flavored Ratios</caption>
+<thead>
+<tr class="header">
+<th align="right">Year</th>
+<th align="right">Flavored Milk Ratio</th>
+<th align="right">Non Whole Ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2019</td>
+<td align="right">1.1015537</td>
+<td align="right">0.9573713</td>
+</tr>
+<tr class="even">
+<td align="right">2020</td>
+<td align="right">0.9815361</td>
+<td align="right">0.9636150</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">1.0582626</td>
+<td align="right">0.9491515</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">0.9438341</td>
+<td align="right">0.9493024</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">0.9843055</td>
+<td align="right">0.9573445</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>T-Test Results</caption>
+<colgroup>
+<col width="12%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="12%" />
+<col width="11%" />
+<col width="15%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">estimate</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">parameter</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+<th align="left">method</th>
+<th align="left">alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-0.0201901</td>
+<td align="right">-1.368529</td>
+<td align="right">0.1777936</td>
+<td align="right">46</td>
+<td align="right">-0.0498866</td>
+<td align="right">0.0095064</td>
+<td align="left">Paired t-test</td>
+<td align="left">two.sided</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 

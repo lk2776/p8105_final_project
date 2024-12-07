@@ -11,7 +11,7 @@
 
 
 
-<title>Data</title>
+<title>milktypes_over_years.knit</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -32,6 +32,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
@@ -307,63 +309,208 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Data</h1>
 
 </div>
 
 
-<p>For this project, we downloaded three different datasets to answer
-specific research questions.</p>
-<div
-id="historical-fluid-beverage-milk-sales-quantities-by-product-data"
-class="section level3">
-<h3>1. Historical Fluid Beverage Milk Sales Quantities by Product
-Data</h3>
-<p>This dataset was downloaded from the <a
-href="https://www.ers.usda.gov/data-products/dairy-data/">U.S.
-Department of Agriculture</a>. The variables in this dataset are:</p>
-<ul>
-<li><code>year</code>: 1970-2023<br />
-</li>
-<li><code>whole</code>: Whole milk sales<br />
-</li>
-<li><code>2%-reduced-fat</code>: 2% reduced-fat milk sales<br />
-</li>
-<li><code>1%-reduced-fat</code>: 1% reduced-fat milk sales<br />
-</li>
-<li><code>skim</code>: Skim milk sales<br />
-</li>
-<li><code>flavored-whole</code>: Flavored whole milk sales<br />
-</li>
-<li><code>flavored-other-than-whole</code>: Flavored non-whole milk
-sales</li>
-</ul>
+<div id="milk-over-the-years" class="section level1">
+<h1>Milk Over the Years</h1>
+<p>This table shows a snapshot of fluid milk sales in the U.S. from 1975
+to 1979.Whole milk consistently accounts for the largest share of total
+sales.Sales of Reduced Fat 2%, Low Fat 1%, and flavored milk types show
+a gradual increase, reflecting a shift in consumer preferences toward
+lower-fat and flavored options.Despite shifts among categories, total
+sales remain relatively stable across the years, indicating consistent
+overall demand for milk products.</p>
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Year
+</th>
+<th style="text-align:right;">
+WholeMilk
+</th>
+<th style="text-align:right;">
+ReducedFat2
+</th>
+<th style="text-align:right;">
+LowFat1
+</th>
+<th style="text-align:right;">
+Skim
+</th>
+<th style="text-align:right;">
+FlavoredWhole
+</th>
+<th style="text-align:right;">
+FlavoredOther
+</th>
+<th style="text-align:right;">
+TotalSales
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1975
+</td>
+<td style="text-align:right;">
+36188
+</td>
+<td style="text-align:right;">
+8726
+</td>
+<td style="text-align:right;">
+2742
+</td>
+<td style="text-align:right;">
+2480
+</td>
+<td style="text-align:right;">
+1366
+</td>
+<td style="text-align:right;">
+719
+</td>
+<td style="text-align:right;">
+53308
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1976
+</td>
+<td style="text-align:right;">
+35241
+</td>
+<td style="text-align:right;">
+9556
+</td>
+<td style="text-align:right;">
+2875
+</td>
+<td style="text-align:right;">
+2524
+</td>
+<td style="text-align:right;">
+1475
+</td>
+<td style="text-align:right;">
+864
+</td>
+<td style="text-align:right;">
+53643
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1977
+</td>
+<td style="text-align:right;">
+34036
+</td>
+<td style="text-align:right;">
+10423
+</td>
+<td style="text-align:right;">
+3003
+</td>
+<td style="text-align:right;">
+2617
+</td>
+<td style="text-align:right;">
+1446
+</td>
+<td style="text-align:right;">
+1062
+</td>
+<td style="text-align:right;">
+53688
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1978
+</td>
+<td style="text-align:right;">
+33235
+</td>
+<td style="text-align:right;">
+11017
+</td>
+<td style="text-align:right;">
+3233
+</td>
+<td style="text-align:right;">
+2543
+</td>
+<td style="text-align:right;">
+1359
+</td>
+<td style="text-align:right;">
+1097
+</td>
+<td style="text-align:right;">
+53561
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1979
+</td>
+<td style="text-align:right;">
+32480
+</td>
+<td style="text-align:right;">
+11762
+</td>
+<td style="text-align:right;">
+3281
+</td>
+<td style="text-align:right;">
+2604
+</td>
+<td style="text-align:right;">
+1236
+</td>
+<td style="text-align:right;">
+1129
+</td>
+<td style="text-align:right;">
+53525
+</td>
+</tr>
+</tbody>
+</table>
+<div id="sales-over-time" class="section level2">
+<h2>Sales over Time</h2>
+<p>Growth Period (1975 to mid-1980s): During this period, total fluid
+milk sales experienced steady growth, likely driven by population growth
+and increased demand for dairy products.</p>
+<p>Plateau Phase (mid-1980s to around 2010): Sales remained relatively
+stable, indicating a period of sus- tained consumption where demand
+neither increased nor decreased significantly.</p>
+<p>Decline Period (2010 to 2023): After 2010, a sharp and continuous
+decline in fluid milk sales is observed, reflecting a significant shift
+in consumer preferences and market trends.</p>
+<p>The data suggests a major transformation in the dairy industry,
+particularly in the last decade, as consumer behaviors evolve.
+Understanding the underlying factors driving these trends would be key
+for stakeholders in the dairy market to adapt to these changes.</p>
+<p><img src="milktypes_over_years_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
-<div
-id="historical-milk-cows-and-milk-production-data-by-state-and-region"
-class="section level3">
-<h3>2. Historical Milk Cows and Milk Production Data by State and
-Region</h3>
-<p>This dataset was downloaded from the <a
-href="https://www.ers.usda.gov/data-products/dairy-data/">U.S.
-Department of Agriculture</a>. The variables in this dataset are:</p>
-<ul>
-<li><code>region</code>: U.S. regions</li>
-<li><code>state</code>: U.S. states</li>
-<li><code>year</code>: Year (1970-2023)</li>
-<li><code>milk_cows</code>: Number of milk cows (in thousands)</li>
-<li><code>milk_production</code>: Milk production (in million
-pounds)</li>
-</ul>
+<div id="mean-sales-over-the-decades" class="section level2">
+<h2>Mean Sales Over the Decades</h2>
+<p>This histogram shows the mean fluid milk sales by decade. Sales
+remained relatively stable from the 1970s to the 2000s, hovering around
+similar levels. A noticeable decline begins in the 2010s and continues
+into the 2020s, reflecting shifting consumer preferences and reduced
+demand for fluid milk. This trend highlights a major change in the milk
+market over the past two decades.</p>
+<p><img src="milktypes_over_years_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
-<div id="nutrional-data" class="section level3">
-<h3>3. Nutrional Data</h3>
-<p>The data for our nutritional analysis was found in four separate
-Excel files. We compiled these files into one sheet and then created a
-new, cleaner Excel sheet for analysis. The data pertains to the
-nutritional information of Cream-O-Land Dairy (a producer of milk). This
-information was compared to other brands, but the differences were
-marginal enough to be considered negligible for our analysis.</p>
 </div>
 
 
