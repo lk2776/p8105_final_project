@@ -2,101 +2,25 @@
 #title: "Milk Cows per Thousand Head Analysis"
 output: 
   html_document:
-    always_allow_html: true
     toc: true
     toc_float: true
+    toc_depth: 2
+    always_allow_html: true
 ---
 
-```{r setup, include=FALSE, warning=FALSE,message=FALSE}
-#code_folding: hide
-#load packages
-library(tidyverse)
-library(ggridges)
-library(patchwork)
-library(plotly)
-library(purrr)
-library(broom)
-library(readxl)
-library(ggplot2)
-library(sf)
-library(usmap)
-library(kableExtra)
-library(RColorBrewer)
-library(knitr)
-library(leaflet)
+```{r, include=FALSE, warning=FALSE,message=FALSE}
+source("./scripts/load_milk_production_data.R")
+source("./scripts/figure_settings.R")
 
-#R figure settings
-knitr::opts_chunk$set(
-  fig.width = 9,
-  fig.asp = .6,
-  out.width = "90%"
-)
-theme_set(theme_minimal() + theme(legend.position = "bottom"))
-
-options(
-  ggplot2.continuous.colour = "viridis",
-  ggplot2.continuous.fill = "viridis"
-)
-
-scale_colour_discrete = scale_colour_viridis_d
-scale_fill_discrete = scale_fill_viridis_d
-
-knitr::opts_chunk$set(
-  echo = FALSE,         #code is not displayed in output
-  warning = FALSE,     #warnings false
-  message = FALSE      #messages false
-)
-```
-
-
-```{r}
-#read milk cows data
-milk_cows = readxl::read_excel("./data/milkcowsandprod.xlsx", 
-                               sheet="Milk cows", 
-                               skip=1,
-                               col_names = TRUE) |>
-  janitor::clean_names() |>
-  #drop_na() |>
-  rename(region = x1) |>
-  rename(state = back_to_content_page) |>
-  filter_all(any_vars(!is.na(.))) |>
-  rename_with(~ gsub("^x", "", .), starts_with("x")) |>
- mutate(region = case_when(
-    state %in% c("Maine", "New Hampshire", "Vermont", "Massachusetts", "Rhode Island", 
-                 "Connecticut", "New York", "New Jersey", "Pennsylvania", 
-                 "Delaware", "Maryland") ~ "Northeast",
-    state %in% c("Michigan","Wisconsin","Minnesota") ~ "Lake States",
-    state %in% c("Ohio","Indiana","Illinois","Iowa","Missouri") ~ "Corn Belt",
-    state %in% c("North Dakota", "South Dakota", "Nebraska", "Kansas") ~ "Northern Plains",
-    state %in% c("Virginia", "West Virginia", "North Carolina", "Kentucky", "Tennessee") ~ "Appalachia",
-    state %in% c("South Carolina", "Georgia", "Florida", "Alabama") ~ "Southeast",
-    state %in% c("Mississippi", "Arkansas","Louisiana") ~ "Delta States",
-    state %in% c("Oklahoma","Texas") ~ "Southern Plains",
-    state %in% c("Montana","Idaho","Wyoming","Colorado","New Mexico","Arizona","Utah","Nevada") ~ "Mountain Region",
-    state %in% c("Washington","Oregon","California") ~ "West Coast",
-    state %in% c("Alaska","Hawaii") ~ "Other States"
-    #TRUE ~ "Other"  # Default case for states not in the Northeast
-  )) |>
-  filter(!is.na(state)) |>
-  filter(region != "Other States") |>
-  mutate(
-    ##remove non numeric character and convert to numeric
-    `2019` = gsub("[^0-9,.-]", "", `2019`) |> as.numeric(), 
-    `2020` = gsub("[^0-9,.-]", "", `2020`) |> as.numeric(),
-    `2021` = gsub("[^0-9,.-]", "", `2021`) |> as.numeric(),
-    `2022` = gsub("[^0-9,.-]", "", `2022`) |> as.numeric(),
-    `2023` = gsub("[^0-9,.-]", "", `2023`) |> as.numeric()
-  ) |>
-  pivot_longer(
-    cols = 3:56,
-    names_to = "year",
-    values_to = "number_of_cows"
-  )  |>
-  drop_na()
+milk_cows = joined_data |>
+  select(region,state,year,number_of_cows)
 
 ```
 
-## Milk Cows Statistics by State
+# Milk Cows Statistics by State
+
+Through analysis of the milk cows dataset, we identified **Wisconsin**, **California**, **New York**, **Minnesota**, and **Pennsylvania** as the states with the highest total number of milk cows in the United States from 1970 to 2023. These states represent the top 5 with the largest number of cows, as determined by summing the total cows per state.
+
 ```{r}
 top_5_states <- milk_cows |>
   group_by(state) |>
@@ -111,22 +35,27 @@ avg_cows_state <- round(mean(top_5_states$`Total Cows`, na.rm = TRUE))
 #min_cows_state <- min(top_5_states$`Total Cows`, na.rm = TRUE)
 
 summary_stats <- tibble(
-   State = c("Total Cows in USA",  "Avg Number of Cows in USA"), #"Min Number of Cows in USA",
+   State = c("Total Cows in USA",  "Average Number of Cows in USA"), #"Min Number of Cows in USA",
   `Total Cows` = c(total_cows_usa, avg_cows_state) #min_cows_state, 
 ) 
 
 final_table <- bind_rows(top_5_states, summary_stats) 
-
+```
+Additionally, the total number of cows in the USA over this period is approximately `r format(total_cows_usa, big.mark = ",", scientific = FALSE)`, while the average number of cows in the top 5 states is approximately `r format(avg_cows_state, big.mark = ",", scientific = FALSE)`.
+```{r}
 #print
 knitr::kable(final_table, caption = "Top 5 States and Summary Statistics for Total Cows (per Thousand Head) (1970-2023)", format="html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 ```
+The table below shows the top states in total milk cows in 1970 vs 2023. As observed in the table, the US map distribution, and the line plots, there has been a shift in regional milk cow production between 1970 and 2023. While Wisconsin was the leading state in 1970, California surpassed it by 2023. Additionally, states like Idaho, which did not play a major role in milk production in 1970, have now become one of the leading producers.
 
+## Table of Top 5 States in Total Cows{.tabset}
+### 1970 {#table_state_1970}
 ```{r}
 #table 1970 by state
 milk_cows |>
   filter(year == 1970) |>
-  group_by(state,year) |>
+  group_by(state) |>
   summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
   arrange(desc(total_cows)) |>
   rename(State = state, 
@@ -134,33 +63,26 @@ milk_cows |>
   head(5)  |>
   knitr::kable(caption = "Top 5 States in Total Cows (per Thousand Head) (1970)", format="html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+```
 
-
-#line plots 1970 by state
-milk_cows_state_1970 = milk_cows |>
-  filter(year == 1970) |>
-  group_by(state,year) |>
+### 2023 {#table_state_2023}
+```{r}
+#table 2023 by state
+milk_cows |>
+  filter(year == 2023) |>
+  group_by(state) |>
   summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
   arrange(desc(total_cows)) |>
   rename(State = state, 
-         "Total Cows 1970" = total_cows, 
-         Year = year) 
-
-
-ggplot(milk_cows_state_1970, aes(x = reorder(State, `Total Cows 1970`), y = `Total Cows 1970`, color = State)) +
-  geom_point(size=0.8) +  
-  geom_line(group = 1, color = "lightblue") + 
-  labs(
-    title = "Total Number of Cows by State (per Thousand Head) (1970)",
-    x = "State",
-    y = "Total Cows",
-    color = "State"
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> static_line_state_1970
-
-ggplotly(static_line_state_1970)
-
+         "Total Cows 2023" = total_cows) |>
+  head(5)  |>
+  knitr::kable(caption = "Top 5 States in Total Cows (per Thousand Head) (2023)", format="html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+```
+## {-}
+## Map of Milk Cows Distribution by State{.tabset}
+### 1970{#map_state_1970}
+```{r}
 #us map by state 1970
 #map coordinates of states
 us_states <- usmap::us_map()
@@ -192,56 +114,25 @@ ggplot(combine_milk_cows_1970) +
   ) -> static_map_state_1970
 
 ggplotly(static_map_state_1970)
-
 ```
-
-
+### 2023{#map_state_2023}
 ```{r}
-#table 2023 state
-milk_cows |>
-  filter(year == 2023) |>
-  group_by(state,year) |>
-  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
-  arrange(desc(total_cows)) |>
-  rename(State = state, 
-         Year = year,
-         "Total Cows 2023" = total_cows) |>
-  head(5)  |>
-  knitr::kable(caption = "Top 5 States in Total Cows (per Thousand Head) (2023)", format="html") |>
-  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+#map coordinates of states
+us_states <- usmap::us_map()
 
-#line plot state 2023
-milk_cows_state_2023 = milk_cows |>
-  filter(year == 2023) |>
-  group_by(state,year) |>
-  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
-  arrange(desc(total_cows)) |>
-  rename(State = state, 
-         "Total Cows 2023" = total_cows, 
-         Year = year)
-
-
-ggplot(milk_cows_state_2023, aes(x = reorder(State, `Total Cows 2023`), y = `Total Cows 2023`, color = State)) +
-  geom_point(size=0.8) +  
-  geom_line(group = 1, color = "lightblue") + 
-  labs(
-    title = "Total Number of Cows by State (per Thousand Head) (2023)",
-    x = "State",
-    y = "Total Cows",
-    color = "State"
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> static_line_state_2023
-
-ggplotly(static_line_state_2023)
+#abbreviation for state names
+data_milk_cows = milk_cows |> mutate(
+  state_abbr = state.abb[match(state, state.name)]
+)
 
 #us map state 2023
 combine_milk_cows_2023 <- us_states |>
  left_join(data_milk_cows, by = c("abbr" = "state_abbr")) |>
-  filter (year == "2023")
+  filter (year == "2023") |>
+  rename("Number of Cows" = number_of_cows)
 
 ggplot(combine_milk_cows_2023) +
-  geom_sf(aes(fill = number_of_cows), color = "white", size = 0.2) +
+  geom_sf(aes(fill = `Number of Cows`), color = "white", size = 0.2) +
   #scale_fill_viridis_c(name = "number_of_cows",option = "plasma") +
   scale_fill_gradientn(
     #colors = c("pink", "magenta","orange","red"),  #magenta
@@ -256,14 +147,66 @@ ggplot(combine_milk_cows_2023) +
   ) -> static_map_state_2023
 
 ggplotly(static_map_state_2023)
-
-
-
 ```
 
+## {-}
+## Plot of Total Cows by State {.tabset}
+### 1970 {#line_state_1970}
+```{r}
+#line plots 1970 by state
+milk_cows_state_1970 = milk_cows |>
+  filter(year == 1970) |>
+  group_by(state,year) |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
+  arrange(desc(total_cows)) |>
+  rename(State = state, 
+         "Total Cows 1970" = total_cows, 
+         Year = year) 
+ggplot(milk_cows_state_1970, aes(x = reorder(State, `Total Cows 1970`), y = `Total Cows 1970`, color = State)) +
+  geom_point(size=0.8) +  
+  geom_line(group = 1, color = "lightblue") + 
+  labs(
+    title = "Total Number of Cows by State (per Thousand Head) (1970)",
+    x = "State",
+    y = "Total Cows",
+    color = "State"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> static_line_state_1970
 
+ggplotly(static_line_state_1970)
+```
+### 2023 {#lineplot2023}
+```{r}
+#line plot state 2023
+milk_cows_state_2023 = milk_cows |>
+  filter(year == 2023) |>
+  group_by(state,year) |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE)) |>
+  arrange(desc(total_cows)) |>
+  rename(State = state, 
+         "Total Cows 2023" = total_cows, 
+         Year = year)
+ggplot(milk_cows_state_2023, aes(x = reorder(State, `Total Cows 2023`), y = `Total Cows 2023`, color = State)) +
+  geom_point(size=0.8) +  
+  geom_line(group = 1, color = "lightblue") + 
+  labs(
+    title = "Total Number of Cows by State (per Thousand Head) (2023)",
+    x = "State",
+    y = "Total Cows",
+    color = "State"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> static_line_state_2023
 
-## Trend of Total Cows by State 
+ggplotly(static_line_state_2023)
+
+```
+## {-}
+The plots and tables below illustrate the overall trend in the total number of milk cows from 1970 to 2023. The data shows a shift in production, with some states experiencing a significant increase in milk cow numbers, while others have seen a decline. States like New Mexico, Idaho, Arizona, and Colorado have experienced more than a 100% increase in milk cow production. In contrast, states like Alabama, Mississippi, Louisiana, and New Jersey have seen a near-total decline in their milk cow industries.
+
+## Plot Trend of Total Cows by State {.tabset}
+### Overall {#overall_state}
 ```{r}
 #line plot for milk cows over years across states - increasing and decreasing trend
 custom_colors <- c(
@@ -302,45 +245,7 @@ milk_cows_over_years = milk_cows |>
 
 ggplotly(milk_cows_over_years)
 ```
-
-
-```{r}
-#increasing trend table
-##total number of cows per state, year, and region
-state_region_cows_summary <-milk_cows |>
-  filter(year >= 1970 & year <= 2023) |>
-  group_by(region, state, year) %>%
-  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop")
-
-#year 1970
-cows_1970 <- state_region_cows_summary |>
-  filter(year == 1970) |>
-  select(region, state, total_cows_1970 = total_cows)
-
-#year2023
-cows_2023 <- state_region_cows_summary |>
-  filter(year == 2023) |>
-  select(region, state, total_cows_2023 = total_cows)
-
-#combine data
-state_region_comparison <- left_join(cows_1970, cows_2023, by = c("region", "state")) |>
-  mutate(percentage_increase = round(((total_cows_2023 - total_cows_1970) / total_cows_1970) * 100, 2)) |>
-  filter(percentage_increase > 0) |>
-  arrange(desc(percentage_increase)) |>
-  rename(
-    Region = region,
-    State = state, 
-    "Total Cows 1970" = total_cows_1970,
-    "Total Cows 2023" = total_cows_2023, 
-    "Percentage Increase" = percentage_increase
-  )
-
-#table
-kable(state_region_comparison, caption = "States with Percentage Increase in Total Number of Cows (Per Thousand Head) (1970–2023)", format = "html") |>
-  kable_styling(full_width = TRUE, bootstrap_options = "bordered") 
-
-```
-
+### Increasing {#increasing_state}
 ```{r}
 #increasing trend plot
 #custom colors
@@ -375,46 +280,7 @@ milk_cows |>
 ggplotly(state_increasing_trend)
 
 ```
-
-
-
-```{r}
-#decreasing trend table
-state_region_cows_summary <- milk_cows |>
-  filter(year >= 1970 & year <= 2023) |>
-  group_by(region, state, year) |>
-  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop")
-
-#1970
-cows_1970 <- state_region_cows_summary |>
-  filter(year == 1970) |>
-  select(region, state, total_cows_1970 = total_cows)
-
-#2023
-cows_2023 <- state_region_cows_summary |>
-  filter(year == 2023) |>
-  select(region, state, total_cows_2023 = total_cows)
-
-#combine
-state_region_comparison <- left_join(cows_1970, cows_2023, by = c("region", "state")) |>
-  mutate(percentage_decrease = round(((total_cows_2023 - total_cows_1970) / total_cows_1970) * 100, 2)) |>
-  filter(percentage_decrease < 0) |>
-  arrange(percentage_decrease) |>
-  rename(
-    Region = region,
-    State = state, 
-    "Total Cows 1970" = total_cows_1970,
-    "Total Cows 2023" = total_cows_2023, 
-    "Percentage Decrease" = percentage_decrease
-  )
-
-#table
-kable(state_region_comparison, caption = "States with Percentage Decrease in Total Number of Cows (Per Thousand Head) (1970–2023)", format = "html") |>
-  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
-
-```
-
-
+### Decreasing {#decreasing_state}
 ```{r}
 #decreasing trend plot
 #custom colors
@@ -465,6 +331,87 @@ ggplotly(state_decreasing_trend)
 
 ```
 
+## {-}
+## Table Trend of Total Cows by State {.tabset}
+### Increasing {#increasing_state_trend_table}
+```{r}
+#increasing trend table
+##total number of cows per state, year, and region
+state_region_cows_summary <-milk_cows |>
+  filter(year >= 1970 & year <= 2023) |>
+  group_by(region, state, year) %>%
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop")
+
+#year 1970
+cows_1970 <- state_region_cows_summary |>
+  filter(year == 1970) |>
+  select(region, state, total_cows_1970 = total_cows)
+
+#year2023
+cows_2023 <- state_region_cows_summary |>
+  filter(year == 2023) |>
+  select(region, state, total_cows_2023 = total_cows)
+
+#combine data
+state_region_comparison <- left_join(cows_1970, cows_2023, by = c("region", "state")) |>
+  mutate(percentage_increase = round(((total_cows_2023 - total_cows_1970) / total_cows_1970) * 100, 2)) |>
+  filter(percentage_increase > 0) |>
+  arrange(desc(percentage_increase)) |>
+  rename(
+    Region = region,
+    State = state, 
+    "Total Cows 1970" = total_cows_1970,
+    "Total Cows 2023" = total_cows_2023, 
+    "Percentage Increase" = percentage_increase
+  )|>
+  head(5)
+
+#table
+kable(state_region_comparison, caption = "States with Percentage Increase in Total Number of Cows (Per Thousand Head) (1970–2023)", format = "html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered") 
+
+```
+### Decreasing {#decreasing_state_trend_table}
+```{r}
+#decreasing trend table
+state_region_cows_summary <- milk_cows |>
+  filter(year >= 1970 & year <= 2023) |>
+  group_by(region, state, year) |>
+  summarise(total_cows = sum(number_of_cows, na.rm = TRUE), .groups = "drop")
+
+#1970
+cows_1970 <- state_region_cows_summary |>
+  filter(year == 1970) |>
+  select(region, state, total_cows_1970 = total_cows)
+
+#2023
+cows_2023 <- state_region_cows_summary |>
+  filter(year == 2023) |>
+  select(region, state, total_cows_2023 = total_cows)
+
+#combine
+state_region_comparison <- left_join(cows_1970, cows_2023, by = c("region", "state")) |>
+  mutate(percentage_decrease = round(((total_cows_2023 - total_cows_1970) / total_cows_1970) * 100, 2)) |>
+  filter(percentage_decrease < 0) |>
+  arrange(percentage_decrease) |>
+  rename(
+    Region = region,
+    State = state, 
+    "Total Cows 1970" = total_cows_1970,
+    "Total Cows 2023" = total_cows_2023, 
+    "Percentage Decrease" = percentage_decrease
+  ) |>
+  head(5)
+
+#table
+kable(state_region_comparison, caption = "States with Percentage Decrease in Total Number of Cows (Per Thousand Head) (1970–2023)", format = "html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+
+```
+## {-}
+
+
+### Number of Cows by State (1970-2023)
 ```{r}
 combine_milk_cows = milk_cows |> 
 group_by(region, state, year) |>
@@ -480,16 +427,18 @@ ggplot(combine_milk_cows) +
     name = "Number of Cows by State"
   ) +
   theme(axis.text.x = element_text(angle = 80, hjust = 1))+
-  labs(title = "Number of Cows by State (1970-2023)", 
-       x = "State",
+  labs(x = "State", #title = "Number of Cows by State (1970-2023)", 
        y = "Number of Cows")
 
 ```
 
+# Milk Cows Statistics by Region
 
+Similarly, milk cow production is analyzed by region. As observed in the table, the US map distribution, and the line plots, the data shows the top regions in total milk cows in 1970 vs 2023. In 1970, the Lake States, with 3,196 thousand milk cows, were the leading region, followed by other key regions such as the Northeast, Corn Belt, Appalachia, and West Coast. By 2023, the Mountain region had emerged as one of the top regions in milk cow production. Overall, the data reveals significant regional shifts in milk cow production from 1970 to 2023, reflecting changing trends over time.
 
-## Milk Cows Statistics by Region
+## Table of Top 5 Regions in Total Cows {.tabset}
 
+### 1970 {#table_1970}
 ```{r}
 #region 1970
 combine_region_cows_1970 <- us_states |>
@@ -510,47 +459,13 @@ filter(year == "1970") |>
   select(region,total_cows) |>
   rename(Region = region, 
          "Total Cows 1970" = total_cows) |>
+  head(5) |>
   knitr::kable(caption = "Total Number of Cows by Region (1970)", format = "html") |>
   kableExtra::kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 
-#line plot 1970
-ggplot(combine_region_cows_1970, aes(x = reorder(Region, `Total Cows`), y = `Total Cows`, color = Region)) +
-  geom_point(size=0.8) +  
-  geom_line(group = 1, color = "gray") +  
-  scale_color_manual(values = c("Northeast" = "blue", "Lake States" = "green", 
-                               "Corn Belt" = "red", "Northern Plains" = "purple", 
-                               "Appalachia" = "orange", "Southeast" = "pink",
-                               "Delta States" = "yellow", "Southern Plains" = "cyan", 
-                               "Mountain Region" = "brown", "West Coast" = "magenta")) +
-  labs(
-    title = "Total Number of Cows by Region (per Thousand Head) (1970)",
-    x = "Region",
-    y = "Total Cows",
-    color = "Region"
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> line_plot_region_2023
-ggplotly(line_plot_region_2023)
 
-
-#us map 1970
-ggplot(combine_region_cows_1970) +
-  geom_sf(aes(fill = `Total Cows`), color = "white", size = 0.2) +
-  scale_fill_gradientn(
-    #colors = c("pink", "magenta","orange","red"),  #magenta
-    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
-    name = "Number of Cows"
-  )+ 
-  theme_minimal() +
-  labs(title = "Milk Cows Distribution by Region (1970)") +
-  theme(
-    axis.text.x = element_text(angle = 80, hjust = 1),
-    legend.position = "bottom"
-  ) #-> us_plot_region_1970
-#ggplotly(us_plot_region_1970)
 ```
-
-
+### 2023 {#table_2023}
 ```{r}
 #region 2023
 combine_region_cows_2023 <- us_states |>
@@ -572,10 +487,86 @@ filter(year == "2023" ) |>
   select(region, total_cows) |>
   rename(Region = region, 
          "Total Cows 2023" = total_cows) |>
+  head(5)|>
   knitr::kable(caption = "Total Number of Cows by Region (2023)", format = "html") |>
   kableExtra::kable_styling(full_width = TRUE, bootstrap_options = "bordered")
   
+```
+## {-}
 
+## Map of Milk Cows Distribution by Region {.tabset}
+
+### 1970 {#map_region_1970}
+
+```{r}
+#us map 1970
+ggplot(combine_region_cows_1970) +
+  geom_sf(aes(fill = `Total Cows`), color = "white", size = 0.2) +
+  scale_fill_gradientn(
+    #colors = c("pink", "magenta","orange","red"),  #magenta
+    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
+    name = "Number of Cows"
+  )+ 
+  theme_minimal() +
+  labs(title = "Milk Cows Distribution by Region (1970)") +
+  theme(
+    axis.text.x = element_text(angle = 80, hjust = 1),
+    legend.position = "bottom"
+  ) #-> us_plot_region_1970
+#ggplotly(us_plot_region_1970)
+```
+
+### 2023 {#map_region_2023}
+
+```{r}
+#us map 2023
+ggplot(combine_region_cows_2023) +
+  geom_sf(aes(fill = `Total Cows`), color = "white", size = 0.2) +
+  scale_fill_gradientn(
+    #colors = c("pink", "magenta","orange","red"),  #magenta
+    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
+    name = "Number of Cows"
+  )+ 
+  theme_minimal() +
+  labs(title = "Milk Cows Distribution by Region (2023)") +
+  theme(
+    axis.text.x = element_text(angle = 80, hjust = 1),
+    legend.position = "bottom"
+  ) #-> us_plot_region_2023
+#ggplotly(us_plot_region_2023)
+
+```
+## {-}
+
+## Plot of Total Cows by Region{.tabset}
+
+### 1970{#plot_region_1970}
+```{r}
+#line plot 1970
+ggplot(combine_region_cows_1970, aes(x = reorder(Region, `Total Cows`), y = `Total Cows`, color = Region)) +
+  geom_point(size=0.8) +  
+  geom_line(group = 1, color = "gray") +  
+  scale_color_manual(values = c("Northeast" = "blue", "Lake States" = "green", 
+                               "Corn Belt" = "red", "Northern Plains" = "purple", 
+                               "Appalachia" = "orange", "Southeast" = "pink",
+                               "Delta States" = "yellow", "Southern Plains" = "cyan", 
+                               "Mountain Region" = "brown", "West Coast" = "magenta")) +
+  labs(
+    title = "Total Number of Cows by Region (per Thousand Head) (1970)",
+    x = "Region",
+    y = "Total Cows",
+    color = "Region"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> line_plot_region_1970
+ggplotly(line_plot_region_1970)
+
+
+```
+
+### 2023{#plot_region_2023}
+
+```{r}
 #line plot 
 ggplot(combine_region_cows_2023, aes(x = reorder(Region, `Total Cows`), y = `Total Cows`, color = Region)) +
   geom_point(size=0.8) +  
@@ -594,26 +585,10 @@ ggplot(combine_region_cows_2023, aes(x = reorder(Region, `Total Cows`), y = `Tot
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> line_plot_region_2023
 ggplotly(line_plot_region_2023)
-  
-#us map 2023
-ggplot(combine_region_cows_2023) +
-  geom_sf(aes(fill = `Total Cows`), color = "white", size = 0.2) +
-  scale_fill_gradientn(
-    #colors = c("pink", "magenta","orange","red"),  #magenta
-    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
-    name = "Number of Cows"
-  )+ 
-  theme_minimal() +
-  labs(title = "Milk Cows Distribution by Region (2023)") +
-  theme(
-    axis.text.x = element_text(angle = 80, hjust = 1),
-    legend.position = "bottom"
-  ) #-> us_plot_region_2023
-#ggplotly(us_plot_region_2023)
 
 ```
-
-## Trend of Total Cows by Region
+## Trend of Total Cows by Region (1970-2023)
+The following plot shows the overall trend in regional milk cow production from 1970 to 2023. Milk cow production in the Lake States, Northeast, Corn Belt, and Appalachia has decreased over time. In contrast, milk cow production in the West Coast, Mountain Region, and Southern Plains has increased, highlighting the regional shifts in milk cow production over the past few decades.
 ```{r}
 #line plot milk cows over years by region
 milk_cows |>
@@ -640,7 +615,7 @@ milk_cows |>
               "Southeast" = "burlywood2",
                 "West Coast" ="red2" )) + 
   labs(
-    title = "Trend of Total Cows by Region (1970-2023)",
+    #title = "Trend of Total Cows by Region (1970-2023)",
     x = "Year",
     y = "Total Number of Cows",
     color = "Region"
@@ -653,41 +628,35 @@ milk_cows |>
 ggplotly(trend_region)
 ```
 
-## Statistical Analysis by State
-States like California, Minnesota, Wisconsin, and Michigan have much higher milk production compared to the baseline state Alabama. 
+# Statistical Analysis by State
+The linear regression model for milk cow production by state and year results are given below. States like California (-50,064.73, p < 0.001), Minnesota (19,388.98, p < 0.001), and Wisconsin (27,158.24, p < 0.001) have significant positive deviations in milk cow populations compared to the reference state (Alabama), indicating large milk cow populations. The year variable has a significant negative effect on milk cow numbers (-1.983, p < 0.001), suggesting a general decline in milk cow production across all states over time. Significant State-Year interactions (e.g., California:year 25.73, p < 0.001; New Mexico:year 9.48, p < 0.001) suggest that some states, such as California, have seen increases in milk cow production over time, while others have seen declines.
 
-Overall Milk Production is significantly increased by year, with a general increase in production over time.
-
-ANOVA test indicates a highly significant difference in number of cows across the different states.
 
 ```{r}
-
 #lm model milk production by state
 milk_cows |> 
   mutate(
     state = as.factor(state),  
     year = as.numeric(year)     
   ) |> 
-  lm(number_of_cows ~ state + year, data = _) |>  
-  broom::tidy() 
-
-
-milk_cows |> 
-  mutate(
-    region = as.factor(state), 
-    year = as.numeric(year)) |>
-  aov(number_of_cows ~ state, data = _) |>  
+  lm(number_of_cows ~ state * year, data = _) |>  
   broom::tidy() |>
-  knitr::kable()
+  head(5) |>
+  knitr::kable(digits = 3)
+
+
+#milk_cows |> 
+#  mutate(
+#    region = as.factor(state), 
+#    year = as.numeric(year)) |>
+#  aov(number_of_cows ~ state*year, data = _) |>  
+#  broom::tidy() |>
+#  knitr::kable(digits=3)
 
 ```
-## Statistical Analysis by Region
+# Statistical Analysis by Region
 
-The  Corn Belt, Lake States, West Coast, and Southern Plains all show significantly higher milk production compared to the reference region Appalachia. 
-
-The year has a significant positive effect on number of cows.
-
-ANOVA test indicates a highly significant difference in number of milk cows across the different regions.
+The linear regression model for milk cow production by region and year reveals that California (-23,512.16, p < 0.001) and the Mountain Region (-12,700.40, p < 0.001) show significant negative deviations in milk cow populations compared to the reference region (Appalachia), though California saw an increase in production over time (positive interaction term with year: 12.00, p < 0.001), while Appalachia experienced a decline. The year variable has a significant negative effect on milk cow numbers (-3.24, p < 0.001), indicating a general decline in milk cow populations across all regions over time. Significant State-Year interactions (e.g., Mountain Region:year 6.36, p < 0.001; West Coast:year 12.00, p < 0.001) suggest that some regions, like California, have seen increases in milk cow production, while regions like Appalachia have seen declines.
 
 ```{r}
 #lm model milk production by region 
@@ -696,17 +665,8 @@ milk_cows |>
     region = as.factor(region),  
     year = as.numeric(year)     
   ) |> 
-  lm(number_of_cows ~ region + year, data = _) |>  
+  lm(number_of_cows ~ region * year, data = _) |>  
   broom::tidy() |>
-  knitr::kable()
-
-
-milk_cows |> 
-  mutate(
-    region = as.factor(region), 
-    year = as.numeric(year)) |>
-  aov(number_of_cows ~ region, data = _) |>  
-  broom::tidy() |>
-  knitr::kable()
+  head(5) |>
+  knitr::kable(digits=3)
 ```
-
