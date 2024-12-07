@@ -279,7 +279,7 @@ $(document).ready(function () {
       <a href="Trends-in-Different-Milk-Types-Over-Time-1.html">Milk Types Compared</a>
     </li>
     <li>
-      <a href="Flavored--1.html">Flavoured vs Non Flavoured</a>
+      <a href="Flavored--2.html">Flavoured vs Non Flavoured</a>
     </li>
   </ul>
 </li>
@@ -342,8 +342,7 @@ fluidmilk_data &lt;- fluidmilk_data %&gt;%
   mutate(Year = as.numeric(Year)) %&gt;%
   filter(!is.na(Year))</code></pre>
 <pre><code>## Warning: There was 1 warning in `mutate()`.
-## ℹ In argument: `Year =
-##   as.numeric(Year)`.
+## ℹ In argument: `Year = as.numeric(Year)`.
 ## Caused by warning:
 ## ! NAs introduced by coercion</code></pre>
 <pre class="r"><code>fluidmilk_data &lt;- fluidmilk_data %&gt;%

@@ -1,17 +1,23 @@
 
-
-
-
-
-
-
-```{r,echo=FALSE}
+```{r,echo=FALSE,warning = FALSE,message = FALSE}
+library(tidyverse)
 library(readxl)
 library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(kableExtra)
+library(plotly)
 
+knitr::opts_chunk$set(
+  echo = FALSE,         #code is not displayed in output
+  warning = FALSE,     #warnings false
+  message = FALSE      #messages false
+)
+```
+
+```{r,echo=FALSE}
 file_path <- "fluidmilk.xlsx"
 fluidmilk_data <- read_excel(file_path, sheet = "fluidmilk")
-
 
 colnames(fluidmilk_data) <- c("Year", "Whole_Milk", "Reduced_Fat_2_%", 
                               "Low_Fat_1_%", "Skim", "Flavored_Whole", 
@@ -26,28 +32,19 @@ fluidmilk_data <- fluidmilk_data %>%
 fluidmilk_data <- fluidmilk_data %>%
   mutate(across(Whole_Milk:Total_Sales, as.numeric))
 
-print(fluidmilk_data)
+#print(fluidmilk_data)
 
-key_stats <- fluidmilk_data %>%
-  summarise(
-    across(everything(), list(mean = mean, sd = sd, min = min, max = max), na.rm = TRUE)
-  )
-
-
-print(key_stats)
+#key_stats <- fluidmilk_data %>%
+#  summarise(
+#    across(everything(), list(mean = mean, sd = sd, min = min, max = max), na.rm = TRUE)
+#  )
+#print(key_stats)
 
 ```
 
 #Trends in Different Milk Types Over Time:
 
-
-
 ```{r,echo=FALSE}
-
-library(plotly)
-library(tidyverse)
-
-
 colnames(fluidmilk_data) <- c("Year", "Whole Milk", "Reduced Fat 2 Percent", 
                               "Low Fat 1 Percent", "Skim", "Flavored Whole", 
                               "Flavored Other", "Buttermilk", "Eggnog", "Total Sales")

@@ -9,11 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Tai Yue" />
 
-<meta name="date" content="2024-12-04" />
 
-<title>Untitled</title>
+<title>Flavored--2.knit</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -309,18 +307,10 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Untitled</h1>
-<h4 class="author">Tai Yue</h4>
-<h4 class="date">2024-12-04</h4>
 
 </div>
 
 
-<pre class="r"><code>library(readxl)
-library(dplyr)
-
-file_path &lt;- &quot;fluidmilk.xlsx&quot;
-fluidmilk_data &lt;- read_excel(file_path, sheet = &quot;fluidmilk&quot;)</code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...2`
 ## • `` -&gt; `...3`
@@ -331,22 +321,10 @@ fluidmilk_data &lt;- read_excel(file_path, sheet = &quot;fluidmilk&quot;)</code>
 ## • `` -&gt; `...8`
 ## • `` -&gt; `...9`
 ## • `` -&gt; `...10`</code></pre>
-<pre class="r"><code>colnames(fluidmilk_data) &lt;- c(&quot;Year&quot;, &quot;Whole_Milk&quot;, &quot;Reduced_Fat_2_%&quot;, 
-                              &quot;Low_Fat_1_%&quot;, &quot;Skim&quot;, &quot;Flavored_Whole&quot;, 
-                              &quot;Flavored_Other&quot;, &quot;Buttermilk&quot;, &quot;Eggnog&quot;, &quot;Total_Sales&quot;)
-
-
-fluidmilk_data &lt;- fluidmilk_data %&gt;%
-  mutate(Year = as.numeric(Year)) %&gt;%
-  filter(!is.na(Year))</code></pre>
 <pre><code>## Warning: There was 1 warning in `mutate()`.
 ## ℹ In argument: `Year = as.numeric(Year)`.
 ## Caused by warning:
 ## ! NAs introduced by coercion</code></pre>
-<pre class="r"><code>fluidmilk_data &lt;- fluidmilk_data %&gt;%
-  mutate(across(Whole_Milk:Total_Sales, as.numeric))
-
-print(fluidmilk_data)</code></pre>
 <pre><code>## # A tibble: 49 × 10
 ##     Year Whole_Milk `Reduced_Fat_2_%` `Low_Fat_1_%`  Skim Flavored_Whole
 ##    &lt;dbl&gt;      &lt;dbl&gt;             &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;
@@ -363,13 +341,6 @@ print(fluidmilk_data)</code></pre>
 ## # ℹ 39 more rows
 ## # ℹ 4 more variables: Flavored_Other &lt;dbl&gt;, Buttermilk &lt;dbl&gt;, Eggnog &lt;dbl&gt;,
 ## #   Total_Sales &lt;dbl&gt;</code></pre>
-<pre class="r"><code>key_stats &lt;- fluidmilk_data %&gt;%
-  summarise(
-    across(everything(), list(mean = mean, sd = sd, min = min, max = max), na.rm = TRUE)
-  )
-
-
-print(key_stats)</code></pre>
 <pre><code>## # A tibble: 1 × 40
 ##   Year_mean Year_sd Year_min Year_max Whole_Milk_mean Whole_Milk_sd
 ##       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
@@ -384,31 +355,7 @@ print(key_stats)</code></pre>
 <div id="flavored-whole-milk-vs-flavored-non-whole-milk-sales-over-time"
 class="section level2">
 <h2>Flavored Whole Milk vs Flavored Non-Whole Milk Sales Over Time</h2>
-<pre class="r"><code>library(ggplot2)
-library(tidyr)
-
-
-fluidmilk_data_comparison &lt;- fluidmilk_data %&gt;%
-  mutate(
-    Flavored_Whole_Category = Flavored_Whole, 
-    Flavored_Non_Whole_Category = Flavored_Other 
-  ) %&gt;%
-  select(Year, Flavored_Whole_Category, Flavored_Non_Whole_Category) %&gt;%
-  pivot_longer(cols = c(Flavored_Whole_Category, Flavored_Non_Whole_Category),
-               names_to = &quot;Milk_Type&quot;, values_to = &quot;Sales&quot;)
-
-
-ggplot(fluidmilk_data_comparison, aes(x = Year, y = Sales, fill = Milk_Type)) +
-  geom_bar(stat = &quot;identity&quot;, position = &quot;dodge&quot;) +
-  labs(
-    title = &quot;Flavored Whole Milk vs Flavored Non-Whole Milk Sales Over Time&quot;,
-    x = &quot;Year&quot;,
-    y = &quot;Sales (Million Pounds)&quot;,
-    fill = &quot;Milk Type&quot;
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<p><img src="Flavored-_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="Flavored--2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>Flavored non-whole milk consistently outpaces flavored whole milk in
 sales, especially after the 1990s.Both categories show significant
 growth from the 1980s, peaking around the late 1990s to early 2000s.
@@ -416,6 +363,37 @@ Sales for both categories decline sharply after 2010, aligning with
 broader trends of reduced fluid milk consumption.Flavored whole milk
 exhibits relatively stable sales compared to the larger fluctuations
 seen in flavored non-whole milk.</p>
+<pre><code>## New names:
+## • `` -&gt; `...1`</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  sales_ratios_flavored$FlavoredWholeRatio and sales_ratios_flavored$NonWholeRatio
+## t = -1.3685, df = 46, p-value = 0.1778
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -0.049886552  0.009506417
+## sample estimates:
+## mean difference 
+##     -0.02019007</code></pre>
+<p>When camparing flavored milk vs non-whole milk sales, the t-statistic
+is -1.3685, which indicates the difference between the means of the two
+groups relative to their variability.The p-value is 0.1778, which is
+greater than 0.05. The mean difference between the Flavored Whole and
+Non-Whole ratios is -02019007 , suggesting that on average, Flavored
+Whole ratios are slightly lower than Non-Whole ratios. However, this
+difference is not significant.This means the result is not statistically
+significant.The confidence interval for the mean difference is
+[-0.049886552 0.009506417], which includes 0. This further indicates
+that the difference in means is not statistically significant.</p>
+<pre><code>## # A tibble: 5 × 3
+##   Year  FlavoredMilkRatio NonWholeRatio
+##   &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;
+## 1 2019              1.10          0.957
+## 2 2020              0.982         0.964
+## 3 2021              1.06          0.949
+## 4 2022              0.944         0.949
+## 5 2023              0.984         0.957</code></pre>
 </div>
 
 
