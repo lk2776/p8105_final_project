@@ -7,7 +7,7 @@ output:
     toc_float: true
 ---
 
-```{r, include=FALSE, warning=FALSE,message=FALS}
+```{r,include=FALSE,warning=FALSE,message=FALSE}
 source("./scripts/load_milk_production_data.R")
 source("./scripts/figure_settings.R")
 
