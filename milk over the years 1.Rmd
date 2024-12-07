@@ -1,51 +1,51 @@
+# Milk Over the Years
 
-
-
-# Milk over the years
-
-
-
-```{r,echo=FALSE}
+```{r,echo=FALSE,warning = FALSE,message = FALSE}
+library(tidyverse)
 library(readxl)
 library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(kableExtra)
 
+knitr::opts_chunk$set(
+  echo = FALSE,         #code is not displayed in output
+  warning = FALSE,     #warnings false
+  message = FALSE      #messages false
+)
+```
+
+```{r warning = FALSE,message = FALSE}
 file_path <- "fluidmilk.xlsx"
 fluidmilk_data <- read_excel(file_path, sheet = "fluidmilk")
-
-
 colnames(fluidmilk_data) <- c("Year", "Whole_Milk", "Reduced_Fat_2_%", 
                               "Low_Fat_1_%", "Skim", "Flavored_Whole", 
                               "Flavored_Other", "Buttermilk", "Eggnog", "Total_Sales")
-
-
 fluidmilk_data <- fluidmilk_data %>%
   mutate(Year = as.numeric(Year)) %>%
   filter(!is.na(Year))
 
-
 fluidmilk_data <- fluidmilk_data %>%
   mutate(across(Whole_Milk:Total_Sales, as.numeric))
 
-print(fluidmilk_data)
+fluidmilk_data |>
+  head(5) |>
+  knitr::kable(format="html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 
 key_stats <- fluidmilk_data %>%
   summarise(
     across(everything(), list(mean = mean, sd = sd, min = min, max = max), na.rm = TRUE)
-  )
+  ) 
 
+key_stats |> knitr::kable(format="html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 
-print(key_stats)
 ```
 
 
-## sales over time
+## Sales over Time
 ```{r,echo=FALSE}
-
-
-library(ggplot2)
-library(tidyr)
-
-
 ggplot(fluidmilk_data, aes(x = Year, y = Total_Sales)) +
   geom_line(color = "pink", size = 1) +
   scale_y_continuous(limits = c(25000, NA)) +  
@@ -66,21 +66,14 @@ c.Decline Period (2010 to 2023): After 2010, a sharp and continuous decline in f
 the data suggests a major transformation in the dairy industry, particularly in the last decade, as consumer behaviors evolve. Understanding the underlying factors driving these trends would be key for stakeholders in the dairy market to adapt to these changes.
 
 
-## mean sales over decades
+## Mean Sales Over the Decades
 ```{r,echo=FALSE}
-
-library(ggplot2)
-library(dplyr)
-
-
 fluidmilk_data <- fluidmilk_data %>%
   mutate(Decade = floor(Year / 10) * 10)  
-
 
 mean_sales_by_decade <- fluidmilk_data %>%
   group_by(Decade) %>%
   summarise(Mean_Sales = mean(Total_Sales, na.rm = TRUE))  
-
 
 ggplot(mean_sales_by_decade, aes(x = as.factor(Decade), y = Mean_Sales)) +
   geom_col(fill = "pink") +
