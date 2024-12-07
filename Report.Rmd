@@ -15,17 +15,41 @@ This project was inspired by the USDA's Economic Research Service website, which
 
 
 ### Initial questions
+Initially, we were mainly interested in answering these questions:
+<ol>
+ <li><b>How has milk production varied across different states and years?</b>
+     <ul>
+         <li>We aimed to understand the regional patterns in milk production across the United States.</li>
+     </ul>
+ </li>
+ <li><b>How many milking cows are there in different regions of the US, and does more milk production mean more milking cows?</b>
+     <ul>
+         <li>We wished to explore the relationship between the number of milking cows and the volume of milk production in different regions.</li>
+     </ul>
+ </li>
+ <li><b>How do different types of milk (e.g., whole, skim, etc.) compare in terms of sales?</b>
+     <ul>
+         <li>We sought to compare sales figures for various types of milk to understand market trends..</li>
+     </ul>
+ </li>
+</ol>
 <br>
-<ul>
-<li> How has milk <b>production varied across different states and years</b>? </li>
-<li> How many milking <b>cows are there in different regions of the US</b>, does more milk production mean more milking cows? </li>
-<li> How do different types of milk (e.g., whole, skim, etc.) <b>compare</b> in terms of <b>sales</b>? </li>
-<li> What have been the <b>trends for flavored milk?</b> </li>
-<li> What are the <b>current trends in consumer preferences</b> for different types of milk? </li>
-<li> How do <b>nutritional components differ</b> for different types of milk? </li>
-<li> Can we comment on <b>health consciousness</b> of people as a whole based on the sales of the different milk types? </li>
-</ul>
-<br><br>
+<b>As our project progressed, our initial questions evolved and expanded in scope</b>: We grew particularly interested in exploring the regional differences that have emerged over the years in milking cow populations and milk production across the US. Additionally, our focus on different types of milk broadened to include an analysis of flavored milk varieties.
+
+<br>
+Apart from this, we also became interested in the nutritional side of the types of Milk and had additional questions.
+<ol>
+ <li><b>How do nutritional components differ for different types of milk?</b>
+     <ul>
+         <li> It is common knowledge that fat differs across Whole, 2%, 1% and Skim milk- but what about other nutrients? We decided to analyse this.</li>
+     </ul>
+ </li>
+ <li><b>Can we comment on the health consciousness of people as a whole based on the sales of the different milk types?</b>
+     <ul>
+         <li>Seeing the differences, we became interested in if sales are driven by the nutrients in the different types of milk. This was a long shot as it would be hard to answer this question just based on limited information.</li>
+     </ul>
+ </li>
+</ol>
 
 ### Data
 
