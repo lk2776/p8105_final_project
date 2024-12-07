@@ -4,6 +4,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+#loading required libraries
 library(tidyverse)
 library(readxl)
 library(gridExtra)
@@ -14,6 +15,7 @@ library(kableExtra)
 <br>
 
 ```{R, echo= FALSE}
+#creating data frame; cleaning accordingly; doing some analysis
 df <- readxl::read_xlsx('nutri.xlsx')|>
   head(11)
 nutri <- df |>
@@ -42,6 +44,7 @@ The above table provides us with nutritional components that are the same for al
 To analyze differences in milk types, we will subtract the values for skim milk from the mean of the other milk types. If the result is not zero, it indicates a difference. Since skim milk has the least fat, it and whole milk will have extreme values, meaning the mean of the others won't match skim milk.
 
 ```{R, echo = FALSE}
+#making table
 kable(nutri_d, format = "html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered") |>
   add_header_above(c("Nutritional Components Different Across Milk Types" = ncol(nutri_d)), 
@@ -52,6 +55,7 @@ kable(nutri_d, format = "html") |>
 While the table identifies which components differ, it only indicates where to analyze further. Visualizing these differences with bar plots will provide more insightful and intuitive comparisons.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#making plots for nutritional components that have different values
 extra <- c(0, 0, 0, 0)
 selected_rows <- nutri[c(1, 3, 5, 11), ]
 nutri_bp <- cbind(selected_rows, extra)
@@ -78,6 +82,7 @@ for (i in rows_to_plot) {
 <h3> <b> <center> Bar Plots for Nutritional Components with Different Values Across Milk Types </center> </b> </h3>
 
 ```{r, results='asis', echo=FALSE}
+#code for slideshow for the 4 plots
 htmltools::HTML('
 <div class="slideshow-container">
 
@@ -177,7 +182,7 @@ plot.new()
 title(main="Cholesterol Intake /cup for a 2000 calorie diet", cex.main=2, font.main=2)
 percentages <- c(12, 6, 5, 2)
 titles <- c("Whole Milk", "2% Milk", "1% Milk", "Skim Milk")
-colors <- c("coral", "lightyellow")
+colors <- c("coral", "#ffe2e6")
 
 par(mar=c(4, 4, 2, 2)) # Adjusting margins
 
@@ -190,9 +195,10 @@ The above pie charts show the cholesterol intake per cup for a 2000 calorie diet
 <br>
 
 ```{R, echo= FALSE}
+#making plots for fat for all 4 types
 data1 <- data.frame(
   Variable = factor(titles, levels = titles),  
-  Percentage = c(10, 6, 3, 0)
+  Percentage = c(10, 6, 3, 0) #as seen in excel file; only 4 values hence directly used
 )
 
 data2 <- data.frame(
@@ -220,6 +226,7 @@ plot2 <- ggplot(data2, aes(x = Variable, y = Percentage, fill = Variable)) +
   labs(title = "Saturated Fat", x = "", y = "") +
   theme(plot.title = element_text(hjust = 0.5), axis.text.x = element_blank(), legend.position = "none")
 
+#Making a single legend because the 4 types are common for both plots
 get_legend <- function(myplot) {
   tmp <- ggplot_gtable(ggplot_build(myplot))
   leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")

@@ -23,7 +23,7 @@ Thanks for visiting our project! Our team consists of Columbia University gradua
   </tr>
   <tr>
     <td><a href="githublink">Vidit Tripathi</a> united the group for this project. He's a puzzle enthusiast and enjoys watching/ reading murder mysteries. <br> Favourite Milk Beverage: Vanilla Milkshake <br> Favourite Dairy Animal: Cow </td>
-    <td><img src="cow1.png" class="portrait"></td>
+    <td><img src="images/cow1.png" class="portrait"></td>
   </tr>
 
   <tr>
@@ -32,7 +32,7 @@ Thanks for visiting our project! Our team consists of Columbia University gradua
   </tr>
   <tr>
     <td><a href="githublink">Lahari Koganti</a> is passionate about all things science. In addition, she enjoys watching TV shows and shopping. <br> Favourite Milk Beverage: Chocolate Milk <br> Favourite Dairy Animal: Buffalo </td>
-    <td><img src="cow2.png" class="portrait"></td>
+    <td><img src="images/cow2.png" class="portrait"></td>
   </tr>
   
   <tr>
@@ -41,7 +41,7 @@ Thanks for visiting our project! Our team consists of Columbia University gradua
   </tr>
   <tr>
     <td><a href="githublink">Yue Tai</a> loves all kinds of sports! He graduated from UIUC. <br> Favourite Milk Beverage: Strawberry Milk <br> Favourite Dairy Animal: Goat </td>
-    <td><img src="cow3.png" class="portrait"></td>
+    <td><img src="images/cow3.png" class="portrait"></td>
   </tr>
 
 </table>
