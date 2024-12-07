@@ -4,6 +4,8 @@ output_dir: "."
 navbar:
   title: "Home"
   left: 
+    - text: "Data"
+      href: 
     - text: "Milk Production"
       menu:
       - text: "Milk Cows"
@@ -23,8 +25,6 @@ navbar:
     - text: "Report"
       href: Report.html
   right:
-    - text: "Data"
-      href: 
     - text: "About the Team"
       href: About-us.html
     - icon: fa-github fa-lg
