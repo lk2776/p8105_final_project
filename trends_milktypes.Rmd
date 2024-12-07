@@ -94,7 +94,7 @@ ggplotly(ggplot_interactive, tooltip = "text")
 ```
 
 
-## Anova 
+## ANOVA
 The p-value from the ANOVA test is 0.0432, which is less than 0.05. Since the p-value is below the 0.05 significance threshold, it indicates that the sales ratios  for the different milk types are not all the same.This means there is evidence to suggest that at least one milk type has a significantly different rate of change in sales compared to the others.
 
 ```{r,echo=FALSE}
