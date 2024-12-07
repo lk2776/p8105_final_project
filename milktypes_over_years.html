@@ -11,7 +11,7 @@
 
 
 
-<title>flavored.knit</title>
+<title>milktypes_over_years.knit</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -32,6 +32,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
@@ -311,104 +313,204 @@ $(document).ready(function () {
 </div>
 
 
-<div id="flavored-whole-milk-vs-flavored-non-whole-milk-sales-over-time"
-class="section level2">
-<h2>Flavored Whole Milk vs Flavored Non-Whole Milk Sales Over Time</h2>
-<p>Flavored non-whole milk consistently outpaces flavored whole milk in
-sales, especially after the 1990s.Both categories show significant
-growth from the 1980s, peaking around the late 1990s to early 2000s.
-Sales for both categories decline sharply after 2010, aligning with
-broader trends of reduced fluid milk consumption.Flavored whole milk
-exhibits relatively stable sales compared to the larger fluctuations
-seen in flavored non-whole milk.</p>
-<p><img src="flavored_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div id="milk-over-the-years" class="section level1">
+<h1>Milk Over the Years</h1>
+<p>This table shows a snapshot of fluid milk sales in the U.S. from 1975
+to 1979.Whole milk consistently accounts for the largest share of total
+sales.Sales of Reduced Fat 2%, Low Fat 1%, and flavored milk types show
+a gradual increase, reflecting a shift in consumer preferences toward
+lower-fat and flavored options.Despite shifts among categories, total
+sales remain relatively stable across the years, indicating consistent
+overall demand for milk products.</p>
+<table class="table table-bordered" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Year
+</th>
+<th style="text-align:right;">
+WholeMilk
+</th>
+<th style="text-align:right;">
+ReducedFat2
+</th>
+<th style="text-align:right;">
+LowFat1
+</th>
+<th style="text-align:right;">
+Skim
+</th>
+<th style="text-align:right;">
+FlavoredWhole
+</th>
+<th style="text-align:right;">
+FlavoredOther
+</th>
+<th style="text-align:right;">
+TotalSales
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1975
+</td>
+<td style="text-align:right;">
+36188
+</td>
+<td style="text-align:right;">
+8726
+</td>
+<td style="text-align:right;">
+2742
+</td>
+<td style="text-align:right;">
+2480
+</td>
+<td style="text-align:right;">
+1366
+</td>
+<td style="text-align:right;">
+719
+</td>
+<td style="text-align:right;">
+53308
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1976
+</td>
+<td style="text-align:right;">
+35241
+</td>
+<td style="text-align:right;">
+9556
+</td>
+<td style="text-align:right;">
+2875
+</td>
+<td style="text-align:right;">
+2524
+</td>
+<td style="text-align:right;">
+1475
+</td>
+<td style="text-align:right;">
+864
+</td>
+<td style="text-align:right;">
+53643
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1977
+</td>
+<td style="text-align:right;">
+34036
+</td>
+<td style="text-align:right;">
+10423
+</td>
+<td style="text-align:right;">
+3003
+</td>
+<td style="text-align:right;">
+2617
+</td>
+<td style="text-align:right;">
+1446
+</td>
+<td style="text-align:right;">
+1062
+</td>
+<td style="text-align:right;">
+53688
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1978
+</td>
+<td style="text-align:right;">
+33235
+</td>
+<td style="text-align:right;">
+11017
+</td>
+<td style="text-align:right;">
+3233
+</td>
+<td style="text-align:right;">
+2543
+</td>
+<td style="text-align:right;">
+1359
+</td>
+<td style="text-align:right;">
+1097
+</td>
+<td style="text-align:right;">
+53561
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1979
+</td>
+<td style="text-align:right;">
+32480
+</td>
+<td style="text-align:right;">
+11762
+</td>
+<td style="text-align:right;">
+3281
+</td>
+<td style="text-align:right;">
+2604
+</td>
+<td style="text-align:right;">
+1236
+</td>
+<td style="text-align:right;">
+1129
+</td>
+<td style="text-align:right;">
+53525
+</td>
+</tr>
+</tbody>
+</table>
+<div id="sales-over-time" class="section level2">
+<h2>Sales over Time</h2>
+<p>Growth Period (1975 to mid-1980s): During this period, total fluid
+milk sales experienced steady growth, likely driven by population growth
+and increased demand for dairy products.</p>
+<p>Plateau Phase (mid-1980s to around 2010): Sales remained relatively
+stable, indicating a period of sus- tained consumption where demand
+neither increased nor decreased significantly.</p>
+<p>Decline Period (2010 to 2023): After 2010, a sharp and continuous
+decline in fluid milk sales is observed, reflecting a significant shift
+in consumer preferences and market trends.</p>
+<p>The data suggests a major transformation in the dairy industry,
+particularly in the last decade, as consumer behaviors evolve.
+Understanding the underlying factors driving these trends would be key
+for stakeholders in the dairy market to adapt to these changes.</p>
+<p><img src="milktypes_over_years_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
-<div id="t-test-results" class="section level2">
-<h2>T-Test Results</h2>
-<p>When camparing flavored milk vs non-whole milk sales, the t-statistic
-is -1.3685, which indicates the difference between the means of the two
-groups relative to their variability.The p-value is 0.1778, which is
-greater than 0.05. The mean difference between the Flavored Whole and
-Non-Whole ratios is -02019007 , suggesting that on average, Flavored
-Whole ratios are slightly lower than Non-Whole ratios. However, this
-difference is not significant.This means the result is not statistically
-significant.The confidence interval for the mean difference is
-[-0.049886552 0.009506417], which includes 0. This further indicates
-that the difference in means is not statistically significant.</p>
-<table>
-<caption>Flavored Ratios</caption>
-<thead>
-<tr class="header">
-<th align="right">Year</th>
-<th align="right">Flavored Milk Ratio</th>
-<th align="right">Non Whole Ratio</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">2019</td>
-<td align="right">1.1015537</td>
-<td align="right">0.9573713</td>
-</tr>
-<tr class="even">
-<td align="right">2020</td>
-<td align="right">0.9815361</td>
-<td align="right">0.9636150</td>
-</tr>
-<tr class="odd">
-<td align="right">2021</td>
-<td align="right">1.0582626</td>
-<td align="right">0.9491515</td>
-</tr>
-<tr class="even">
-<td align="right">2022</td>
-<td align="right">0.9438341</td>
-<td align="right">0.9493024</td>
-</tr>
-<tr class="odd">
-<td align="right">2023</td>
-<td align="right">0.9843055</td>
-<td align="right">0.9573445</td>
-</tr>
-</tbody>
-</table>
-<table>
-<caption>T-Test Results</caption>
-<colgroup>
-<col width="12%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="12%" />
-<col width="11%" />
-<col width="15%" />
-<col width="13%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="right">estimate</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
-<th align="right">parameter</th>
-<th align="right">conf.low</th>
-<th align="right">conf.high</th>
-<th align="left">method</th>
-<th align="left">alternative</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">-0.0201901</td>
-<td align="right">-1.368529</td>
-<td align="right">0.1777936</td>
-<td align="right">46</td>
-<td align="right">-0.0498866</td>
-<td align="right">0.0095064</td>
-<td align="left">Paired t-test</td>
-<td align="left">two.sided</td>
-</tr>
-</tbody>
-</table>
+<div id="mean-sales-over-the-decades" class="section level2">
+<h2>Mean Sales Over the Decades</h2>
+<p>This histogram shows the mean fluid milk sales by decade. Sales
+remained relatively stable from the 1970s to the 2000s, hovering around
+similar levels. A noticeable decline begins in the 2010s and continues
+into the 2020s, reflecting shifting consumer preferences and reduced
+demand for fluid milk. This trend highlights a major change in the milk
+market over the past two decades.</p>
+<p><img src="milktypes_over_years_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
 </div>
 
 
