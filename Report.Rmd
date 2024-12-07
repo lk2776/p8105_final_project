@@ -15,6 +15,7 @@ This project was inspired by the USDA's Economic Research Service website, which
 
 
 ### Initial questions
+
 Initially, we were mainly interested in answering these questions:
 <ol>
  <li><b>How has milk production varied across different states and years?</b>
