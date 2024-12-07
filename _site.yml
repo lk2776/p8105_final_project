@@ -18,10 +18,8 @@ navbar:
         href: milk-over-the-years-1.html
       - text: "Milk Types Compared"
         href: trends_milktypes.html
-      - text: "Flavoured vs Non Flavoured"
-        href: Flavored--2.html
       - text: "Flavoured Milk: Whole VS Non Whole"
-        href: Flavored--2.html
+        href: flavored.html
     - text: "Nutrition"
       href: nutri.html
     - text: "Report"

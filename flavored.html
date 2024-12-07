@@ -11,7 +11,7 @@
 
 
 
-<title>Flavored--2.knit</title>
+<title>flavored.knit</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -277,10 +277,7 @@ $(document).ready(function () {
       <a href="trends_milktypes.html">Milk Types Compared</a>
     </li>
     <li>
-      <a href="Flavored--2.html">Flavoured vs Non Flavoured</a>
-    </li>
-    <li>
-      <a href="Flavored--2.html">Flavoured Milk: Whole VS Non Whole</a>
+      <a href="flavored.html">Flavoured Milk: Whole VS Non Whole</a>
     </li>
   </ul>
 </li>
@@ -314,70 +311,9 @@ $(document).ready(function () {
 </div>
 
 
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre><code>## New names:
-## • `` -&gt; `...2`
-## • `` -&gt; `...3`
-## • `` -&gt; `...4`
-## • `` -&gt; `...5`
-## • `` -&gt; `...6`
-## • `` -&gt; `...7`
-## • `` -&gt; `...8`
-## • `` -&gt; `...9`
-## • `` -&gt; `...10`</code></pre>
-<pre><code>## Warning: There was 1 warning in `mutate()`.
-## ℹ In argument: `Year = as.numeric(Year)`.
-## Caused by warning:
-## ! NAs introduced by coercion</code></pre>
-<pre><code>## # A tibble: 49 × 10
-##     Year Whole_Milk `Reduced_Fat_2_%` `Low_Fat_1_%`  Skim Flavored_Whole
-##    &lt;dbl&gt;      &lt;dbl&gt;             &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;
-##  1  1975      36188              8726          2742  2480           1366
-##  2  1976      35241              9556          2875  2524           1475
-##  3  1977      34036             10423          3003  2617           1446
-##  4  1978      33235             11017          3233  2543           1359
-##  5  1979      32480             11762          3281  2604           1236
-##  6  1980      31253             12435          3483  2636           1075
-##  7  1981      30397             13088          3574  2583            843
-##  8  1982      29350             13501          3537  2449            710
-##  9  1983      28871             14183          3455  2474            749
-## 10  1984      28204             15143          3382  2726            907
-## # ℹ 39 more rows
-## # ℹ 4 more variables: Flavored_Other &lt;dbl&gt;, Buttermilk &lt;dbl&gt;, Eggnog &lt;dbl&gt;,
-## #   Total_Sales &lt;dbl&gt;</code></pre>
-<pre><code>## Warning: There was 1 warning in `summarise()`.
-## ℹ In argument: `across(...)`.
-## Caused by warning:
-## ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
-## Supply arguments directly to `.fns` through an anonymous function instead.
-## 
-##   # Previously
-##   across(a:b, mean, na.rm = TRUE)
-## 
-##   # Now
-##   across(a:b, \(x) mean(x, na.rm = TRUE))</code></pre>
-<pre><code>## # A tibble: 1 × 40
-##   Year_mean Year_sd Year_min Year_max Whole_Milk_mean Whole_Milk_sd
-##       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
-## 1      1999    14.3     1975     2023          20872.         6578.
-## # ℹ 34 more variables: Whole_Milk_min &lt;dbl&gt;, Whole_Milk_max &lt;dbl&gt;,
-## #   `Reduced_Fat_2_%_mean` &lt;dbl&gt;, `Reduced_Fat_2_%_sd` &lt;dbl&gt;,
-## #   `Reduced_Fat_2_%_min` &lt;dbl&gt;, `Reduced_Fat_2_%_max` &lt;dbl&gt;,
-## #   `Low_Fat_1_%_mean` &lt;dbl&gt;, `Low_Fat_1_%_sd` &lt;dbl&gt;, `Low_Fat_1_%_min` &lt;dbl&gt;,
-## #   `Low_Fat_1_%_max` &lt;dbl&gt;, Skim_mean &lt;dbl&gt;, Skim_sd &lt;dbl&gt;, Skim_min &lt;dbl&gt;,
-## #   Skim_max &lt;dbl&gt;, Flavored_Whole_mean &lt;dbl&gt;, Flavored_Whole_sd &lt;dbl&gt;,
-## #   Flavored_Whole_min &lt;dbl&gt;, Flavored_Whole_max &lt;dbl&gt;, …</code></pre>
 <div id="flavored-whole-milk-vs-flavored-non-whole-milk-sales-over-time"
 class="section level2">
 <h2>Flavored Whole Milk vs Flavored Non-Whole Milk Sales Over Time</h2>
-<p><img src="Flavored--2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>Flavored non-whole milk consistently outpaces flavored whole milk in
 sales, especially after the 1990s.Both categories show significant
 growth from the 1980s, peaking around the late 1990s to early 2000s.
@@ -385,19 +321,10 @@ Sales for both categories decline sharply after 2010, aligning with
 broader trends of reduced fluid milk consumption.Flavored whole milk
 exhibits relatively stable sales compared to the larger fluctuations
 seen in flavored non-whole milk.</p>
-<pre><code>## New names:
-## • `` -&gt; `...1`</code></pre>
-<pre><code>## 
-##  Paired t-test
-## 
-## data:  sales_ratios_flavored$FlavoredWholeRatio and sales_ratios_flavored$NonWholeRatio
-## t = -1.3685, df = 46, p-value = 0.1778
-## alternative hypothesis: true mean difference is not equal to 0
-## 95 percent confidence interval:
-##  -0.049886552  0.009506417
-## sample estimates:
-## mean difference 
-##     -0.02019007</code></pre>
+<p><img src="flavored_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="t-test-results" class="section level2">
+<h2>T-Test Results</h2>
 <p>When camparing flavored milk vs non-whole milk sales, the t-statistic
 is -1.3685, which indicates the difference between the means of the two
 groups relative to their variability.The p-value is 0.1778, which is
@@ -408,14 +335,80 @@ difference is not significant.This means the result is not statistically
 significant.The confidence interval for the mean difference is
 [-0.049886552 0.009506417], which includes 0. This further indicates
 that the difference in means is not statistically significant.</p>
-<pre><code>## # A tibble: 5 × 3
-##   Year  FlavoredMilkRatio NonWholeRatio
-##   &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;
-## 1 2019              1.10          0.957
-## 2 2020              0.982         0.964
-## 3 2021              1.06          0.949
-## 4 2022              0.944         0.949
-## 5 2023              0.984         0.957</code></pre>
+<table>
+<caption>Flavored Ratios</caption>
+<thead>
+<tr class="header">
+<th align="right">Year</th>
+<th align="right">Flavored Milk Ratio</th>
+<th align="right">Non Whole Ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2019</td>
+<td align="right">1.1015537</td>
+<td align="right">0.9573713</td>
+</tr>
+<tr class="even">
+<td align="right">2020</td>
+<td align="right">0.9815361</td>
+<td align="right">0.9636150</td>
+</tr>
+<tr class="odd">
+<td align="right">2021</td>
+<td align="right">1.0582626</td>
+<td align="right">0.9491515</td>
+</tr>
+<tr class="even">
+<td align="right">2022</td>
+<td align="right">0.9438341</td>
+<td align="right">0.9493024</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">0.9843055</td>
+<td align="right">0.9573445</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>T-Test Results</caption>
+<colgroup>
+<col width="12%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="12%" />
+<col width="11%" />
+<col width="15%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">estimate</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">parameter</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+<th align="left">method</th>
+<th align="left">alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-0.0201901</td>
+<td align="right">-1.368529</td>
+<td align="right">0.1777936</td>
+<td align="right">46</td>
+<td align="right">-0.0498866</td>
+<td align="right">0.0095064</td>
+<td align="left">Paired t-test</td>
+<td align="left">two.sided</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
