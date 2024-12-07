@@ -33,8 +33,7 @@ nutri_same <- nutri |>
 colnames(nutri_same)[2] <- "All 4 Milk Types"
 kable(nutri_same, format = "html") |>
   kable_styling(bootstrap_options = "striped", full_width = TRUE) |>
-  add_header_above(c("Nutritional Components Same Across Milk Types" = ncol(nutri_same)), 
-                   bold = TRUE, align = "c", background = "pink") |>
+  add_header_above(c("Nutritional Components Same Across Milk Types" = ncol(nutri_same)), bold = TRUE, align = "c", background = "pink") |>
   row_spec(0, bold = TRUE)
 
 ```
@@ -47,8 +46,7 @@ To analyze differences in milk types, we will subtract the values for skim milk 
 #making table
 kable(nutri_d, format = "html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered") |>
-  add_header_above(c("Nutritional Components Different Across Milk Types" = ncol(nutri_d)), 
-                   bold = TRUE, align = "c", background = "pink") |>
+  add_header_above(c("Nutritional Components Different Across Milk Types" = ncol(nutri_d)), bold = TRUE, align = "c", background = "pink") |>
   row_spec(0, bold = TRUE)
 ```
 
@@ -243,3 +241,95 @@ grid.arrange(empty_plot, plot1, plot2, legend, ncol = 4, widths = c(1, 2, 2, 1.5
 ```
 
 The fat content decreases progressively from Whole Milk to 2% Milk, 1% Milk, and Skim Milk, reflecting their names. The bar plots above effectively illustrate this reduction. For instance, a 1% decrease indicates that our total and saturated fat intake is halved when transitioning from Whole to 2% Milk, and further reduced from 2% to 1%, ultimately reaching zero in Skim Milk.
+
+We will now perform a regression analysis on the five most recent sales ratios of the four types of milk (more about the ratios is [here](.html)) with their respective Cholesterol and Saturated Fat content. This analysis aims to determine if consumers have become more health-conscious over the years.
+
+```{R, echo = FALSE,message=FALSE, warning=FALSE}
+#transferring the ANOVA results for all 4 Milk types here
+fluidmilk <- read_excel("fluidmilk.xlsx", sheet = "fluidmilk", skip = 1)
+
+colnames(fluidmilk) <- c(
+  "Year", "Whole", "ReducedFat2", "LowFat1", "Skim",
+  "FlavoredWhole", "FlavoredOther", "Buttermilk", "Eggnog", "Total"
+)
+
+
+fluidmilk_clean <- fluidmilk %>%
+  mutate(across(Whole:Total, as.numeric)) %>%
+  filter(!is.na(Year)) %>%
+  arrange(Year)
+
+
+fluidmilk_ratios <- fluidmilk_clean %>%
+  mutate(
+    WholeRatio = Whole / lag(Whole),
+    ReducedFat2Ratio = ReducedFat2 / lag(ReducedFat2),
+    LowFat1Ratio = LowFat1 / lag(LowFat1),
+    SkimRatio = Skim / lag(Skim)
+  )
+
+
+recent_ratios <- fluidmilk_ratios %>%
+  filter(!is.na(WholeRatio) & !is.na(ReducedFat2Ratio) &
+           !is.na(LowFat1Ratio) & !is.na(SkimRatio)) %>%
+  select(Year, WholeRatio, ReducedFat2Ratio, LowFat1Ratio, SkimRatio) %>%
+  tail(5)
+
+
+# Transform to long format
+df_long <- recent_ratios |>
+  rename('Whole' = WholeRatio,
+         '1_Percent' = ReducedFat2Ratio,
+         '2_Percent' = LowFat1Ratio,
+         'Skim' = SkimRatio) |>
+  pivot_longer(cols = c('Whole', '2_Percent' , '1_Percent', 'Skim'),
+               names_to = "Milk_Type",
+               values_to = "Sales_Ratio")
+
+# Data frame with cholesterol and saturated fat values - values entered directly instead of reading from excel as it is just 4 values and hence easier to directly enter
+df_health <- data.frame(
+  'Milk_Type' = c('Whole', '2_Percent' , '1_Percent', 'Skim'),
+  'Cholesterol_mg'= c(36, 19.2, 14.4, 4.8),
+  'SaturatedFat_g' = c(4.992, 3, 1.488, 0)
+)
+
+# Merge sales ratios with health data
+df_merged <- left_join(df_long, df_health, by = "Milk_Type")
+
+#Regression model
+model <- lm(Sales_Ratio ~ Year + Cholesterol_mg + SaturatedFat_g, data = df_merged)
+
+# Tidy the model results
+tidy_model <- broom::tidy(model)
+
+# Rename the terms
+tidy_model <- tidy_model |>
+  mutate(term = recode(term,
+                       `(Intercept)` = "Intercept",
+                       `Year2020` = "Year 2020",
+                       `Year2021` = "Year 2021",
+                       `Year2022` = "Year 2022",
+                       `Year2023` = "Year 2023",
+                       `Cholesterol_mg` = "Cholesterol (mg)",
+                       `SaturatedFat_g` = "Saturated Fat (g)"))
+
+# Displaying using kable
+tidy_model |>
+  kable(format = "html") |>
+  kable_styling(bootstrap_options = "striped", full_width = TRUE) |>
+  add_header_above(c("Regression Model Summary" = ncol(tidy_model)), bold = TRUE, align = "c", background = "pink") |>
+  row_spec(0, bold = TRUE)
+
+
+
+```
+
+Cholesterol: 
+
+This positive coefficient, 0.006719714, suggests that higher cholesterol content is associated with a higher Sales Ratio. However, this relationship is not statistically significant (p-value 0.1041602).
+
+Saturated Fat: 
+
+This negative coefficient, -0.021363109, indicates that higher saturated fat is associated with a lower Sales Ratio, but again, this is not statistically significant (p-value 0.3802799).
+
+Based on this regression analysis, there is no strong or significant evidence to suggest that people have become more health-conscious over the years based on changes in sales ratios of milk types associated with cholesterol and saturated fat content.

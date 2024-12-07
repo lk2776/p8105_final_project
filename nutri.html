@@ -352,6 +352,14 @@ Iron (mg)
 </tr>
 <tr>
 <td style="text-align:left;">
+Protein (g)
+</td>
+<td style="text-align:right;">
+7.99
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Carbohydrate (g)
 </td>
 <td style="text-align:right;">
@@ -432,14 +440,6 @@ Sodium (mg)
 </td>
 <td style="text-align:right;">
 -3.20000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Protein (g)
-</td>
-<td style="text-align:right;">
-0.00000
 </td>
 </tr>
 <tr>
@@ -566,6 +566,173 @@ effectively illustrate this reduction. For instance, a 1% decrease
 indicates that our total and saturated fat intake is halved when
 transitioning from Whole to 2% Milk, and further reduced from 2% to 1%,
 ultimately reaching zero in Skim Milk.</p>
+<p>We will now perform a regression analysis on the five most recent
+sales ratios of the four types of milk (more about the ratios is <a
+href=".html">here</a>) with their respective Cholesterol and Saturated
+Fat content. This analysis aims to determine if consumers have become
+more health-conscious over the years.</p>
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; padding-right: 4px; padding-left: 4px; background-color: pink !important;" colspan="5">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Regression Model Summary
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+term
+</th>
+<th style="text-align:right;font-weight: bold;">
+estimate
+</th>
+<th style="text-align:right;font-weight: bold;">
+std.error
+</th>
+<th style="text-align:right;font-weight: bold;">
+statistic
+</th>
+<th style="text-align:right;font-weight: bold;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:right;">
+0.8818317
+</td>
+<td style="text-align:right;">
+0.0249940
+</td>
+<td style="text-align:right;">
+35.2817248
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Year 2020
+</td>
+<td style="text-align:right;">
+0.0169234
+</td>
+<td style="text-align:right;">
+0.0229558
+</td>
+<td style="text-align:right;">
+0.7372161
+</td>
+<td style="text-align:right;">
+0.4740873
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Year 2021
+</td>
+<td style="text-align:right;">
+-0.0340774
+</td>
+<td style="text-align:right;">
+0.0229558
+</td>
+<td style="text-align:right;">
+-1.4844804
+</td>
+<td style="text-align:right;">
+0.1615206
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Year 2022
+</td>
+<td style="text-align:right;">
+-0.0072458
+</td>
+<td style="text-align:right;">
+0.0229558
+</td>
+<td style="text-align:right;">
+-0.3156431
+</td>
+<td style="text-align:right;">
+0.7572835
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Year 2023
+</td>
+<td style="text-align:right;">
+0.0067313
+</td>
+<td style="text-align:right;">
+0.0229558
+</td>
+<td style="text-align:right;">
+0.2932278
+</td>
+<td style="text-align:right;">
+0.7739765
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cholesterol (mg)
+</td>
+<td style="text-align:right;">
+0.0067197
+</td>
+<td style="text-align:right;">
+0.0038459
+</td>
+<td style="text-align:right;">
+1.7472404
+</td>
+<td style="text-align:right;">
+0.1041602
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Saturated Fat (g)
+</td>
+<td style="text-align:right;">
+-0.0213631
+</td>
+<td style="text-align:right;">
+0.0235214
+</td>
+<td style="text-align:right;">
+-0.9082413
+</td>
+<td style="text-align:right;">
+0.3802799
+</td>
+</tr>
+</tbody>
+</table>
+<p>Cholesterol:</p>
+<p>This positive coefficient, 0.006719714, suggests that higher
+cholesterol content is associated with a higher Sales Ratio. However,
+this relationship is not statistically significant (p-value
+0.1041602).</p>
+<p>Saturated Fat:</p>
+<p>This negative coefficient, -0.021363109, indicates that higher
+saturated fat is associated with a lower Sales Ratio, but again, this is
+not statistically significant (p-value 0.3802799).</p>
+<p>Based on this regression analysis, there is no strong or significant
+evidence to suggest that people have become more health-conscious over
+the years based on changes in sales ratios of milk types associated with
+cholesterol and saturated fat content.</p>
 
 
 
