@@ -1,29 +1,30 @@
 ---
-title: "data"
+title: "Data"
 output: html_document
-date: "2024-12-07"
 ---
+For this project, we downloaded three different datasets to answer specific research questions.
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+### 1. Historical Fluid Beverage Milk Sales Quantities by Product Data
+This dataset was downloaded from the [U.S. Department of Agriculture](https://www.ers.usda.gov/data-products/dairy-data/). The variables in this dataset are:
 
-## R Markdown
+- `year`: 1970-2023  
+- `whole`: Whole milk sales  
+- `2%-reduced-fat`: 2% reduced-fat milk sales  
+- `1%-reduced-fat`: 1% reduced-fat milk sales  
+- `skim`: Skim milk sales  
+- `flavored-whole`: Flavored whole milk sales  
+- `flavored-other-than-whole`: Flavored non-whole milk sales  
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+### 2. Historical Milk Cows and Milk Production Data by State and Region
 
-```{r cars}
-summary(cars)
-```
+This dataset was downloaded from the [U.S. Department of Agriculture](https://www.ers.usda.gov/data-products/dairy-data/). The variables in this dataset are: 
 
-## Including Plots
+- `region`: U.S. regions
+- `state`: U.S. states
+- `year`: Year (1970-2023)
+- `milk_cows`: Number of milk cows (in thousands)
+- `milk_production`: Milk production (in million pounds)
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### 3. Nutrional Data
+The data for our nutritional analysis was found in four separate Excel files. We compiled these files into one sheet and then created a new, cleaner Excel sheet for analysis. The data pertains to the nutritional information of Cream-O-Land Dairy (a producer of milk). This information was compared to other brands, but the differences were marginal enough to be considered negligible for our analysis.
