@@ -242,8 +242,10 @@ grid.arrange(empty_plot, plot1, plot2, legend, ncol = 4, widths = c(1, 2, 2, 1.5
 
 The fat content decreases progressively from Whole Milk to 2% Milk, 1% Milk, and Skim Milk, reflecting their names. The bar plots above effectively illustrate this reduction. For instance, a 1% decrease indicates that our total and saturated fat intake is halved when transitioning from Whole to 2% Milk, and further reduced from 2% to 1%, ultimately reaching zero in Skim Milk.
 
+We will now perform a regression analysis on the five most recent sales ratios of the four types of milk (more about the ratios is [here](.html)) with their respective Cholesterol and Saturated Fat content. This analysis aims to determine if consumers have become more health-conscious over the years.
+
 ```{R, echo = FALSE}
-#transferring the ANOVA results for all 4 Milk types here as well
+#transferring the ANOVA results for all 4 Milk types here
 fluidmilk <- read_excel("fluidmilk.xlsx", sheet = "fluidmilk", skip = 1)
 
 colnames(fluidmilk) <- c(
@@ -274,8 +276,6 @@ recent_ratios <- fluidmilk_ratios %>%
   tail(5)
 
 
-print(recent_ratios)
-
 # Transform to long format
 df_long <- recent_ratios |>
   rename('Whole' = WholeRatio,
@@ -286,9 +286,6 @@ df_long <- recent_ratios |>
                names_to = "Milk_Type",
                values_to = "Sales_Ratio")
 
-# View the transformed data frame
-print(df_long)
-
 # Data frame with cholesterol and saturated fat values - values entered directly instead of reading from excel as it is just 4 values and hence easier to directly enter
 df_health <- data.frame(
   'Milk_Type' = c('Whole', '2_Percent' , '1_Percent', 'Skim'),
@@ -298,13 +295,32 @@ df_health <- data.frame(
 
 # Merge sales ratios with health data
 df_merged <- left_join(df_long, df_health, by = "Milk_Type")
-print(df_merged)
 
-# Fit the regression model
+#Regression model
 model <- lm(Sales_Ratio ~ Year + Cholesterol_mg + SaturatedFat_g, data = df_merged)
 
-# Summary of the model
-broom::tidy(model)
+# Tidy the model results
+tidy_model <- broom::tidy(model)
+
+# Rename the terms
+tidy_model <- tidy_model |>
+  mutate(term = recode(term,
+                       `(Intercept)` = "Intercept",
+                       `Year2020` = "Year 2020",
+                       `Year2021` = "Year 2021",
+                       `Year2022` = "Year 2022",
+                       `Year2023` = "Year 2023",
+                       `Cholesterol_mg` = "Cholesterol (mg)",
+                       `SaturatedFat_g` = "Saturated Fat (g)"))
+
+# Displaying using kable
+tidy_model |>
+  kable(format = "html", caption = "Regression Model Summary") |>
+  kable_styling(bootstrap_options = "striped", full_width = TRUE) |>
+  add_header_above(c("Regression Model Summary" = ncol(tidy_model)), bold = TRUE, align = "c", background = "pink") |>
+  row_spec(0, bold = TRUE)
+
+
 
 ```
 
