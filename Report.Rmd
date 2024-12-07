@@ -1,6 +1,9 @@
 ---
 title: "Report"
 ---
+Project Name: Milk Industry Insights
+
+Project Members: Vidit Tripathi (vt2415), Tai Yue (ty2554), Lahari Koganti (lk2776)
 
 <br><br> 
 
