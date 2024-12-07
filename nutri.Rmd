@@ -244,7 +244,7 @@ The fat content decreases progressively from Whole Milk to 2% Milk, 1% Milk, and
 
 We will now perform a regression analysis on the five most recent sales ratios of the four types of milk (more about the ratios is [here](.html)) with their respective Cholesterol and Saturated Fat content. This analysis aims to determine if consumers have become more health-conscious over the years.
 
-```{R, echo = FALSE}
+```{R, echo = FALSE,message=FALSE, warning=FALSE}
 #transferring the ANOVA results for all 4 Milk types here
 fluidmilk <- read_excel("fluidmilk.xlsx", sheet = "fluidmilk", skip = 1)
 
@@ -315,7 +315,7 @@ tidy_model <- tidy_model |>
 
 # Displaying using kable
 tidy_model |>
-  kable(format = "html", caption = "Regression Model Summary") |>
+  kable(format = "html") |>
   kable_styling(bootstrap_options = "striped", full_width = TRUE) |>
   add_header_above(c("Regression Model Summary" = ncol(tidy_model)), bold = TRUE, align = "c", background = "pink") |>
   row_spec(0, bold = TRUE)
