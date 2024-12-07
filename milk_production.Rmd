@@ -672,8 +672,6 @@ milk_production |>
   head(5) |>
   knitr::kable(digits=3)
 
-
-
 ```
 
 # Statistical Analysis by Region
