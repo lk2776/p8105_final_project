@@ -15,7 +15,7 @@ navbar:
     - text: "Milk Sales"
       menu:
       - text: "Milk Over the Years"
-        href: milk-over-the-years-1.html
+        href: milktypes_over_years.html
       - text: "Milk Types Compared"
         href: trends_milktypes.html
       - text: "Flavoured Milk: Whole VS Non Whole"
