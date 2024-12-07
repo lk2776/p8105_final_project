@@ -160,8 +160,6 @@ function showSlides(n) {
 }
 </script>
 ')
-
-
 ```
 
 There is a decreasing trend as we go towards the lower fat options for calories and cholesterol.
@@ -322,12 +320,14 @@ tidy_model |>
 
 ```
 
-Cholesterol: 
+<b>Cholesterol</b>: 
 
 This positive coefficient, 0.006719714, suggests that higher cholesterol content is associated with a higher Sales Ratio. However, this relationship is not statistically significant (p-value 0.1041602).
 
-Saturated Fat: 
+<b>Saturated Fat</b>: 
 
 This negative coefficient, -0.021363109, indicates that higher saturated fat is associated with a lower Sales Ratio, but again, this is not statistically significant (p-value 0.3802799).
+
+<b>Conclusion</b>:
 
 Based on this regression analysis, there is no strong or significant evidence to suggest that people have become more health-conscious over the years based on changes in sales ratios of milk types associated with cholesterol and saturated fat content.
