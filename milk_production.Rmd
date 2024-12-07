@@ -2,9 +2,10 @@
 #title: "milkproduction"
 output: 
   html_document:
-    always_allow_html: true
     toc: true
     toc_float: true
+    toc_depth: 2
+    always_allow_html: true
 ---
 
 ```{r,include=FALSE,warning=FALSE,message=FALSE}
@@ -14,6 +15,8 @@ source("./scripts/figure_settings.R")
 milk_production = joined_data |>
   select(region,state,year,milk_production)
 ```
+# Milk Production Statistics by State
+Through analysis of the milk production dataset, we identified **California**, **Wisconsin**,  **New York**, **Pennsylvania**, **Minnesota**,  as the states with the highest milk production in the United States from 1970 to 2023. These states represent the top 5 with the largest milk production.
 
 
 ```{r}
@@ -35,17 +38,27 @@ summary_stats <- tibble(
 ) 
 
 final_table <- bind_rows(top_5_states, summary_stats) 
+```
 
+Additionally, total milk production in the USA over this period is approximately `r format(total_production_usa, big.mark = ",", scientific = FALSE)` million pounds,, while the average milk production is approximately `r format(avg_production_state, big.mark = ",", scientific = FALSE)` million pounds.
+
+```{r}
 #print
 knitr::kable(final_table, caption = "Top 5 States and Summary Statistics for Total Production (Million Pounds) (1970-2023)", format="html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 ```
 
+
+## Table of Top 5 States in Total Cows{.tabset}
+
+The table below shows the top states in milk production in 1970 versus 2023. As observed in the table, the US map distribution, and the line plots, there has been a shift in regional milk production between 1970 and 2023. While Wisconsin was the leading state in 1970, California surpassed it by 2023. Additionally, states like Idaho, which played a minor role in milk production in 1970, have now become major producers.
+
+### 1970 {#table_state_1970}
+
 ```{r}
-#table 1970 by state
 milk_production |>
   filter(year == 1970) |>
-  group_by(state,year) |>
+  group_by(state) |>
   summarise(total_production = sum(milk_production, na.rm = TRUE)) |>
   arrange(desc(total_production)) |>
   rename(State = state, 
@@ -53,33 +66,28 @@ milk_production |>
   head(5)  |>
   knitr::kable(caption = "Top 5 States in Total Production (Million Pounds) (1970)", format="html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+```
 
+### 2023 {#table_state_2023}
 
-#line plots 1970 by state
-milk_production_state_1970 = milk_production |>
-  filter(year == 1970) |>
-  group_by(state,year) |>
+```{r}
+#table 2023 state
+milk_production |>
+  filter(year == 2023) |>
+  group_by(state) |>
   summarise(total_production = sum(milk_production, na.rm = TRUE)) |>
   arrange(desc(total_production)) |>
   rename(State = state, 
-         "Total Production 1970" = total_production, 
-         Year = year) 
+         "Total Production 2023" = total_production) |>
+  head(5)  |>
+  knitr::kable(caption = "Top 5 States in Total Production (Million Pounds) (2023)", format="html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+```
+## {-}
+## Map of Milk Cows Distribution by State{.tabset}
+### 1970{#map_state_1970}
 
-
-ggplot(milk_production_state_1970, aes(x = reorder(State, `Total Production 1970`), y = `Total Production 1970`, color = State)) +
-  geom_point() +  
-  geom_line(group = 1, color = "lightblue") + 
-  labs(
-    title = "Total Production by State (Million Pounds) (1970)",
-    x = "State",
-    y = "Total Production",
-    color = "State"
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> static_line_state_1970
-
-ggplotly(static_line_state_1970)
-
+```{r}
 #merge location data with production data
 us_states <- usmap::us_map()
 
@@ -91,10 +99,10 @@ data_milk_production = milk_production |> mutate(
 combine_milk_production_1970 <- us_states |>
  left_join(data_milk_production, by = c("abbr" = "state_abbr")) |>
   filter (year == "1970") |>
-  rename(" production" = milk_production)
+  rename(Production = milk_production)
 
 ggplot(combine_milk_production_1970) +
-  geom_sf(aes(fill = ` production`), color = "white", size = 0.2) +
+  geom_sf(aes(fill = Production), color = "white", size = 0.2) +
   #scale_fill_viridis_c(name = "milk_production",option = "plasma") +
   scale_fill_gradientn(
     #colors = c("pink", "magenta","orange","red"),  #magenta
@@ -112,21 +120,68 @@ ggplotly(static_map_state_1970)
 
 ```
 
+### 2023{#map_state_2023}
+
 
 ```{r}
-#table 2023 state
-milk_production |>
-  filter(year == 2023) |>
+#us map state 2023
+combine_milk_production_2023 <- us_states |>
+ left_join(data_milk_production, by = c("abbr" = "state_abbr")) |>
+  filter (year == "2023") |>
+  rename(Production = milk_production)
+
+ggplot(combine_milk_production_2023) +
+  geom_sf(aes(fill = Production), color = "white", size = 0.2) +
+  #scale_fill_viridis_c(name = "milk_production",option = "plasma") +
+  scale_fill_gradientn(
+    #colors = c("pink", "magenta","orange","red"),  #magenta
+    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
+    name = "Production"
+  ) + 
+  theme_minimal() +
+  labs(title = "Milk Production Distribution by State (Million Pounds) (2023)") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+    #legend.position = "bottom"
+  ) -> static_map_state_2023
+
+ggplotly(static_map_state_2023)
+```
+
+## {-}
+## Plot of Total Cows by State {.tabset}
+
+### 1970 {#line_state_1970}
+
+```{r}
+#line plots 1970 by state
+milk_production_state_1970 = milk_production |>
+  filter(year == 1970) |>
   group_by(state,year) |>
   summarise(total_production = sum(milk_production, na.rm = TRUE)) |>
   arrange(desc(total_production)) |>
   rename(State = state, 
-         Year = year,
-         "Total Production 2023" = total_production) |>
-  head(5)  |>
-  knitr::kable(caption = "Top 5 States in Total Production (Million Pounds) (2023)", format="html") |>
-  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+         "Total Production 1970" = total_production, 
+         Year = year) 
 
+ggplot(milk_production_state_1970, aes(x = reorder(State, `Total Production 1970`), y = `Total Production 1970`, color = State)) +
+  geom_point() +  
+  geom_line(group = 1, color = "lightblue") + 
+  labs(
+    title = "Total Production by State (Million Pounds) (1970)",
+    x = "State",
+    y = "Total Production",
+    color = "State"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> static_line_state_1970
+
+ggplotly(static_line_state_1970)
+
+```
+### 2023 {#lineplot2023}
+
+```{r}
 #line plot state 2023
 milk_production_state_2023 = milk_production |>
   filter(year == 2023) |>
@@ -136,7 +191,6 @@ milk_production_state_2023 = milk_production |>
   rename(State = state, 
          "Total Production 2023" = total_production, 
          Year = year)
-
 
 ggplot(milk_production_state_2023, aes(x = reorder(State, `Total Production 2023`), y = `Total Production 2023`, color = State)) +
   geom_point() +  
@@ -151,36 +205,14 @@ ggplot(milk_production_state_2023, aes(x = reorder(State, `Total Production 2023
   theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> static_line_state_2023
 
 ggplotly(static_line_state_2023)
-
-#us map state 2023
-combine_milk_production_2023 <- us_states |>
- left_join(data_milk_production, by = c("abbr" = "state_abbr")) |>
-  filter (year == "2023")
-
-ggplot(combine_milk_production_2023) +
-  geom_sf(aes(fill = milk_production), color = "white", size = 0.2) +
-  #scale_fill_viridis_c(name = "milk_production",option = "plasma") +
-  scale_fill_gradientn(
-    #colors = c("pink", "magenta","orange","red"),  #magenta
-    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
-    name = " Production"
-  ) + 
-  theme_minimal() +
-  labs(title = "Milk Production Distribution by State (Million Pounds) (2023)") +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1)
-    #legend.position = "bottom"
-  ) -> static_map_state_2023
-
-ggplotly(static_map_state_2023)
-
-
-
 ```
 
+## {-}
+
+## Plot Trend of Milk Production by State {.tabset}
+### Overall {#overall_state}
 
 
-## Trend of Total Production by State 
 ```{r}
 #line plot for milk production over years across states - increasing and decreasing trend
 custom_colors <- c(
@@ -220,43 +252,7 @@ milk_production_over_years = milk_production |>
 ggplotly(milk_production_over_years)
 ```
 
-
-```{r}
-#increasing trend table
-##Total production per state, year, and region
-state_region_production_summary <-milk_production |>
-  filter(year >= 1970 & year <= 2023) |>
-  group_by(region, state, year) %>%
-  summarise(total_production = sum(milk_production, na.rm = TRUE), .groups = "drop")
-
-#year 1970
-production_1970 <- state_region_production_summary |>
-  filter(year == 1970) |>
-  select(region, state, total_production_1970 = total_production)
-
-#year2023
-production_2023 <- state_region_production_summary |>
-  filter(year == 2023) |>
-  select(region, state, total_production_2023 = total_production)
-
-#combine data
-state_region_comparison <- left_join(production_1970, production_2023, by = c("region", "state")) |>
-  mutate(percentage_increase = round(((total_production_2023 - total_production_1970) / total_production_1970) * 100, 2)) |>
-  filter(percentage_increase > 0) |>
-  arrange(desc(percentage_increase)) |>
-  rename(
-    Region = region,
-    State = state, 
-    "Total Production 1970" = total_production_1970,
-    "Total Production 2023" = total_production_2023, 
-    "Percentage Increase" = percentage_increase
-  )
-
-#table
-kable(state_region_comparison, caption = "States with Percentage Increase in Total Production (Million Pounds) (1970–2023)", format = "html") |>
-  kable_styling(full_width = TRUE, bootstrap_options = "bordered") 
-
-```
+### Increasing {#increasing_state}
 
 ```{r}
 #increasing trend plot
@@ -297,45 +293,7 @@ ggplotly(state_increasing_trend)
 
 ```
 
-
-
-```{r}
-#decreasing trend table
-state_region_production_summary <- milk_production |>
-  filter(year >= 1970 & year <= 2023) |>
-  group_by(region, state, year) |>
-  summarise(total_production = sum(milk_production, na.rm = TRUE), .groups = "drop")
-
-#1970
-production_1970 <- state_region_production_summary |>
-  filter(year == 1970) |>
-  select(region, state, total_production_1970 = total_production)
-
-#2023
-production_2023 <- state_region_production_summary |>
-  filter(year == 2023) |>
-  select(region, state, total_production_2023 = total_production)
-
-#combine
-state_region_comparison <- left_join(production_1970, production_2023, by = c("region", "state")) |>
-  mutate(percentage_decrease = round(((total_production_2023 - total_production_1970) / total_production_1970) * 100, 2)) |>
-  filter(percentage_decrease < 0) |>
-  arrange(percentage_decrease) |>
-  rename(
-    Region = region,
-    State = state, 
-    "Total Production 1970" = total_production_1970,
-    "Total Production 2023" = total_production_2023, 
-    "Percentage Decrease" = percentage_decrease
-  )
-
-#table
-kable(state_region_comparison, caption = "States with Percentage Decrease in Total production (Million Pounds) (1970–2023)", format = "html") |>
-  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
-
-```
-
-
+### Decreasing {#decreasing_state}
 ```{r}
 #decreasing trend plot
 #custom colors
@@ -377,6 +335,87 @@ milk_production |>
 ggplotly(state_decreasing_trend)
 
 ```
+## {-}
+## Table Trend of Total Cows by State {.tabset}
+### Increasing {#increasing_state_trend_table}
+```{r}
+#increasing trend table
+##Total production per state, year, and region
+state_region_production_summary <-milk_production |>
+  filter(year >= 1970 & year <= 2023) |>
+  group_by(region, state, year) %>%
+  summarise(total_production = sum(milk_production, na.rm = TRUE), .groups = "drop")
+
+#year 1970
+production_1970 <- state_region_production_summary |>
+  filter(year == 1970) |>
+  select(region, state, total_production_1970 = total_production)
+
+#year2023
+production_2023 <- state_region_production_summary |>
+  filter(year == 2023) |>
+  select(region, state, total_production_2023 = total_production)
+
+#combine data
+state_region_comparison <- left_join(production_1970, production_2023, by = c("region", "state")) |>
+  mutate(percentage_increase = round(((total_production_2023 - total_production_1970) / total_production_1970) * 100, 2)) |>
+  filter(percentage_increase > 0) |>
+  arrange(desc(percentage_increase)) |>
+  rename(
+    Region = region,
+    State = state, 
+    "Total Production 1970" = total_production_1970,
+    "Total Production 2023" = total_production_2023, 
+    "Percentage Increase" = percentage_increase
+  ) |>
+  head(5)
+
+#table
+kable(state_region_comparison, caption = "States with Percentage Increase in Total Production (Million Pounds) (1970–2023)", format = "html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered") 
+
+```
+### Decreasing {#decreasing_state_trend_table}
+
+```{r}
+#decreasing trend table
+state_region_production_summary <- milk_production |>
+  filter(year >= 1970 & year <= 2023) |>
+  group_by(region, state, year) |>
+  summarise(total_production = sum(milk_production, na.rm = TRUE), .groups = "drop")
+
+#1970
+production_1970 <- state_region_production_summary |>
+  filter(year == 1970) |>
+  select(region, state, total_production_1970 = total_production)
+
+#2023
+production_2023 <- state_region_production_summary |>
+  filter(year == 2023) |>
+  select(region, state, total_production_2023 = total_production)
+
+#combine
+state_region_comparison <- left_join(production_1970, production_2023, by = c("region", "state")) |>
+  mutate(percentage_decrease = round(((total_production_2023 - total_production_1970) / total_production_1970) * 100, 2)) |>
+  filter(percentage_decrease < 0) |>
+  arrange(percentage_decrease) |>
+  rename(
+    Region = region,
+    State = state, 
+    "Total Production 1970" = total_production_1970,
+    "Total Production 2023" = total_production_2023, 
+    "Percentage Decrease" = percentage_decrease
+  ) |> 
+  head(5)
+
+#table
+kable(state_region_comparison, caption = "States with Percentage Decrease in Total production (Million Pounds) (1970–2023)", format = "html") |>
+  kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+
+```
+## {-}
+
+### Number of Cows by State (1970-2023)
 
 ```{r}
 #us map by state 1970
@@ -414,10 +453,54 @@ ggplot(combine_milk_production) +
 
 ```
 
+# Milk Production Statistics by Region
 
+Similarly, milk production is analyzed by region. As observed in the table, the US map distribution, and the line plots, the data shows the top regions in milk production in 1970 versus 2023. In 1970, the Lake States, Appalachia, and Northeast were among the leading milk producers. By 2023, the West Coast and Mountain regions had emerged as some of the top regions in milk cow production. Overall, the data reveals significant regional shifts in milk production from 1970 to 2023, reflecting changing trends over time.
 
-## Milk Production Statistics by Region
+## Table of Top 5 Regions in Total Cows {.tabset}
+
+### 1970 {#table_1970}
+
 ```{r}
+#table 1970
+milk_production |> 
+group_by(region, year) |>
+filter(year == "1970") |>
+  summarise(total_production = sum(milk_production, na.rm = TRUE), .groups = "drop") |>
+  arrange(desc(total_production)) |>
+  select(region,total_production) |>
+  rename(Region = region, 
+         "Total Production 1970" = total_production) |>
+  head(5)|>
+  knitr::kable(caption = "Total production by Region (1970)", format = "html") |>
+  kableExtra::kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+```
+
+### 2023 {#table_2023}
+
+```{r}
+#table 2023
+milk_production |> 
+group_by(region, year) |>
+filter(year == "2023" ) |>
+  summarise(total_production = sum(milk_production, na.rm = TRUE), .groups = "drop") |>
+  arrange(desc(total_production)) |>
+  select(region, total_production) |>
+  rename(Region = region, 
+         "Total Production 2023" = total_production) |>
+  head(5) |>
+  knitr::kable(caption = "Total production by Region (2023)", format = "html") |>
+  kableExtra::kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+  
+```
+## {-}
+
+## Map of Milk Cows Distribution by Region {.tabset}
+
+### 1970 {#map_region_1970}
+
+```{r}
+#us map 1970
 us_states <- usmap::us_map()
 
 #abbreviation for state names
@@ -437,19 +520,57 @@ combine_region_production_1970 <- us_states |>
          Year = year,
          `Total Production` = total_production)
 
+ggplot(combine_region_production_1970) +
+  geom_sf(aes(fill = `Total Production`), color = "white", size = 0.2) +
+  scale_fill_gradientn(
+    #colors = c("pink", "magenta","orange","red"),  #magenta
+    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
+    name = "Production"
+  )+ 
+  theme_minimal() +
+  labs(title = "Milk production Distribution by Region (1970)") +
+  theme(
+    axis.text.x = element_text(angle = 80, hjust = 1),
+    legend.position = "bottom"
+  ) #-> us_plot_region_1970
+#ggplotly(us_plot_region_1970)
+```
 
-#table 1970
-milk_production |> 
-group_by(region, year) |>
-filter(year == "1970") |>
+### 2023 {#map_region_2023}
+
+```{r}
+#us map 2023
+combine_region_production_2023 <- us_states |>
+ left_join(data_milk_production, by = c("abbr" = "state_abbr")) |>
+  filter (year == "2023") |>
+  group_by(region, year) |>
   summarise(total_production = sum(milk_production, na.rm = TRUE), .groups = "drop") |>
-  arrange(desc(total_production)) |>
-  select(region,total_production) |>
   rename(Region = region, 
-         "Total Production 1970" = total_production) |>
-  knitr::kable(caption = "Total production by Region (1970)", format = "html") |>
-  kableExtra::kable_styling(full_width = TRUE, bootstrap_options = "bordered")
+         Year = year,
+         `Total Production` = total_production)
 
+
+ggplot(combine_region_production_2023) +
+  geom_sf(aes(fill = `Total Production`), color = "white", size = 0.2) +
+  scale_fill_gradientn(
+    #colors = c("pink", "magenta","orange","red"),  #magenta
+    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1" 
+    name = "Production"
+  )+ 
+  theme_minimal() +
+  labs(title = "Milk production Distribution by Region (2023)") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "bottom"
+  ) #-> us_plot_region_2023
+#ggplotly(us_plot_region_2023)
+```
+## {-}
+
+## Plot of Total Cows by Region{.tabset}
+
+### 1970{#plot_region_1970}
+```{r}
 #line plot 1970
 ggplot(combine_region_production_1970, aes(x = reorder(Region, `Total Production`), y = `Total Production`, color = Region)) +
   geom_point(size=0.8) +  
@@ -468,51 +589,11 @@ ggplot(combine_region_production_1970, aes(x = reorder(Region, `Total Production
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> line_plot_region_2023
 ggplotly(line_plot_region_2023)
-
-
-#us map 1970
-ggplot(combine_region_production_1970) +
-  geom_sf(aes(fill = `Total Production`), color = "white", size = 0.2) +
-  scale_fill_gradientn(
-    #colors = c("pink", "magenta","orange","red"),  #magenta
-    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1"
-    name = "Production"
-  )+ 
-  theme_minimal() +
-  labs(title = "Milk production Distribution by Region (1970)") +
-  theme(
-    axis.text.x = element_text(angle = 80, hjust = 1),
-    legend.position = "bottom"
-  ) #-> us_plot_region_1970
-#ggplotly(us_plot_region_1970)
 ```
 
-
+### 2023{#plot_region_2023}
 
 ```{r}
-#region 2023
-combine_region_production_2023 <- us_states |>
- left_join(data_milk_production, by = c("abbr" = "state_abbr")) |>
-  filter (year == "2023") |>
-  group_by(region, year) |>
-  summarise(total_production = sum(milk_production, na.rm = TRUE), .groups = "drop") |>
-  rename(Region = region, 
-         Year = year,
-         `Total Production` = total_production)
-
-
-#table 
-milk_production |> 
-group_by(region, year) |>
-filter(year == "2023" ) |>
-  summarise(total_production = sum(milk_production, na.rm = TRUE), .groups = "drop") |>
-  arrange(desc(total_production)) |>
-  select(region, total_production) |>
-  rename(Region = region, 
-         "Total Production 2023" = total_production) |>
-  knitr::kable(caption = "Total production by Region (2023)", format = "html") |>
-  kableExtra::kable_styling(full_width = TRUE, bootstrap_options = "bordered")
-  
 
 #line plot 
 ggplot(combine_region_production_2023, aes(x = reorder(Region, `Total Production`), y = `Total Production`, color = Region)) +
@@ -532,27 +613,12 @@ ggplot(combine_region_production_2023, aes(x = reorder(Region, `Total Production
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 80, hjust = 1)) -> line_plot_region_2023
 ggplotly(line_plot_region_2023)
-  
-#us map 2023
-ggplot(combine_region_production_2023) +
-  geom_sf(aes(fill = `Total Production`), color = "white", size = 0.2) +
-  scale_fill_gradientn(
-    #colors = c("pink", "magenta","orange","red"),  #magenta
-    colors = c("lavender","magenta","darkmagenta","red2"), #"purple1" 
-    name = "Production"
-  )+ 
-  theme_minimal() +
-  labs(title = "Milk production Distribution by Region (2023)") +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "bottom"
-  ) #-> us_plot_region_2023
-#ggplotly(us_plot_region_2023)
+``` 
+## {-}
 
+## Trend of Milk Production by Region
+The following plot shows the overall trend in regional milk production from 1970 to 2023. Milk production has increased over the years in most regions, including the Lake States, West Coast, and Mountain Region.
 
-```
-
-## Trend of Total Production by Region
 ```{r}
 #line plot milk production over years by region
 milk_production |>
@@ -592,12 +658,7 @@ milk_production |>
 ggplotly(trend_region)
 ```
 
-## Statistical Analysis by State
-States like California, Minnesota, Wisconsin, and Michigan have much higher milk production compared to the baseline state Alabama. 
-
-Overall Milk Production is significantly increased by year, with a general increase in production over time.
-
-ANOVA test indicates a highly significant difference in milk production across the different states.
+# Statistical Analysis by State
 
 ```{r}
 #lm model milk production by state
@@ -606,47 +667,28 @@ milk_production |>
     state = as.factor(state),  
     year = as.numeric(year)     
   ) |> 
-  lm(milk_production ~ state + year, data = _) |>  
-  broom::tidy() 
-
-
-milk_production |> 
-  mutate(
-    region = as.factor(state), 
-    year = as.numeric(year)) |>
-  aov(milk_production ~ state, data = _) |>  
+  lm(milk_production ~ state * year, data = _) |>  
   broom::tidy() |>
-  knitr::kable()
+  head(5) |>
+  knitr::kable(digits=3)
+
+
 
 ```
 
-## Statistical Analysis by Region
-The Corn Belt, Lake States, Mountain Region, Northeast, Southern Plains, and West Coast all show significantly higher milk production compared to the reference region Appalachia. 
-
-Delta States, Northern Plains, and Southeast do not show significant differences in milk production compared to the reference region Appalachia.
-
-The year has a significant positive effect on milk production, with an increase of 45.83 thousand pounds per year, suggesting that milk production has been increasing over time.
-
-ANOVA test indicates a highly significant difference in milk production across the different regions.
+# Statistical Analysis by Region
 
 ```{r}
 #lm model milk production by region 
 milk_production |> 
   mutate(
-    region = as.factor(region),  
+    #region = as.factor(region), 
+    region = relevel(as.factor(region), ref = "Southern Plains"),
     year = as.numeric(year)     
   ) |> 
-  lm(milk_production ~ region + year, data = _) |>  
+  lm(milk_production ~ region * year, data = _) |>  
   broom::tidy() |>
-  knitr::kable()
-
-
-milk_production |> 
-  mutate(
-    region = as.factor(region), 
-    year = as.numeric(year)) |>
-  aov(milk_production ~ region, data = _) |>  
-  broom::tidy() |>
+  head(5) |>
   knitr::kable()
 ```
 
