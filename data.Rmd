@@ -27,4 +27,5 @@ This dataset was downloaded from the [U.S. Department of Agriculture](https://ww
 - `milk_production`: Milk production (in million pounds)
 
 ### 3. Nutrional Data
-The data for our nutritional analysis was found in four separate Excel files. We compiled these files into one sheet and then created a new, cleaner Excel sheet for analysis. The data pertains to the nutritional information of Cream-O-Land Dairy (a producer of milk). This information was compared to other brands, but the differences were marginal enough to be considered negligible for our analysis.
+
+The data for our nutritional analysis was found in four separate Excel files. We compiled these files into one sheet and then created a new, cleaner Excel sheet for analysis. The data pertains to the nutritional information of Cream-O-Land Dairy (a producer of milk). This information was compared to other brands known to us, but the differences were marginal enough to be considered negligible for our analysis. The original excel sheets were downloaded from [here](https://www.nutritionvalue.org).
