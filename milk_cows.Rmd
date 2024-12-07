@@ -22,6 +22,8 @@ library(sf)
 library(usmap)
 library(kableExtra)
 library(RColorBrewer)
+library(knitr)
+library(leaflet)
 
 #R figure settings
 knitr::opts_chunk$set(
