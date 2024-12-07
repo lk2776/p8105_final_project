@@ -15,6 +15,19 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Trends in Different Milk Types Over Time:
+
+- The sales of whole milk have experienced a dramatic decline since 1975. Initially the dominant milk type, it steadily decreased as consumers shifted toward lower-fat alternatives, reflecting changing dietary preferences and health trends.
+
+- Reduced-Fat (2%) Milk: gained popularity starting in the late 1970s and peaked around the 1990s. However, its sales began to decline after 2010, mirroring the overall decline in fluid milk consumption.
+
+- Skim milk experienced gradual growth from the 1980s to the early 2000s, reflecting increasing health- consciousness. However, its sales have significantly declined since the mid-2000s, suggesting a loss of favor among consumers, possibly due to taste or the rise of alternatives.
+
+- Sales of 1% milk have remained relatively stable over the years, though they have seen a slight decline post-2010.
+
+While there was a clear shift from whole milk to reduced-fat and skim milk during the late 20th century, all categories have experienced declining sales since 2010. This underscores a broader trend of declining fluid milk consumption, possibly driven by the rise of plant-based alternatives, changing dietary habits, and demographic shifts.
+
+
 ```{r,echo=FALSE}
 file_path <- "fluidmilk.xlsx"
 fluidmilk_data <- read_excel(file_path, sheet = "fluidmilk")
@@ -23,16 +36,17 @@ colnames(fluidmilk_data) <- c("Year", "Whole_Milk", "Reduced_Fat_2_%",
                               "Low_Fat_1_%", "Skim", "Flavored_Whole", 
                               "Flavored_Other", "Buttermilk", "Eggnog", "Total_Sales")
 
-
 fluidmilk_data <- fluidmilk_data %>%
   mutate(Year = as.numeric(Year)) %>%
   filter(!is.na(Year))
 
-
 fluidmilk_data <- fluidmilk_data %>%
   mutate(across(Whole_Milk:Total_Sales, as.numeric))
-
 #print(fluidmilk_data)
+
+colnames(fluidmilk_data) <- c("Year", "Whole Milk", "Reduced Fat 2 Percent", 
+                              "Low Fat 1 Percent", "Skim", "Flavored Whole", 
+                              "Flavored Other", "Buttermilk", "Eggnog", "Total Sales")
 
 #key_stats <- fluidmilk_data %>%
 #  summarise(
@@ -51,110 +65,66 @@ fluidmilk_long <- fluidmilk_data %>%
     "Skim"
   )))
 
-ggplot_interactive <- ggplot(fluidmilk_long, aes(
+ggplot(fluidmilk_long, aes(
   x = Year, 
   y = Sales, 
   color = Milk_Type, 
+  group = Milk_Type,
   text = paste0("Year: ", Year, 
                 "<br>Milk Type: ", Milk_Type, 
                 "<br>Sales: ", round(Sales, 2))
 )) +
   geom_line(size = 1) +
+  scale_color_manual(
+    values = c(
+      `Whole Milk` = "red",
+      `Reduced Fat 2 Percent` = "orange",
+      `Low Fat 1 Percent` = "magenta",
+      `Skim` = "pink"
+    )
+  ) +
   labs(title = "Trends in Different Milk Types Over Time", 
        x = "Year", 
        y = "Sales (Million Pounds)", 
        color = "Milk Type") +
-  theme_minimal()
+  theme_minimal() -> ggplot_interactive
 
-interactive_plot <- ggplotly(ggplot_interactive, tooltip = "text")
-
-interactive_plot
+ggplotly(ggplot_interactive, tooltip = "text")
 
 ```
 
-# Trends in Different Milk Types Over Time:
 
-```{r}
-colnames(fluidmilk_data) <- c("Year", "Whole Milk", "Reduced Fat 2 Percent", 
-                              "Low Fat 1 Percent", "Skim", "Flavored Whole", 
-                              "Flavored Other", "Buttermilk", "Eggnog", "Total Sales")
-
-
-fluidmilk_data <- fluidmilk_data %>%
-  mutate(Year = as.numeric(Year)) %>%  
-  filter(!is.na(Year)) %>%             
-  mutate(across(`Whole Milk`:`Total Sales`, as.numeric))  
-
-# Convert to long format
-fluidmilk_long <- fluidmilk_data %>%
-  select(Year, `Whole Milk`, `Reduced Fat 2 Percent`, `Low Fat 1 Percent`, Skim) %>%
-  pivot_longer(cols = -Year, names_to = "Milk_Type", values_to = "Sales") %>%
-  mutate(Milk_Type = factor(Milk_Type, levels = c(
-    "Whole Milk", 
-    "Reduced Fat 2 Percent", 
-    "Low Fat 1 Percent", 
-    "Skim"
-  )))
-
-
-print(head(fluidmilk_long))
-summary(fluidmilk_long)
-if (any(is.na(fluidmilk_long$Sales))) {
-  print("Warning: There are missing values in the Sales column.")
-}
-
-
-ggplot_basic <- ggplot(fluidmilk_long, aes(x = Year, y = Sales, color = Milk_Type)) +
-  geom_line(size = 1) +
-  labs(title = "Trends in Different Milk Types Over Time", 
-       x = "Year", 
-       y = "Sales (Million Pounds)", 
-       color = "Milk Type") +
-  theme_minimal()
-
-
-print(ggplot_basic)
-ggplotly(ggplot_basic)
-
-ggplot_interactive <- ggplot(fluidmilk_long, aes(
-  x = Year, 
-  y = Sales, 
-  color = Milk_Type, 
-  text = paste0("Year: ", Year, 
-                "<br>Milk Type: ", Milk_Type, 
-                "<br>Sales: ", round(Sales, 2))
-)) +
-  geom_line(size = 1) +
-  labs(title = "Trends in Different Milk Types Over Time", 
-       x = "Year", 
-       y = "Sales (Million Pounds)", 
-       color = "Milk Type") +
-  theme_minimal()
-
-interactive_plot <- ggplotly(ggplot_interactive, tooltip = "text")
-
-interactive_plot
-```
-
-Trends in Different Milk Types Over Time:
-
-- The sales of whole milk have experienced a dramatic decline since 1975. Initially the dominant milk type, it steadily decreased as consumers shifted toward lower-fat alternatives, reflecting changing dietary preferences and health trends.
-
-- Reduced-Fat (2%) Milk: gained popularity starting in the late 1970s and peaked around the 1990s. However, its sales began to decline after 2010, mirroring the overall decline in fluid milk consumption.
-
-- Skim milk experienced gradual growth from the 1980s to the early 2000s, reflecting increasing health- consciousness. However, its sales have significantly declined since the mid-2000s, suggesting a loss of favor among consumers, possibly due to taste or the rise of alternatives.
-
-- Sales of 1% milk have remained relatively stable over the years, though they have seen a slight decline post-2010.
-
-While there was a clear shift from whole milk to reduced-fat and skim milk during the late 20th century, all categories have experienced declining sales since 2010. This underscores a broader trend of declining fluid milk consumption, possibly driven by the rise of plant-based alternatives, changing dietary habits, and demographic shifts.
-
+## Anova 
+The p-value from the ANOVA test is 0.0432, which is less than 0.05. Since the p-value is below the 0.05 significance threshold, it indicates that the sales ratios  for the different milk types are not all the same.This means there is evidence to suggest that at least one milk type has a significantly different rate of change in sales compared to the others.
 
 ```{r,echo=FALSE}
 #Anova data 
+fluidmilk <- read_excel("fluidmilk.xlsx", sheet = "fluidmilk", skip = 1)
+
+
 colnames(fluidmilk) <- c(
   "Year", "Whole", "ReducedFat2", "LowFat1", "Skim",
   "FlavoredWhole", "FlavoredOther", "Buttermilk", "Eggnog", "Total"
 )
+
+fluidmilk_clean <- fluidmilk %>%
+  mutate(across(Whole:Total, as.numeric)) %>%
+  filter(!is.na(Year))  
+
+sales_ratios <- fluidmilk_clean %>%
+  arrange(as.numeric(Year)) %>%
+  mutate(
+    WholeRatio = Whole / lag(Whole),
+    ReducedFat2Ratio = ReducedFat2 / lag(ReducedFat2),
+    LowFat1Ratio = LowFat1 / lag(LowFat1),
+    SkimRatio = Skim / lag(Skim)
+  )
+
+
+#colnames(fluidmilk_) <- c(
+#  "Year", "Whole", "ReducedFat2", "LowFat1", "Skim",
+#  "FlavoredWhole", "FlavoredOther", "Buttermilk", "Eggnog", "Total"
+#)
 
 fluidmilk_clean <- fluidmilk %>%
   mutate(across(Whole:Total, as.numeric)) %>%
@@ -181,13 +151,14 @@ recent_ratios |>
          `Reduced Fat 2% Ratio` = ReducedFat2Ratio,
          `Low Fat 1% Ratio` = LowFat1Ratio, 
          `Skim Ratio` = SkimRatio) |>
-  knitr::kable(digits=3)
+  
+  knitr::kable(digits=3,caption = "Ratios of Milk Types")
 
 ```
 
-### Anova
+
 ```{r,echo=FALSE}
-library(dplyr)
+
 
 anova_data <- sales_ratios %>%
   select(Year, WholeRatio, ReducedFat2Ratio, LowFat1Ratio, SkimRatio) %>%
@@ -199,51 +170,12 @@ anova_data <- sales_ratios %>%
   )
 #print(anova_data)
 
-
-
-```
-The p-value from the ANOVA test is 0.0432, which is less than 0.05.Since the p-value is below the 0.05 significance threshold, it indicates that the sales ratios  for the different milk types are not all the same.This means there is evidence to suggest that at least one milk type has a significantly different rate of change in sales compared to the others.
-
-```{r,echo=FALSE}
 anova_results <- aov(SalesRatio ~ MilkType, data = anova_data) 
 anova_results|>  
   broom::tidy() |>
   #head(2) |>
-  knitr::kable(digits=3)
+  knitr::kable(digits=3, caption="Anova Results")
 #summary(anova_results)
-```
-
-
-# delete?
-
-
-
-```{r}
-
-fluidmilk <- read_excel("fluidmilk.xlsx", sheet = "fluidmilk", skip = 1)
-
-
-colnames(fluidmilk) <- c(
-  "Year", "Whole", "ReducedFat2", "LowFat1", "Skim",
-  "FlavoredWhole", "FlavoredOther", "Buttermilk", "Eggnog", "Total"
-)
-
-
-fluidmilk_clean <- fluidmilk %>%
-  mutate(across(Whole:Total, as.numeric)) %>%
-  filter(!is.na(Year))  
-
-
-sales_ratios <- fluidmilk_clean %>%
-  arrange(as.numeric(Year)) %>%
-  mutate(
-    WholeRatio = Whole / lag(Whole),
-    ReducedFat2Ratio = ReducedFat2 / lag(ReducedFat2),
-    LowFat1Ratio = LowFat1 / lag(LowFat1),
-    SkimRatio = Skim / lag(Skim)
-  )
-
-
-#print(sales_ratios)
 
 ```
+
