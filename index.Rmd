@@ -6,7 +6,7 @@ output: html_document
 # A Comprehensive Analysis of Milk Production & Types
 
 
-![](images/CoverPicW.png){ width=1000 height=640 }
+![](images/CoverPicW.png){ width=1000 height=628 }
 
 <br>
 
