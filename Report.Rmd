@@ -141,22 +141,22 @@ The following plot shows the overall trend in regional milk production from 1970
 
 <b>Nutrition:</b>
 
-<img src="nutri-files/figure-html
+<img src="nutri_files/figure-html
 /unnamed-chunk-3-1.png" class="center">
 
-<img src="nutri-files/figure-html
+<img src="nutri_files/figure-html
 /unnamed-chunk-3-2.png" class="center">
 
-<img src="nutri-files/figure-html
+<img src="nutri_files/figure-html
 /unnamed-chunk-3-3.png" class="center">
 
-<img src="nutri-files/figure-html
+<img src="nutri_files/figure-html
 /unnamed-chunk-3-4.png" class="center">
 
-<img src="nutri-files/figure-html
+<img src="nutri_files/figure-html
 /unnamed-chunk-5-1.png" class="center">
 
-<img src="nutri-files/figure-html
+<img src="nutri_files/figure-html
 /unnamed-chunk-6-1.png" class="center">
 <br>
 
