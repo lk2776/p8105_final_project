@@ -5,17 +5,19 @@ Project Name: Milk Industry Insights
 
 Project Members: Vidit Tripathi (vt2415), Tai Yue (ty2554), Lahari Koganti (lk2776)
 
-<br><br> 
+<br>
 
 ### Motivation
 
 This project provides a comprehensive analysis of the dairy industry, focusing on trends in milk production, consumer preferences, and the nutritional content of various milk types. By examining U.S. milk production and cow numbers from 1970 to 2023, it aims to uncover regional disparities and shifts in production patterns over time. The project also explores consumer preferences for whole milk, 2%, 1%, and skim, investigating the factors driving changes in demand. Additionally, it compares the nutritional profiles of these milk types, with a focus on cholesterol, fat, and mineral content, to offer insights into the health implications of different milk choices.
 
+<br>
+
 ### Related Work
 
 Research on the U.S. dairy industry has examined trends in milk production, consumer preferences, and nutritional content. The USDA’s Economic Research Service (ERS) reports a 70-year decline in fluid milk consumption, driven largely by generational shifts in dietary habits rather than the rise of plant-based alternatives [1]. While milk production has increased due to advances in farming practices, the number of dairy cows has decreased, creating regional disparities in output [2]. Consumer preferences have shifted toward reduced-fat milks due to health concerns [3]. This body of research offers valuable context for understanding the complex dynamics of milk production, consumption, and health.
 
-<br><br>
+<br>
 
 ### Initial questions
 
