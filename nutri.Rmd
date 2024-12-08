@@ -355,10 +355,35 @@ plotpr <- ggplot(df_merged, aes(x = Sales_Ratio, y = Predicted, color = Milk_Typ
 
 ggplotly(plotpr, tooltip = c("text"))
 ```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shift Plot Example</title>
+  <style>
+    .plot-container {
+      margin-left: 50px; /* Adjust this value to shift the plot to the right */
+    }
+  </style>
+</head>
+<body>
+  <div class="plot-container">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+      var plotpr = { /* Your ggplotly plot data and layout */ };
+
+      Plotly.newPlot('plot', plotpr.data, plotpr.layout);
+    </script>
+    <div id="plot"></div>
+  </div>
+</body>
+</html>
+
 
 <b> Conclusions based on above plot and ANOVA results </b>
 <ul>
- <li> Saturated fat and Sales: For the lower fat options, most of the points lie above the dashed line. This suggests that the model tends to overestimate the sales ratios for these lower fat milk types.<br>
+ <li> Saturated fat and Sales: For the lower fat options (Skim and 1% Milk), most of the points lie above the dashed line. This suggests that the model tends to overestimate the sales ratios for these lower fat milk types.<br>
 For the higher Fat Options (Whole and 2% Milk), most of the points lie below the dashed line. This indicates that the model tends to underestimate the sales ratios for these higher fat milk types.
  </li>
  <li>Bias in Predictions: The model tends to overestimate sales ratios for lower fat milk types and underestimate them for higher fat milk types, indicating that other factors might be at play which are not accounted for by just using saturated fat as a predictor.

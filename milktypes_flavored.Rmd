@@ -73,7 +73,9 @@ ggplot(fluidmilk_data_comparison, aes(x = Year, y = Sales, fill = Milk_Type)) +
 
 ## T-Test Results
 
-When camparing flavored milk vs non-whole milk sales, the t-statistic is -1.3685, which indicates the difference between the means of the two groups relative to their variability.The p-value is 0.1778, which is greater than 0.05. The mean difference between the Flavored Whole and Non-Whole ratios is -02019007 , suggesting that on average, Flavored Whole ratios are slightly lower than Non-Whole ratios. However, this difference is not significant.This means the result is not statistically significant.The confidence interval for the mean difference is [-0.049886552  0.009506417], which includes 0. This further indicates that the difference in means is not statistically significant.
+When comparing the sales ratios of flavored whole versus non-whole milk (i.e., the current year sales to past year sales ratios), the t-statistic is -1.3685. This indicates the difference between the means of the two groups relative to their variability. The mean difference between the flavored whole and non-whole ratios is -0.02019007, suggesting that, on average, the sales ratios for flavored whole milk are slightly lower than those for non-whole milk. However, this difference is not significant. The confidence interval for the mean difference is [-0.049886552, 0.009506417], which includes 0, suggests that the difference in means is not statistically significant. The p-value (0.1778, which is greater than 0.05) further confirms this, indicating that the result is not statistically significant.
+
+Our analysis indicates that there is no statistical significant difference  between the sales ratios of flavored whole milk and non-whole milk. Although the mean difference suggests that flavored whole milk tends to have slightly lower sales ratios compared to non-whole milk, this difference is not statistically meaningful.
 
 ```{r,echo=FALSE,warning=FALSE,message=FALSE}
 colnames(fluidmilk_data) <- c(
@@ -101,10 +103,7 @@ fluidmilk_ratios %>%
   rename( `Flavored Milk Ratio`= FlavoredMilkRatio,
           `Non Whole Ratio` = NonWholeRatio) |>
   knitr::kable(caption= "Flavored Ratios")
-
-
 #print(recent_flavored_ratios)
-
 ```
 
 
@@ -137,5 +136,4 @@ t.test(
 ) |>
   broom::tidy() |>
   knitr::kable(caption= "T-Test Results")
-
 ```
