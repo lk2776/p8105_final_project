@@ -76,6 +76,15 @@ In the project, we used visualizations like line plots, bar plots, and histogram
 /unnamed-chunk-4-1.png" class="center" width="450" height="350">
 
 
+<img src="milktypes_over_years_files/figure-html
+/unnamed-chunk-3-1.png" class="center" width="450" height="350">
+
+<img src="milktypes_over_years_files/figure-html
+/unnamed-chunk-3-1.png" class="center" width="450" height="350">
+
+<img src="milktypes_over_years_files/figure-html
+/unnamed-chunk-3-1.png" class="center" width="450" height="350">
+
 <br>
 
 ### Data analysis
