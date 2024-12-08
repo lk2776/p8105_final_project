@@ -652,6 +652,7 @@ milk_cows |>
 
 The linear regression model for milk cow production by region and year, with Appalachia as the reference region, reveals several key trends. Significant region-year interactions (e.g., Mountain Region:year = 6.36, p < 0.001; West Coast:year = 12.00, p < 0.001) suggest that some regions, like the Mountain Region and West Coast, have seen increases in milk cow production over time. In contrast, regions such as the Lake States (estimate = -5.584, p < 0.001) have seen declines. The year variable has a significant negative effect on milk cow numbers across all regions (estimate = -3.24, p < 0.001), indicating an overall decline in milk cow populations over time. Significant negative deviations in milk cow populations compared to Appalachia are seen in the West Coast (-23,512.16, p < 0.001) and Mountain Region (-12,700.40, p < 0.001). However, regions like the West Coast and Mountain Region showed increases over time (positive interaction term with year), reinforcing the shift in milk cow populations to certain regions over time.
 
+
 ```{r}
 #lm model milk production by region 
 milk_cows |> 
@@ -664,5 +665,4 @@ milk_cows |>
   head(5) |>
   knitr::kable(digits=3, format="html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
-  
 ```
