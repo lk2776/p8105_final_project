@@ -414,7 +414,7 @@ kable(state_region_comparison, caption = "States with Percentage Decrease in Tot
 ```
 ## {-}
 
-### Number of Cows by State (1970-2023)
+### Milk Production by State (1970-2023)
 
 ```{r}
 #us map by state 1970
@@ -690,7 +690,7 @@ milk_production |>
   ) |> 
   lm(milk_production ~ region * year, data = _) |>  
   broom::tidy() |>
-  #head(5) |>
+  head(5) |>
   knitr::kable(digits=3, format="html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 ```
