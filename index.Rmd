@@ -45,7 +45,7 @@ Our project delves into the dairy industry, focusing on:
 
 <br>
 
-## Dairy Industry Insights Puzzle
+## Dairy Animals Puzzle
 
 ```{r, results='asis', echo=FALSE}
 htmltools::HTML('
