@@ -1,6 +1,10 @@
 ---
 title: "Nutrition Analysis"
-output: html_document
+Output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
@@ -21,7 +25,7 @@ We’ve talked extensively about the four main types of milk—whole, 2%, 1%, an
 <br>
 ```{R, echo= FALSE}
 #creating data frame; cleaning accordingly; doing some analysis
-df <- readxl::read_xlsx('nutri.xlsx')|>
+df <- readxl::read_xlsx('data/nutri.xlsx')|>
   head(11)
 nutri <- df |>
   as.data.frame() |>
@@ -242,15 +246,15 @@ legend <- get_legend(ggplot(data1, aes(x = Variable, y = Percentage, fill = Vari
 grid.arrange(empty_plot, plot1, plot2, legend, ncol = 4, widths = c(1, 2, 2, 1.5))
 ```
 
-The fat content decreases progressively from Whole Milk to 2% Milk, 1% Milk, and Skim Milk, reflecting their names (Fun Fact: Whole Milk has a little over 3% fat). The bar plots above effectively illustrate this reduction. For instance, a 1% decrease indicates that our total and saturated fat intake is halved when transitioning from Whole to 2% Milk, and further reduced from 2% to 1%, ultimately reaching zero in Skim Milk.
+The fat content decreases progressively from whole milk to 2% milk, 1% milk, and Skim milk, reflecting their names (Fun Fact: whole milk has a little over 3% fat). The bar plots above effectively illustrate this reduction. For instance, a 1% decrease indicates that our total and saturated fat intake is almost halved when transitioning from whole to 2% milk, and further reduced from 2% to 1%, ultimately reaching zero in skim milk.
 <br>
 <h3> Regression Analysis </h3>
 <br>
-We will now perform a regression analysis on the five most recent sales ratios of the four types of milk (more about the ratios is [here](milktypes_trends.html) with their respective Cholesterol and Saturated Fat content. This analysis aims to determine if consumers have become more health-conscious over the years.
+We will now perform a regression analysis on the five most recent sales ratios of the four types of milk (more about the ratios is [here](milktypes_trends.html)) with their respective cholesterol and saturated fat content. This analysis aims to determine if consumers have become more health-conscious over the years.
 
 ```{R, echo = FALSE,message=FALSE, warning=FALSE}
 #transferring the ANOVA results for all 4 Milk types here
-fluidmilk <- read_excel("fluidmilk.xlsx", sheet = "fluidmilk", skip = 1)
+fluidmilk <- read_excel("data/fluidmilk.xlsx", sheet = "fluidmilk", skip = 1)
 
 colnames(fluidmilk) <- c(
   "Year", "Whole", "ReducedFat2", "LowFat1", "Skim",
@@ -333,15 +337,15 @@ tidy_model |>
 
 <b>Cholesterol</b>: 
 
-This positive coefficient, 0.006719714, suggests that higher cholesterol content is associated with a higher Sales Ratio. However, this relationship is not statistically significant (p-value 0.1041602).
+This positive coefficient, 0.0067197, suggests that higher cholesterol content is associated with a higher sales ratio. However, this relationship is not statistically significant (p-value 0.1041602).
 
 <b>Saturated Fat</b>: 
 
-This negative coefficient, -0.021363109, indicates that higher saturated fat is associated with a lower Sales Ratio, but again, this is not statistically significant (p-value 0.3802799).
+This negative coefficient, -0.0213631, indicates that higher saturated fat is associated with a lower sales ratio, but again, this is not statistically significant (p-value 0.3802799).
 
 Based on this regression analysis, there is no strong or significant evidence to suggest that people have become more health-conscious over the years based on changes in sales ratios of milk types associated with cholesterol and saturated fat content.
 
-It is common knowledge that as we go from Skim to 1% and eventually to Whole we are increasing our fat intake. Saturated fat is not considered a good type of Fat (a topic of debate). Based on our previous results, we saw that higher saturated fat is associated with a lower Sales Ratio but not statistically significant. Here is a plot with Saturated Fat as a predictor for Sales Ratio to better understand our result.
+It is common knowledge that as we go from skim to 1% and eventually to whole we are increasing our fat intake. Saturated fat is not considered a good type of fat (a topic of debate). Based on our previous results, we saw that higher saturated fat is associated with a lower sales ratio but not statistically significant. Here is a plot with saturated fat as a predictor for sales ratio to better understand our result.
 
 ```{R, echo = FALSE, warning = FALSE}
 # Predicted vs Actual Sales Ratio
@@ -358,12 +362,12 @@ ggplotly(plotpr, tooltip = c("text"))
 
 <b> Conclusions based on above plot and ANOVA results </b>
 <ul>
- <li> Saturated fat and Sales: For the Skim and 2%, most of the points lie above the dashed line. This suggests that the model tends to overestimate the sales ratios for these milk types.<br>
-For Whole and 1% Milk, most of the points lie below the dashed line. This indicates that the model tends to underestimate the sales ratios for these milk types.<br>
-This shows why, for the current model, Saturated Fat is not a good predictor. Although it has a negative association according to our ANOVA results, it did something unexpected: it overestimated for 2% but underestimated for 1%.
+ <li> Saturated fat and Sales: For skim and 2%, most of the points lie above the dashed line. This suggests that the model tends to overestimate the sales ratios for these milk types.<br>
+For whole and 1% Milk, most of the points lie below the dashed line. This indicates that the model tends to underestimate the sales ratios for these milk types.<br>
+This shows why, for the current model, saturated fat is not a good predictor. Although it has a negative association according to our ANOVA results, it did something unexpected: it overestimated for 2% but underestimated for 1% milk.
  </li>
  <li>Bias in Predictions: The model tends to overestimate sales ratios for certain milk types and underestimate them for others, indicating that other factors might be at play which are not accounted for by just using saturated fat as a predictor.
  </li>
- <li>Further Analysis Needed: To improve the model, it might be beneficial to include additional predictors such as price, marketing efforts, consumer preferences, or other nutritional information. Consumer preferences and dietary requirements is a crucial factor because someone may prefer taste of one over the other. It is also possible that their diet doesn't contain a lot of fat and hence, they need whole milk, for instance.
+ <li>Further Analysis Needed: To improve the model, it might be beneficial to include additional predictors such as price, marketing efforts, consumer preferences, or other nutritional information. Consumer preferences and dietary requirements (example: toddlers are recommended to consume whole milk) is a crucial factor because someone may prefer taste of one over the other. It is also possible that their diet doesn't contain a lot of fat and hence, they need whole milk, for instance.
  </li>
 </ul>

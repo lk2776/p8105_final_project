@@ -7,7 +7,7 @@ library(tidyr)
 library(readxl)
 
 
-file_path <- "fluidmilk.xlsx"
+file_path <- "data/fluidmilk.xlsx"
 fluidmilk_data <- read_excel(file_path, sheet = "fluidmilk")
 colnames(fluidmilk_data) <- c("Year", "Whole_Milk", "Reduced_Fat_2_%", 
                               "Low_Fat_1_%", "Skim", "Flavored_Whole", 
@@ -109,7 +109,7 @@ fluidmilk_ratios %>%
 
 ```{r,echo=FALSE,warning=FALSE,message=FALSE}
 
-fluidmilk <- read_excel("fluidmilk.xlsx", sheet = "fluidmilk", skip = 1)
+fluidmilk <- read_excel("data/fluidmilk.xlsx", sheet = "fluidmilk", skip = 1)
 
 colnames(fluidmilk) <- c(
   "Year", "Whole", "ReducedFat2", "LowFat1", "Skim",

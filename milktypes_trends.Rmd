@@ -29,7 +29,7 @@ While there was a clear shift from whole milk to reduced-fat and skim milk durin
 
 
 ```{r,echo=FALSE}
-file_path <- "fluidmilk.xlsx"
+file_path <- "data/fluidmilk.xlsx"
 fluidmilk_data <- read_excel(file_path, sheet = "fluidmilk")
 
 colnames(fluidmilk_data) <- c("Year", "Whole_Milk", "Reduced_Fat_2_%", 
@@ -101,7 +101,7 @@ The p-value from the ANOVA test is 0.0432, which is less than 0.05. Since the p-
 
 ```{r,echo=FALSE}
 #Anova data 
-fluidmilk <- read_excel("fluidmilk.xlsx", sheet = "fluidmilk", skip = 1)
+fluidmilk <- read_excel("data/fluidmilk.xlsx", sheet = "fluidmilk", skip = 1)
 
 
 colnames(fluidmilk) <- c(

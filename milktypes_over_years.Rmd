@@ -26,7 +26,7 @@ library(knitr)
 library(kableExtra)
 
 
-filePath <- "fluidmilk.xlsx"
+filePath <- "data/fluidmilk.xlsx"
 fluidmilkData <- read_excel(filePath, sheet = "fluidmilk")
 
 
