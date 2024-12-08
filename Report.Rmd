@@ -187,3 +187,9 @@ Our analysis lays a strong foundation for an even more detailed report. The regi
 3. <https://www.ers.usda.gov/webdocs/publications/44247/56317_ef29.pdf?v=0>
 4. <https://www.ers.usda.gov/data-products/dairy-data/>
 
+<br><br>
+
+#### Acknowledgements
+
+As we conclude our exploration of milk production and consumption, we extend heartfelt thanks to Professor Jeff Goldsmith for his invaluable guidance. Analyzing industries has traditionally been the domain of large organizations and researchers, but our confidence in conducting this analysis comes from the data science skills we've gained. We hope our research inspires and assists others in understanding and improving this industry.
+
