@@ -69,14 +69,22 @@ Milk Cows and Milk Production Data: The tidying process for these datasets begin
 
 <b>Milk Types:</b>In the project, we used visualizations like line plots, bar plots, and histograms to analyze trends in fluid milk sales over time. These helped us compare different milk types, flavored vs. non-flavored categories, and overall sales trends by decade. Summaries provided key insights, like the steady decline in milk sales after 2010 and generational shifts in consumption. We used exploratory statistical analyses to calculate means, group sales by decade, and compare trends across milk types. These steps were essential to highlight patterns and changes in consumer behavior. Initially, the focus was broader, but we narrowed it to trends like flavored vs. non-flavored milk and decade-wise changes for clearer insights. This shift allowed us to align the project better with the dataset's strengths and the observed trends.
 
+This plot shows the total fluid milk sales (in million pounds) over time, indicating a steady decline since the early 2000s.
+
 <img src="milktypes_over_years_files/figure-html
 /unnamed-chunk-3-1.png" class="center">
+
+This plot shows the mean whole milk sales by decade, highlighting a decline from the 1970s to the 1990s, followed by stabilization in recent decades.
 
 <img src="milktypes_over_years_files/figure-html
 /unnamed-chunk-4-1.png" class="center">
 
+This plot shows the sales trends of flavored whole milk and flavored non-whole milk in the U.S. from 1975 to 2022, highlighting the dominance of flavored whole milk.
+
 <img src="milktypes_flavored_files/figure-html
 /unnamed-chunk-2-1.png" class="center">
+
+This plot shows sales trends for different milk types over time, highlighting the decline in whole milk sales and the rise and stabilization of reduced-fat and low-fat milk varieties.
 
 <img src="milktypes_flavored_files/figure-html
 /milk-trend.png" class="center">
