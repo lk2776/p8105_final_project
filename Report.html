@@ -318,30 +318,30 @@ Koganti (lk2776)</p>
 <p><br><br></p>
 <div id="motivation" class="section level3">
 <h3>Motivation</h3>
+<p>This project provides a comprehensive analysis of the dairy industry,
+focusing on trends in milk production, consumer preferences, and the
+nutritional content of various milk types. By examining U.S. milk
+production and cow numbers from 1970 to 2023, it aims to uncover
+regional disparities and shifts in production patterns over time. The
+project also explores consumer preferences for whole milk, 2%, 1%, and
+skim, investigating the factors driving changes in demand. Additionally,
+it compares the nutritional profiles of these milk types, with a focus
+on cholesterol, fat, and mineral content, to offer insights into the
+health implications of different milk choices.</p>
 </div>
 <div id="related-work" class="section level3">
 <h3>Related Work</h3>
-<p>This project was inspired by the USDA’s Economic Research Service
-website, which highlights the long-term decline in fluid milk
-consumption in the U.S. over 70 years. It discusses generational shifts
-in dietary habits and the limited impact of plant-based alternatives on
-this trend. Despite government programs like the National School Lunch
-Program and marketing efforts, reversing the decline has been
-challenging. This information provided context for analyzing milk
-consumption patterns and their societal implications. The USDA’s
-Economic Research Service reports that U.S. per capita fluid milk
-consumption has been declining for over 70 years, with the steepest drop
-in the 2010s. Between 2003 and 2018, individuals across all age groups
-reduced their milk intake, primarily consumed as a beverage. While
-plant-based milk alternatives have gained popularity, they account for
-only a small portion of this decline. The decrease is largely attributed
-to generational shifts in dietary habits, with newer generations
-consuming less milk than their predecessors. Despite efforts by
-government programs and the dairy industry to promote milk consumption,
-such as the National School Lunch Program and various marketing
-initiatives, reversing this downward trend has proven challenging <a
-href="https://www.ers.usda.gov/amber-waves/2022/june/fluid-milk-consumption-continues-downward-trend-proving-difficult-to-reverse/">U.S.
-DEPARTMENT OF AGRICULTURE</a></p>
+<p>Research on the U.S. dairy industry has examined trends in milk
+production, consumer preferences, and nutritional content. The USDA’s
+Economic Research Service (ERS) reports a 70-year decline in fluid milk
+consumption, driven largely by generational shifts in dietary habits
+rather than the rise of plant-based alternatives [1]. While milk
+production has increased due to advances in farming practices, the
+number of dairy cows has decreased, creating regional disparities in
+output [2]. Consumer preferences have shifted toward reduced-fat milks
+due to health concerns [3]. This body of research offers valuable
+context for understanding the complex dynamics of milk production,
+consumption, and health.</p>
 <p><br><br></p>
 </div>
 <div id="initial-questions" class="section level3">
@@ -411,16 +411,18 @@ would be hard to answer this question just based on limited information.
 </div>
 <div id="data" class="section level3">
 <h3>Data</h3>
-<p>The data cleaning process begins by reading the dataset from an Excel
-file using the read_excel() function. The column names are renamed to
-more descriptive and consistent labels, making them easier to interpret.
-Next, the ‘ Year’ column is converted to a numeric data type to ensure
-compatibility with numerical operations. Any rows with missing values in
-the Year column are removed to maintain data integrity. Following this,
-the columns representing milk sales are also converted to numeric
-values, ensuring uniformity in data types across these variables.
-Finally, the cleaned dataset is printed for review, and ready for
-further analysis.</p>
+<p>Milk Types Sales Data: The cleaning process for begins by reading the
+dataset from an Excel file using the read_excel() function. The column
+names are renamed to more descriptive and consistent labels, making them
+easier to interpret. Next, the <code>Year</code> column is converted to
+a numeric data type to ensure compatibility with numerical operations.
+Any rows with missing values in the Year column are removed to maintain
+data integrity. Following this, the columns representing milk sales are
+also converted to numeric values, ensuring uniformity in data types
+across these variables. Finally, the cleaned dataset is printed for
+review, and ready for further analysis.</p>
+<p>Milk Cows and Milk production data: The tidying process for this
+dataset involves reading the data from 2 sheets of the excel file.</p>
 <p><br><br></p>
 </div>
 <div id="exploratory-analysis" class="section level3">
@@ -486,11 +488,16 @@ changing preferences.</p>
 <div id="references" class="section level3">
 <h3>References</h3>
 <ol style="list-style-type: decimal">
-<li><a href="https://www.ers.usda.gov/data-products/dairy-data/"
-class="uri">https://www.ers.usda.gov/data-products/dairy-data/</a></li>
 <li><a
 href="https://www.ers.usda.gov/amber-waves/2022/june/fluid-milk-consumption-continues-downward-trend-proving-difficult-to-reverse/"
-class="uri">https://www.ers.usda.gov/amber-waves/2022/june/fluid-milk-consumption-continues-downward-trend-proving-difficult-to-reverse/</a></li>
+class="uri">https://www.ers.usda.gov/amber-waves/2022/june/fluid-milk-consumption-continues-downward-trend-proving-difficult-to-reverse/</a>
+2.<a
+href="https://www.ers.usda.gov/webdocs/publications/44247/56317_ef29.pdf?v=0"
+class="uri">https://www.ers.usda.gov/webdocs/publications/44247/56317_ef29.pdf?v=0</a></li>
+<li><a href="https://doi.org/10.1007/s13594-019-00433-5"
+class="uri">https://doi.org/10.1007/s13594-019-00433-5</a></li>
+<li><a href="https://www.ers.usda.gov/data-products/dairy-data/"
+class="uri">https://www.ers.usda.gov/data-products/dairy-data/</a></li>
 </ol>
 </div>
 
