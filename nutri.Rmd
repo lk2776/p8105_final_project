@@ -15,10 +15,10 @@ library(plotly)
 
 <br>
 
-We've explored the four main types of milk—Whole, 2%, 1%, and Skim milk—quite extensively in the previous section. But what exactly sets them apart? The primary distinction lies in their nutritional content. While taste and availability also play significant roles, it's the nutrients that predominantly differentiate these types of milk and justify their coexistence in the market. In this section, we'll delve into the nutritional profiles of these four milk types and analyze their differences to understand why each has its unique place in our diets.
-
+We’ve talked extensively about the four main types of milk—whole, 2%, 1%, and skim—in the previous section. But what really makes them different from each other? It mostly comes down to their nutrients. Sure, taste, availability, and other factors also matter, but it's really the nutrients that set them apart and explain why we have four different types instead of just one. Here, we will analyse these four types from a health/nutrition perspective and see if we can comment on the sales based on the data we have.
 <br>
-
+<h3> Introductory Analysis </h3>
+<br>
 ```{R, echo= FALSE}
 #creating data frame; cleaning accordingly; doing some analysis
 df <- readxl::read_xlsx('nutri.xlsx')|>
@@ -43,9 +43,9 @@ kable(nutri_same, format = "html") |>
 
 ```
 
-The above table provides us with nutritional components that are the same for all 4 types of milk.
+The above table provides us with nutritional components that are the same for all four types of milk.
 
-To analyze differences in milk types, we will subtract the values for skim milk from the mean of the other milk types. If the result is not zero, it indicates a difference. Since skim milk has the least fat, it and whole milk will have extreme values, meaning the mean of the others won't match skim milk.
+To analyse nutritional differences in milk types, we will subtract the values for skim milk from the mean of the other milk types. If the result is not zero, it indicates a difference. Since skim milk has the least fat, it and whole milk will have extreme values, meaning the mean of the others won't match skim milk.
 
 ```{R, echo = FALSE}
 #making table
@@ -170,9 +170,9 @@ function showSlides(n) {
 There is a decreasing trend as we go towards the lower fat options for calories and cholesterol.
 Quantity of sodium is roughly the same for all 4 (higher in 1% and skim).
 Skim has the least amount of calcium. The rest seem to have the same amount.
-
-<br>
-
+<br><br>
+<h3> Pie Charts for Cholesterol </h3>
+<br><br>
 ```{R, echo= FALSE}
 # Making a layout
 layout(matrix(c(1, 1, 2, 3, 4, 5), nrow=3, ncol=2, byrow=TRUE), heights=c(0.2, 1, 1))
@@ -192,7 +192,8 @@ for (i in 1:4) { pie(c(percentages[i], 100 - percentages[i]), labels = c("", "")
 The above pie charts show the cholesterol intake per cup for a 2000 calorie diet. Obviously, higher fat means more cholesterol. This intake is quite important as a health conscious person is likely to lean towards the lower fat options because of the lower cholesterol. Accompany the individual cholesterol with the fact that most people will use milk in some way and not just drink it straight up implies that the way they consume it (through cereal or drinks) would increase their cholesterol intake due to what they added.
 
 <br>
-
+<h3> Comparing the Fat Content Across all Four Types </h3>
+<br>
 ```{R, echo= FALSE}
 #making plots for fat for all 4 types
 data1 <- data.frame(
@@ -241,8 +242,10 @@ legend <- get_legend(ggplot(data1, aes(x = Variable, y = Percentage, fill = Vari
 grid.arrange(empty_plot, plot1, plot2, legend, ncol = 4, widths = c(1, 2, 2, 1.5))
 ```
 
-The fat content decreases progressively from Whole Milk to 2% Milk, 1% Milk, and Skim Milk, reflecting their names. The bar plots above effectively illustrate this reduction. For instance, a 1% decrease indicates that our total and saturated fat intake is halved when transitioning from Whole to 2% Milk, and further reduced from 2% to 1%, ultimately reaching zero in Skim Milk.
-
+The fat content decreases progressively from Whole Milk to 2% Milk, 1% Milk, and Skim Milk, reflecting their names (Fun Fact: Whole Milk has a little over 3% fat). The bar plots above effectively illustrate this reduction. For instance, a 1% decrease indicates that our total and saturated fat intake is halved when transitioning from Whole to 2% Milk, and further reduced from 2% to 1%, ultimately reaching zero in Skim Milk.
+<br>
+<h3> Regression Analysis </h3>
+<br>
 We will now perform a regression analysis on the five most recent sales ratios of the four types of milk (more about the ratios is [here](.html)) with their respective Cholesterol and Saturated Fat content. This analysis aims to determine if consumers have become more health-conscious over the years.
 
 ```{R, echo = FALSE,message=FALSE, warning=FALSE}
@@ -348,13 +351,9 @@ plotpr <- ggplot(df_merged, aes(x = Sales_Ratio, y = Predicted, color = Milk_Typ
   geom_point(size = 2, aes(text = paste("Year:", Year, "<br>", "Actual:", Sales_Ratio, "<br>", "Predicted:", Predicted))) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
   scale_color_manual(values = c("Whole" = "red", "2 Percent" = "orange", "1 Percent" = "magenta", "Skim" = "pink")) +
-  labs(title = "Actual vs Predicted Sales Ratio", x = "Actual Sales Ratio", y = "Predicted Sales Ratio", color = "Milk Type")
-
-
+  labs(title = "Actual vs Predicted (from Saturated Fat) Sales Ratio", x = "Actual Sales Ratio", y = "Predicted Sales Ratio", color = "Milk Type")
 
 ggplotly(plotpr, tooltip = c("text"))
-
-
 ```
 
 <b> Conclusions based on above plot and ANOVA results </b>
