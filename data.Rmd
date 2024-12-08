@@ -2,7 +2,7 @@
 title: "Data"
 output: html_document
 ---
-For this project, we downloaded three different datasets to answer specific research questions.
+For this project, we downloaded three different datasets to answer specific research questions. All data sets can be downloaded from our github.
 
 ### 1. Historical Fluid Beverage Milk Sales Quantities by Product Data
 This dataset was downloaded from the [U.S. Department of Agriculture](https://www.ers.usda.gov/data-products/dairy-data/). The variables in this dataset are:
