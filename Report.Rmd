@@ -178,7 +178,7 @@ The linear regression model results for milk production by region and year, with
 
 <b>Nutrition: </b> Our nutrition-based analysis looked into the nutritional profiles of whole, 2%, 1%, and skim milk, both individually and in relation to their sales ratios over a year, to understand consumer preferences and trends. We found significant differences in calories, calcium, sodium, and cholesterol among these types, with whole milk having the highest fat content and skim milk the least. We wanted to see if health consciousness was influencing milk sales, but the results weren’t clear-cut. We found a slight positive trend between cholesterol content and sales ratios, but it wasn’t statistically significant. Likewise, higher saturated fat content showed a negative trend with sales, but this also wasn’t significant. Interestingly, our model overestimated sales for 2% and skim milk while underestimating for whole and 1% milk. Our findings suggest that other unaccounted factors are also playing a role. To get a clearer picture, we need a more detailed model.
 
-<br><br>
+<br>
 
 ### Discussion
 
@@ -189,7 +189,7 @@ Between 1970 and 2023, U.S. milk cow production and milk production have undergo
 
 Our nutritional analysis revealed significant differences in calories, calcium, sodium, and cholesterol among whole, 2%, 1%, and skim milk. These variations underscore the diverse health impacts and preferences influencing consumer choices. Understanding these nutritional factors is crucial in determining how they drive milk consumption trends. We also explored whether this nutritional information could predict sales trends and suggest a growing health consciousness among consumers.
 
-<br><br>
+<br>
 
 ### Limitations
 <ul>
@@ -204,13 +204,13 @@ Regional trends in milk production and consumption are influenced by a lot of di
 </li>
 </ul>
 
-<br><br>
+<br>
 
 ### Further Scope
 
 Our analysis lays a strong foundation for an even more detailed report. The regional analysis reveals various trends and historical differences that could be much clearer with the inclusion of economic factors and relevant policies. Beyond just sales data, understanding how consumers use milk can offer valuable insights. For instance, is 1% Milk usually consumed directly, while Whole Milk is reserved for baking? Adding variables through surveys or other methods to answer questions like, "Are people buying milk for protein or other nutrients? Are they unaware of the differences between milk types, or is it simply a matter of taste?" could reveal whether an increase in health consciousness is driving sales up or down for the different types.
 
-<br><br>
+<br>
 
 ### References
 
@@ -219,9 +219,9 @@ Our analysis lays a strong foundation for an even more detailed report. The regi
 3. <https://www.ers.usda.gov/webdocs/publications/44247/56317_ef29.pdf?v=0>
 4. <https://www.ers.usda.gov/data-products/dairy-data/>
 
-<br><br>
+<br>
 
-#### Acknowledgements
+### Acknowledgements
 
 As we conclude our exploration of milk production and consumption, we extend heartfelt thanks to Professor Jeff Goldsmith for his invaluable guidance. Analyzing industries has traditionally been the domain of large organizations and researchers, but our confidence in conducting this analysis comes from the data science skills we've gained. We hope our research inspires and assists others in understanding and improving this industry.
 
