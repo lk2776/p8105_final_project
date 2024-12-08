@@ -315,7 +315,7 @@ $(document).ready(function () {
 <p>Project Name: Milk Industry Insights</p>
 <p>Project Members: Vidit Tripathi (vt2415), Tai Yue (ty2554), Lahari
 Koganti (lk2776)</p>
-<p><br><br></p>
+<p><br></p>
 <div id="motivation" class="section level3">
 <h3>Motivation</h3>
 <p>This project provides a comprehensive analysis of the dairy industry,
@@ -352,6 +352,22 @@ government programs and the dairy industry to promote milk consumption,
 such as the National School Lunch Program and various marketing
 initiatives, reversing this downward trend has proven challenging.</p>
 <p><br><br></p>
+<p><br></p>
+</div>
+<div id="related-work" class="section level3">
+<h3>Related Work</h3>
+<p>Research on the U.S. dairy industry has examined trends in milk
+production, consumer preferences, and nutritional content. The USDA’s
+Economic Research Service (ERS) reports a 70-year decline in fluid milk
+consumption, driven largely by generational shifts in dietary habits
+rather than the rise of plant-based alternatives [1]. While milk
+production has increased due to advances in farming practices, the
+number of dairy cows has decreased, creating regional disparities in
+output [2]. Consumer preferences have shifted toward reduced-fat milks
+due to health concerns [3]. This body of research offers valuable
+context for understanding the complex dynamics of milk production,
+consumption, and health.</p>
+<p><br></p>
 </div>
 <div id="initial-questions" class="section level3">
 <h3>Initial questions</h3>
@@ -420,16 +436,18 @@ would be hard to answer this question just based on limited information.
 </div>
 <div id="data" class="section level3">
 <h3>Data</h3>
-<p>The data cleaning process begins by reading the dataset from an Excel
-file using the read_excel() function. The column names are renamed to
-more descriptive and consistent labels, making them easier to interpret.
-Next, the ‘ Year’ column is converted to a numeric data type to ensure
-compatibility with numerical operations. Any rows with missing values in
-the Year column are removed to maintain data integrity. Following this,
-the columns representing milk sales are also converted to numeric
-values, ensuring uniformity in data types across these variables.
-Finally, the cleaned dataset is printed for review, and ready for
-further analysis.</p>
+<p>Milk Types Sales Data: The cleaning process for begins by reading the
+dataset from an Excel file using the read_excel() function. The column
+names are renamed to more descriptive and consistent labels, making them
+easier to interpret. Next, the <code>Year</code> column is converted to
+a numeric data type to ensure compatibility with numerical operations.
+Any rows with missing values in the Year column are removed to maintain
+data integrity. Following this, the columns representing milk sales are
+also converted to numeric values, ensuring uniformity in data types
+across these variables. Finally, the cleaned dataset is printed for
+review, and ready for further analysis.</p>
+<p>Milk Cows and Milk production data: The tidying process for this
+dataset involves reading the data from 2 sheets of the excel file.</p>
 <p><br><br></p>
 </div>
 <div id="exploratory-analysis" class="section level3">
@@ -526,11 +544,16 @@ behind the trends we see.
 <div id="references" class="section level3">
 <h3>References</h3>
 <ol style="list-style-type: decimal">
-<li><a href="https://www.ers.usda.gov/data-products/dairy-data/"
-class="uri">https://www.ers.usda.gov/data-products/dairy-data/</a></li>
 <li><a
 href="https://www.ers.usda.gov/amber-waves/2022/june/fluid-milk-consumption-continues-downward-trend-proving-difficult-to-reverse/"
 class="uri">https://www.ers.usda.gov/amber-waves/2022/june/fluid-milk-consumption-continues-downward-trend-proving-difficult-to-reverse/</a></li>
+<li><a href="https://doi.org/10.1007/s13594-019-00433-5"
+class="uri">https://doi.org/10.1007/s13594-019-00433-5</a></li>
+<li><a
+href="https://www.ers.usda.gov/webdocs/publications/44247/56317_ef29.pdf?v=0"
+class="uri">https://www.ers.usda.gov/webdocs/publications/44247/56317_ef29.pdf?v=0</a></li>
+<li><a href="https://www.ers.usda.gov/data-products/dairy-data/"
+class="uri">https://www.ers.usda.gov/data-products/dairy-data/</a></li>
 </ol>
 </div>
 
