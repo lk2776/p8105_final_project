@@ -670,6 +670,7 @@ milk_production |>
   ) |> 
   lm(milk_production ~ state * year, data = _) |>  
   broom::tidy() |>
+  mutate(term = str_remove(term, "state")) |>
   head(5) |>
   knitr::kable(digits=3, format="html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
@@ -690,6 +691,7 @@ milk_production |>
   ) |> 
   lm(milk_production ~ region * year, data = _) |>  
   broom::tidy() |>
+  mutate(term = str_remove(term, "region")) |>
   head(5) |>
   knitr::kable(digits=3, format="html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
