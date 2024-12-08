@@ -82,32 +82,32 @@ In the project, we used visualizations like line plots, bar plots, and histogram
 The U.S. maps below the distribution of milk cows in 1970 vs 2023. While Wisconsin was the leading state in 1970, California surpassed it by 2023. Additionally, states like Idaho, which did not play a major role in milk production in 1970, have now become one of the leading producers.
 
 <img src="milk_cows_files/figure-html
-/unnamed-chunk-8-1.png" class="center" width="450" height="350">
+/unnamed-chunk-8-1.png" class="center">
 
 <img src="milk_cows_files/figure-html
-/unnamed-chunk-8-2.png" class="center" width="450" height="350">
+/unnamed-chunk-8-2.png" class="center">
 
 The plots  illustrate the overall trend in the total number of milk cows from 1970 to 2023. The data shows a shift in production, with some states experiencing a significant increase in milk cow numbers, while others have seen a decline. States like New Mexico, Idaho, Arizona, and Colorado have experienced more than a 100% increase in milk cow production. In contrast, states like Alabama, Mississippi, Louisiana, and New Jersey have seen a near-total decline in their milk cow industries.
 
 <img src="milk_cows_files/figure-html
-/unnamed-chunk-7-1.png" class="center" width="450" height="350">
+/unnamed-chunk-7-1.png" class="center">
 
 <img src="milk_cows_files/figure-html
-/unnamed-chunk-9-1.png" class="center" width="450" height="350">
+/unnamed-chunk-9-1.png" class="center">
 
 Similarly, milk cow production is analyzed by region. As observed in the he U.S. map distribution, the data shows the top regions in total milk cows in 1970 vs 2023. In 1970, the Lake States, with 3,196 thousand milk cows, were the leading region, followed by other key regions such as the Northeast, Corn Belt, Appalachia, and West Coast. By 2023, the Mountain region had emerged as one of the top regions in milk cow production. Overall, the data reveals significant regional shifts in milk cow production from 1970 to 2023, reflecting changing trends over time.
 
 <img src="milk_cows_files/figure-html
-/unnamed-chunk-11-2.png" class="center" width="450" height="350">
+/unnamed-chunk-11-2.png" class="center">
 
 <img src="milk_cows_files/figure-html
-/unnamed-chunk-11-4.png" class="center" width="450" height="350">
+/unnamed-chunk-11-4.png" class="center">
 
 
 The following plots shows the overall trend in regional milk cow production from 1970 to 2023. Milk cow production in the Lake States, Northeast, Corn Belt, and Appalachia has decreased over time. In contrast, milk cow production in the West Coast, Mountain Region, and Southern Plains has increased, highlighting the regional shifts in milk cow production over the past few decades.
 
 <img src="milk_cows_files/figure-html
-/unnamed-chunk-5-1.png" class="center" width="450" height="350">
+/unnamed-chunk-5-1.png" class="center">
 
 
 
