@@ -15,7 +15,7 @@ This project provides a comprehensive analysis of the dairy industry, focusing o
 
 ### Related Work
 
-Research on the U.S. dairy industry has examined trends in milk production, consumer preferences, and nutritional content. The USDA’s Economic Research Service (ERS) reports a 70-year decline in fluid milk consumption, driven largely by generational shifts in dietary habits rather than the rise of plant-based alternatives [1]. While milk production has increased due to advances in farming practices, the number of dairy cows has decreased, creating regional disparities in output [2]. Consumer preferences have shifted toward reduced-fat milks due to health concerns [3]. This body of research offers valuable context for understanding the complex dynamics of milk production, consumption, and health.
+Research on the U.S. dairy industry has examined trends in milk production, consumer preferences, and nutritional content. The USDA’s Economic Research Service (ERS) reports a 70-year decline in fluid milk consumption, driven largely by generational shifts in dietary habits rather than the rise of plant-based alternatives [1]. While milk production has increased due to advances in farming practices, the number of dairy cows has decreased, creating regional disparities in output [3]. Consumer preferences have shifted toward reduced-fat milks due to health concerns [2]. This body of research offers valuable context for understanding the complex dynamics of milk production, consumption, and health.
 
 <br>
 
@@ -88,7 +88,7 @@ These findings align with expectations based on broader consumer shifts toward p
 ### References
 
 1. <https://www.ers.usda.gov/amber-waves/2022/june/fluid-milk-consumption-continues-downward-trend-proving-difficult-to-reverse/>
-2.<https://www.ers.usda.gov/webdocs/publications/44247/56317_ef29.pdf?v=0>
-3. <https://doi.org/10.1007/s13594-019-00433-5>
+2. <https://doi.org/10.1007/s13594-019-00433-5>
+3. <https://www.ers.usda.gov/webdocs/publications/44247/56317_ef29.pdf?v=0>
 4. <https://www.ers.usda.gov/data-products/dairy-data/>
 
