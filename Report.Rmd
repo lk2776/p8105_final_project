@@ -79,6 +79,22 @@ In this project, several statistical tests were conducted to analyze milk sales 
 From the project, we found that fluid milk sales have steadily declined since 2010, with a significant drop in recent decades. Whole milk sales have decreased over time, while reduced-fat and skim milk gained popularity earlier but also declined after 2010. Flavored non-whole milk consistently had higher sales than flavored whole milk.
 These findings align with expectations based on broader consumer shifts toward plant-based alternatives and reduced dairy consumption. Insights include the impact of generational habits, health trends, and competition from alternative beverages. What’s more, some people may believe that the appearance of  COVID-19 could also be a factor. During the pandemic, there was an initial spike in grocery purchases, including milk, as people stayed home and cooked more. However, this was temporary and may not have reversed the long-term downward trend in fluid milk consumption. School closures and reduced institutional demand could also have negatively impacted sales. Overall, while COVID-19 may have caused short-term fluctuations, it’s unlikely to be a key factor in the long-term decline observed in the dataset. All in all, the data highlights the dairy industry's challenges in maintaining relevance amid changing preferences.
 
+<br><br>
+
+### Limitations
+<ul>
+<li><b>Tastes and Dietary Requirements</b>:
+To get a clearer picture of health impacts, we need to understand people's dietary needs and preferences better. Taste and how people use different types of milk are really important too. Just looking at cholesterol and fat isn't enough to tell the whole story. We also need to consider dietary requirements and other associated factors.
+</li>
+<li><b>Limited Categories for Flavoured Milk Data</b>:
+Our analysis of flavored milk was pretty limited—we only looked at flavoured whole milk and flavoured non-whole milk. Because of this, we can't make broad conclusions. With so many flavours and brands out there, each with different prices, nutrients, and other factors, our findings are just a starting point.
+</li>
+<li><b>Economic and Political Factors Unaccounted For</b>:
+Regional trends in milk production and consumption are influenced by a lot of different factors, such as policies. Without looking at regional policies, market conditions, and environmental regulations, it's tough to fully understand why production or consumption might be going up or down. These factors add a lot of complexity and might hide the true reasons behind the trends we see.
+</li>
+</ul>
+
+
 
 <br><br>
 
