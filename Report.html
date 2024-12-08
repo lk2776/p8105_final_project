@@ -438,19 +438,19 @@ function.</p>
 </div>
 <div id="exploratory-analysis" class="section level3">
 <h3>Exploratory analysis</h3>
-<p>In the project, we used visualizations like line plots, bar plots,
-and histograms to analyze trends in fluid milk sales over time. These
-helped us compare different milk types, flavored vs. non-flavored
-categories, and overall sales trends by decade. Summaries provided key
-insights, like the steady decline in milk sales after 2010 and
-generational shifts in consumption. We used exploratory statistical
-analyses to calculate means, group sales by decade, and compare trends
-across milk types. These steps were essential to highlight patterns and
-changes in consumer behavior. Initially, the focus was broader, but we
-narrowed it to trends like flavored vs. non-flavored milk and
-decade-wise changes for clearer insights. This shift allowed us to align
-the project better with the dataset’s strengths and the observed
-trends.</p>
+<p><b>Milk Types:</b>In the project, we used visualizations like line
+plots, bar plots, and histograms to analyze trends in fluid milk sales
+over time. These helped us compare different milk types, flavored
+vs. non-flavored categories, and overall sales trends by decade.
+Summaries provided key insights, like the steady decline in milk sales
+after 2010 and generational shifts in consumption. We used exploratory
+statistical analyses to calculate means, group sales by decade, and
+compare trends across milk types. These steps were essential to
+highlight patterns and changes in consumer behavior. Initially, the
+focus was broader, but we narrowed it to trends like flavored
+vs. non-flavored milk and decade-wise changes for clearer insights. This
+shift allowed us to align the project better with the dataset’s
+strengths and the observed trends.</p>
 <p><img src="milktypes_over_years_files/figure-html
 /unnamed-chunk-3-1.png" class="center" width="450" height="350"></p>
 <p><img src="milktypes_over_years_files/figure-html
@@ -504,11 +504,11 @@ cow production over the past few decades.</p>
 </div>
 <div id="data-analysis" class="section level3">
 <h3>Data analysis</h3>
-<p>In this project, several statistical tests were conducted to analyze
-milk sales patterns. An ANOVA test was performed on sales ratios of
-different milk types (Whole, Reduced Fat 2%, Low Fat 1%, Skim) to
-determine if there were significant differences in their rates of
-change. The test revealed a p-value of 0.0432, which is below 0.05,
+<p><b>Milk Types:</b>In this project, several statistical tests were
+conducted to analyze milk sales patterns. An ANOVA test was performed on
+sales ratios of different milk types (Whole, Reduced Fat 2%, Low Fat 1%,
+Skim) to determine if there were significant differences in their rates
+of change. The test revealed a p-value of 0.0432, which is below 0.05,
 indicating that at least one milk type showed a significantly different
 sales trend compared to others. This supports the idea that consumer
 preferences for milk types vary significantly. A paired t-test compared
@@ -536,6 +536,29 @@ cow production, while regions like the Lake States (estimate = -5.584, p
 negative effect on milk cow numbers (-3.24, p &lt; 0.001), indicating a
 general decline in milk cow populations across all regions over
 time.</p>
+<p><b>Milk Production:</b>The results of the linear regression model for
+milk cow production by state and year are provided below. The state-year
+interaction results show how milk production (in million pounds) trends
+differ across states over time. For example, California exhibits
+substantial positive growth in milk production, with an interaction
+coefficient of 767.01 million pounds per year (p &lt; 0.001), suggesting
+significant annual increases in production. Similarly, Texas (229.81
+million pounds/year) and New Mexico (208.66 million pounds/year) also
+show notable increases over time. In contrast, states like Tennessee
+(-23.16 million pounds/year) experience declines in milk production,
+indicating a regional decrease in dairy production. The year variable
+itself has a negative coefficient of -15.24 million pounds (p = 0.009),
+suggesting an overall decline in milk production across all states over
+time, though this trend is not uniform. The linear regression model
+results for milk production by region and year, with Appalachia as the
+reference region, are given below. While the year variable itself has a
+non-significant effect on milk production across all regions (estimate =
+-20.576, p = 0.237), significant region-year interactions indicate that
+some regions have seen increases in milk production over time. Notably,
+the Lake States (estimate = 130.39, p &lt; 0.001), Mountain Region
+(estimate = 114.22, p &lt; 0.001), and West Coast (estimate = 314.34, p
+&lt; 0.001) have experienced positive trends in milk production over
+time, showing significant growth.</p>
 <p><br><br></p>
 </div>
 <div id="discussion" class="section level3">
