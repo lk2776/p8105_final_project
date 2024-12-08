@@ -187,6 +187,8 @@ These findings align with expectations based on broader consumer shifts toward p
 
 Between 1970 and 2023, U.S. milk cow production and milk production have undergone significant regional shifts. In 1970, Wisconsin led in both milk cow numbers and production, but by 2023, California surpassed it. States like Idaho, New Mexico, Arizona, and Colorado have seen more than 100% increases in milk cow numbers and production, while states like Alabama, Mississippi, Louisiana, and New Jersey have experienced substantial declines. Regionally, the Lake States, Northeast, and Corn Belt, which were dominant in 1970, saw decreases, while the Mountain and West Coast regions emerged as major producers. These trends reflect a broader redistribution of milk cow and milk production across the U.S. over the past five decades.
 
+Our nutritional analysis revealed significant differences in calories, calcium, sodium, and cholesterol among whole, 2%, 1%, and skim milk. These variations underscore the diverse health impacts and preferences influencing consumer choices. Understanding these nutritional factors is crucial in determining how they drive milk consumption trends. We also explored whether this nutritional information could predict sales trends and suggest a growing health consciousness among consumers.
+
 <br><br>
 
 ### Limitations
