@@ -110,6 +110,34 @@ The following plots shows the overall trend in regional milk cow production from
 /unnamed-chunk-5-1.png" class="center">
 
 Milk Production Data: 
+The U.S. map distribution below shows the top states in milk production in 1970 versus 2023. A shift in regional milk production between 1970 and 2023. While Wisconsin was the leading state in 1970, California surpassed it by 2023. Additionally, states like Idaho, which played a minor role in milk production in 1970, have now become major producers.
+
+<img src="milk_production_files/figure-html
+/state-1970.png" class="center">
+
+<img src="milk_production_files/figure-html
+/state-2023.png" class="center">
+
+The plots below illustrate the overall trend in the milk production from 1970 to 2023. The data shows a shift in production, with some states experiencing a significant increase in milk production, while others have seen a decline. States like New Mexico, Idaho, Arizona, and Colorado have experienced more than a 100% increase in milk production. In contrast, states like Alabama, Mississippi, Louisiana, and New Jersey have seen a near-total decline in their milk production.
+<img src="milk_production_files/figure-html
+/increasing-state.png" class="center">
+
+<img src="milk_production_files/figure-html
+/decreasing-state.png" class="center">
+
+Similarly, milk production is analyzed by region. As in the US map distribution, and the line plots, the data shows the top regions in milk produciton in 1970 vs 2023. in 1970, Lake States, Appalachia, Northeast were among the leading producers of milk.  By 2023, the West Coast and Mountain region had emerged as one of the top regions in milk cow production. Overall, the data reveals significant regional shifts in milk production from 1970 to 2023, reflecting changing trends over time.
+
+<img src="milk_production_files/figure-html
+/unnamed-chunk-11-2.png" class="center">
+
+<img src="milk_production_files/figure-html
+/unnamed-chunk-12-2.png" class="center">
+
+The following plot shows the overall trend in regional milk production from 1970 to 2023. Milk production has increased over the years in most regions, including the Lake States, West Coast, and Mountain Region.
+
+<img src="milk_production_files/figure-html
+/region-trend.png" class="center">
+
 
 <br>
 
