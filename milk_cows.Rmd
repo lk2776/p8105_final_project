@@ -11,7 +11,7 @@ output:
 ```{r,include=FALSE,warning=FALSE,message=FALSE}
 source("./scripts/load_milk_production_data.R")
 source("./scripts/figure_settings.R")
-
+library(stringr)
 milk_cows = joined_data |>
   select(region,state,year,number_of_cows)
 
@@ -644,6 +644,7 @@ milk_cows |>
   lm(number_of_cows ~ state * year, data = _) |>  
   broom::tidy() |>
   head(5) |>
+  mutate(term = str_remove(term, "state")) |>
   knitr::kable(digits=3, format="html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 
@@ -662,7 +663,8 @@ milk_cows |>
   ) |> 
   lm(number_of_cows ~ region * year, data = _) |>  
   broom::tidy() |>
-  head(5) |>
+  head(5) |> 
+  mutate(term = str_remove(term, "region")) |>
   knitr::kable(digits=3, format="html") |>
   kable_styling(full_width = TRUE, bootstrap_options = "bordered")
 ```
