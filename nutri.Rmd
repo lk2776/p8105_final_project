@@ -15,6 +15,10 @@ library(plotly)
 
 <br>
 
+We've explored the four main types of milk—Whole, 2%, 1%, and Skim milk—quite extensively in the previous section. But what exactly sets them apart? The primary distinction lies in their nutritional content. While taste and availability also play significant roles, it's the nutrients that predominantly differentiate these types of milk and justify their coexistence in the market. In this section, we'll delve into the nutritional profiles of these four milk types and analyze their differences to understand why each has its unique place in our diets.
+
+<br>
+
 ```{R, echo= FALSE}
 #creating data frame; cleaning accordingly; doing some analysis
 df <- readxl::read_xlsx('nutri.xlsx')|>
@@ -360,6 +364,6 @@ For the higher Fat Options (Whole and 2% Milk), most of the points lie below the
  </li>
  <li>Bias in Predictions: The model tends to overestimate sales ratios for lower fat milk types and underestimate them for higher fat milk types, indicating that other factors might be at play which are not accounted for by just using saturated fat as a predictor.
  </li>
- <li>Further Analysis Needed: To improve the model, it might be beneficial to include additional predictors such as price, marketing efforts, consumer preferences, or other nutritional information.
+ <li>Further Analysis Needed: To improve the model, it might be beneficial to include additional predictors such as price, marketing efforts, consumer preferences, or other nutritional information. Consumer preferences and dietary requirements is a crucial factor because someone may prefer taste of one over the other. It is also possible that their diet doesn't contain a lot of fat and hence, they need whole milk.
  </li>
 </ul>
