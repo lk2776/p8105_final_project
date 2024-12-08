@@ -72,12 +72,12 @@ Milk Cows and Milk Production Data: The tidying process for these datasets begin
 This plot shows the total fluid milk sales (in million pounds) over time, indicating a steady decline since the early 2000s.
 
 <img src="milktypes_over_years_files/figure-html
-/unnamed-chunk-3-1.png" class="center">
+/unnamed-chunk-3-1.png" class="center" width="70%" height="70%">
 
 This plot shows the mean whole milk sales by decade, highlighting a decline from the 1970s to the 1990s, followed by stabilization in recent decades.
 
 <img src="milktypes_over_years_files/figure-html
-/unnamed-chunk-4-1.png" class="center">
+/unnamed-chunk-4-1.png" class="center" width="70%" height="70%">
 
 This plot shows the sales trends of flavored whole milk and flavored non-whole milk in the U.S. from 1975 to 2022, highlighting the dominance of flavored whole milk.
 
