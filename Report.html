@@ -422,10 +422,17 @@ data integrity. Following this, the columns representing milk sales are
 also converted to numeric values, ensuring uniformity in data types
 across these variables. Finally, the cleaned dataset is printed for
 review, and ready for further analysis.</p>
-<p>Milk Cows and Milk production data: The tidying process for this
-dataset involves reading the data from 2 sheets of the excel file using
-read_excel() function. <code>x</code> letter is removed from column
-names of years using gsub() function. <code>Region</code> colulmn is</p>
+<p>Milk Cows and Milk Production Data: The tidying process for these
+datasets begins by reading data from two sheets of an Excel file using
+the <code>read_excel()</code> function. The <code>x</code> characters in
+the column names of the years are removed using the <code>gsub()</code>
+function, and the columns are then converted to numeric format. A
+<code>Region</code> column is added to the dataset for regional
+identification. The <code>pivot_longer()</code> function is applied to
+reshape the data, creating Year, milk_cows, and milk_production columns.
+The datasets are then merged using the <code>inner_join()</code>
+function. The resulting code is saved in the scripts folder and loaded
+into the analysis RMD files using the source() function.</p>
 <p><br><br></p>
 </div>
 <div id="exploratory-analysis" class="section level3">
