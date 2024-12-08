@@ -135,7 +135,7 @@ Similarly, milk production is analyzed by region. As in the US map distribution,
 The following plot shows the overall trend in regional milk production from 1970 to 2023. Milk production has increased over the years in most regions, including the Lake States, West Coast, and Mountain Region.
 
 <img src="milk_production_files/figure-html
-/region-trend.png" class="center">
+/trend-region.png" class="center">
 
 
 <br>
