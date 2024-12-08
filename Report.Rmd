@@ -174,7 +174,7 @@ Regional trends in milk production and consumption are influenced by a lot of di
 
 <br><br>
 
-###Further Scope
+### Further Scope
 
 Our analysis lays a strong foundation for an even more detailed report. The regional analysis reveals various trends and historical differences that could be much clearer with the inclusion of economic factors and relevant policies. Beyond just sales data, understanding how consumers use milk can offer valuable insights. For instance, is 1% Milk usually consumed directly, while Whole Milk is reserved for baking? Adding variables through surveys or other methods to answer questions like, "Are people buying milk for protein or other nutrients? Are they unaware of the differences between milk types, or is it simply a matter of taste?" could reveal whether an increase in health consciousness is driving sales up or down for the different types.
 
