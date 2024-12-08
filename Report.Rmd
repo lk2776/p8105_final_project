@@ -7,9 +7,13 @@ Project Members: Vidit Tripathi (vt2415), Tai Yue (ty2554), Lahari Koganti (lk27
 
 <br><br> 
 
-### Motivation and Related Work
+### Motivation
 
-This project was inspired by the USDA's Economic Research Service website, which highlights the long-term decline in fluid milk consumption in the U.S. over 70 years. It discusses generational shifts in dietary habits and the limited impact of plant-based alternatives on this trend. Despite government programs like the National School Lunch Program and marketing efforts, reversing the decline has been challenging. This information provided context for analyzing milk consumption patterns and their societal implications. The USDA's Economic Research Service reports that U.S. per capita fluid milk consumption has been declining for over 70 years, with the steepest drop in the 2010s. Between 2003 and 2018, individuals across all age groups reduced their milk intake, primarily consumed as a beverage. While plant-based milk alternatives have gained popularity, they account for only a small portion of this decline. The decrease is largely attributed to generational shifts in dietary habits, with newer generations consuming less milk than their predecessors. Despite efforts by government programs and the dairy industry to promote milk consumption, such as the National School Lunch Program and various marketing initiatives, reversing this downward trend has proven challenging.
+
+### Related Work
+
+This project was inspired by the USDA’s Economic Research Service website, which highlights the long-term decline in fluid milk consumption in the U.S. over 70 years. It discusses generational shifts in dietary habits and the limited impact of plant-based alternatives on this trend. Despite government programs like the National School Lunch Program and marketing efforts, reversing the decline has been challenging. This information provided context for analyzing milk consumption patterns and their societal implications. The USDA’s Economic Research Service reports that U.S. per capita fluid milk consumption has been declining for over 70 years, with the steepest drop in the 2010s. Between 2003 and 2018, individuals across all age groups reduced their milk intake, primarily consumed as a beverage. While plant-based milk alternatives have gained popularity, they account for only a small portion of this decline. The decrease is largely attributed to generational shifts in dietary habits, with newer generations consuming less milk than their predecessors. Despite efforts by government programs and the dairy industry to promote milk consumption, such as the National School Lunch Program and various marketing initiatives, reversing this downward trend has proven challenging [U.S. DEPARTMENT OF AGRICULTURE](https://www.ers.usda.gov/amber-waves/2022/june/fluid-milk-consumption-continues-downward-trend-proving-difficult-to-reverse/)
+
 
 <br><br>
 
@@ -52,6 +56,8 @@ Apart from this, we also became interested in the nutritional side of the types 
 </ol>
 
 ### Data
+
+The data cleaning process begins by reading the dataset from an Excel file using the read_excel() function. The column names are renamed to more descriptive and consistent labels, making them easier to interpret. Next, the ‘ Year’ column is converted to a numeric data type to ensure compatibility with numerical operations. Any rows with missing values in the Year column are removed to maintain data integrity. Following this, the columns representing milk sales are also converted to numeric values, ensuring uniformity in data types across these variables. Finally, the cleaned dataset is printed for review, and ready for further analysis.
 
 <br><br>
 

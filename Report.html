@@ -316,8 +316,11 @@ $(document).ready(function () {
 <p>Project Members: Vidit Tripathi (vt2415), Tai Yue (ty2554), Lahari
 Koganti (lk2776)</p>
 <p><br><br></p>
-<div id="motivation-and-related-work" class="section level3">
-<h3>Motivation and Related Work</h3>
+<div id="motivation" class="section level3">
+<h3>Motivation</h3>
+</div>
+<div id="related-work" class="section level3">
+<h3>Related Work</h3>
 <p>This project was inspired by the USDA’s Economic Research Service
 website, which highlights the long-term decline in fluid milk
 consumption in the U.S. over 70 years. It discusses generational shifts
@@ -336,7 +339,9 @@ to generational shifts in dietary habits, with newer generations
 consuming less milk than their predecessors. Despite efforts by
 government programs and the dairy industry to promote milk consumption,
 such as the National School Lunch Program and various marketing
-initiatives, reversing this downward trend has proven challenging.</p>
+initiatives, reversing this downward trend has proven challenging <a
+href="https://www.ers.usda.gov/amber-waves/2022/june/fluid-milk-consumption-continues-downward-trend-proving-difficult-to-reverse/">U.S.
+DEPARTMENT OF AGRICULTURE</a></p>
 <p><br><br></p>
 </div>
 <div id="initial-questions" class="section level3">
@@ -406,6 +411,16 @@ would be hard to answer this question just based on limited information.
 </div>
 <div id="data" class="section level3">
 <h3>Data</h3>
+<p>The data cleaning process begins by reading the dataset from an Excel
+file using the read_excel() function. The column names are renamed to
+more descriptive and consistent labels, making them easier to interpret.
+Next, the ‘ Year’ column is converted to a numeric data type to ensure
+compatibility with numerical operations. Any rows with missing values in
+the Year column are removed to maintain data integrity. Following this,
+the columns representing milk sales are also converted to numeric
+values, ensuring uniformity in data types across these variables.
+Finally, the cleaned dataset is printed for review, and ready for
+further analysis.</p>
 <p><br><br></p>
 </div>
 <div id="exploratory-analysis" class="section level3">
