@@ -15,7 +15,7 @@ library(plotly)
 
 <br>
 
-We’ve talked extensively about the four main types of milk—whole, 2%, 1%, and skim—in the previous section. But what really makes them different from each other? It mostly comes down to their nutrients. Sure, taste, availability, and other factors also matter, but it's really the nutrients that set them apart and explain why we have four different types instead of just one. Here, we will analyse these four types from a health/nutrition perspective and see if we can comment on the sales based on the data we have.
+We’ve talked extensively about the four main types of milk—whole, 2%, 1%, and skim—in the previous section. But what really makes them different from each other? It mostly comes down to their nutrients. Sure, taste, availability, and other factors also matter, but it's really the nutrients that set them apart and explain why we have four different types instead of just one. Here, we will analyse these four types from a health/nutrition perspective and see if we can comment on the sales based on the data we have. All of the nutritional information here is for 1 cup of milk which is approximately 240 ml.
 <br>
 <h3> Introductory Analysis </h3>
 <br>

@@ -149,20 +149,18 @@ The following plot shows the overall trend in regional milk production from 1970
 
 <b>Nutrition:</b>
 
+Here is an example of the bar plots we made to compare the nutritional component across all four milk types. The colors tell us the milk type and the y axis tells us the quantity present in one cup of milk.
+
 <img src="nutri_files/figure-html
 /unnamed-chunk-3-1.png" class="center">
-
-<img src="nutri_files/figure-html
-/unnamed-chunk-3-2.png" class="center">
-
-<img src="nutri_files/figure-html
-/unnamed-chunk-3-3.png" class="center">
 
 <img src="nutri_files/figure-html
 /unnamed-chunk-3-4.png" class="center">
 
 <img src="nutri_files/figure-html
 /unnamed-chunk-5-1.png" class="center">
+
+The above pie chart shows us the daily % intake of cholesterol a person has by consuming a cup of that particular milk. The one below shows the daily % intake for total fat and saturate fat using bar plots. These plots assume a diet of 2000 calories.
 
 <img src="nutri_files/figure-html
 /unnamed-chunk-6-1.png" class="center">
